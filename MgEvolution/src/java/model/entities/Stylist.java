@@ -36,6 +36,9 @@ public class Stylist implements Serializable {
     private String area;
     @Column(length = 50)
     private float salary;
+    @Column(length = 35)
+    private Boolean admin;
+
 
     public String getName() {
         return name;
@@ -76,6 +79,14 @@ public class Stylist implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+      public Boolean getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean administrador) {
+        this.admin = administrador;
+    }
+
 
     @Override
     public int hashCode() {
