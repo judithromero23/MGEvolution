@@ -1,11 +1,11 @@
+package utilities;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package utilities;
 
-import Controller.entities.StylistJpaController;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.persistence.Persistence;
@@ -14,13 +14,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.controllers.StylistJpaController;
 import model.entities.Stylist;
 
 /**
  *
  * @author judith
  */
-@WebServlet(name = "createAdmin", urlPatterns = {"/createAdmin"})
+@WebServlet(urlPatterns = {"/createAdmin"})
 public class createAdmin extends HttpServlet {
 
     /**
@@ -36,34 +37,30 @@ public class createAdmin extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /*Creo un estilista el cual es el unico administrador.
-            El administrador es un estilista ya que tambien es un trabajador mas especialidades*/
+            
             Stylist stylistAdmin = new Stylist();
             stylistAdmin.setName("Administrador");
             stylistAdmin.setLastName("");
             stylistAdmin.setArea("Corte, Colorimetría");
             stylistAdmin.setSalary(0);
             stylistAdmin.setAdmin(true);
-            
-            
-            String message = "Stylist Admin Created Successfully";
-            StylistJpaController ejc
-                    = new StylistJpaController(Persistence.createEntityManagerFactory("MgEvolution"));
+
+            String mensaje = "Se ha creado el Administrador";
+            StylistJpaController  ejc
+                    = new StylistJpaController (Persistence.createEntityManagerFactory("MgEvolutionPU"));
             try {
                 ejc.create(stylistAdmin);
             } catch (Exception ex) {
-                message = "An error occurred while creating the admin stylist";
+                mensaje = "An error occurred while creating the admin stylist";
                 System.err.println(ex.getClass().getName() + ":" + ex.getMessage());
-                ex.printStackTrace();
             }
-
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet createAdmin</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>" + message + "</h1>");
+            out.println("<h1>" + mensaje + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -106,6 +103,6 @@ public class createAdmin extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }// </editor-fold>
+    }
 
 }
