@@ -26,7 +26,12 @@ public class Service implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date date;
-    
+    /*Declaracion de los atributos de Servicio, entre ellos se encuentra:
+    stylist = ID del estilista,
+    client = ID del cliente,
+    El ID del producto es date = Fecha del servicio.
+    Servicio es una tabla que nace de la relacion de Estilista y Cliente 
+    por eso sus campos son los id de las dos tablas que une además de su propio id*/
     @ManyToOne
     private Stylist stylist;
     @ManyToOne

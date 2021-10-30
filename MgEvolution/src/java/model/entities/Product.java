@@ -11,6 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 /**
  *
@@ -25,19 +28,33 @@ public class Product implements Serializable {
     private Long codBarras;
     /*Declaracion de los atributos de Producto, entre ellos se encuentra:
     Name = Nombre del producto,
-    Brand = Marca del producto,
+    Brand = Marca del producto (ID del proveedor),
     Category = Categoria a la que el producto pertenece,
     Price = Precio del producto,
     Stock = cantidad en stock del producto,
-    El ID del producto es codBarras = Código de barras del producto*/
+    El ID del producto es codBarras = Código de barras del producto.
+    Producto tiene dos relaciones. Una es N:M con cliente de donde sale la
+    tabla compra y otra relacion es N:1 con proveedor*/
     @Column(length = 80)
     private String name;
-    @Column(length = 50)
-    private String brand;
     @Column(length = 50)
     private String category;
     @Column(length = 50)
     private float price;
+    @Column(length = 50)
+    private Integer stock;
+
+    @ManyToOne()
+    @JoinColumn(name = "brand", nullable = false, updatable = false)
+    private Supplier brand;
+
+    public Supplier getBrand() {
+        return brand;
+    }
+
+    public void setBrand(Supplier brand) {
+        this.brand = brand;
+    }
 
     public Long getCodBarras() {
         return codBarras;
@@ -53,14 +70,6 @@ public class Product implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
     }
 
     public String getCategory() {
@@ -86,9 +95,6 @@ public class Product implements Serializable {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
-    @Column(length = 50)
-    private Integer stock;
-    
 
     public Long getId() {
         return codBarras;
@@ -122,5 +128,5 @@ public class Product implements Serializable {
     public String toString() {
         return "model.entities.Producto[ id=" + codBarras + " ]";
     }
-    
+
 }

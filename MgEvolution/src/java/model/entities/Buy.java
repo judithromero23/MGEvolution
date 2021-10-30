@@ -26,7 +26,12 @@ public class Buy implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date date;
-    
+    /*Declaracion de los atributos de Compra, entre ellos se encuentra:
+    product = ID del producto,
+    client = ID del cliente,
+    El ID del producto es date = Fecha de la compra.
+    Compra es una tabla que nace de la relacion de Producto y Cliente 
+    por eso sus campos son los id de las dos tablas que une además de su propio id*/
     @ManyToOne
     private Product product;
     @ManyToOne

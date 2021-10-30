@@ -27,7 +27,9 @@ public class Stylist implements Serializable {
     name = Nombre del estilista,
     lastName = Apellido del estilista,
     area = Especialidad del estilista,
-    salary = Sueldo del estilista*/
+    salary = Sueldo del estilista.
+    Estilista tiene una relación N:M con la entidad Cliente de donde
+    nace la tabla "Servicios"*/
     @Column(length = 80)
     private String name;
     @Column(length = 80)

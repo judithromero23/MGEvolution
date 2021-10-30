@@ -29,7 +29,9 @@ public class Client implements Serializable {
     name = Nombre del cliente,
     lastName = Apellido del cliente,
     phone = Número de móvil del cliente,
-    birthDate = Fecha de nacimiento del cliente*/
+    birthDate = Fecha de nacimiento del cliente.
+    Cliente tiene dos relaciones N:M, una con la entidad Estilistas de donde nace la tabla "Servicio"
+    y otra con Producto de donde nace la tabla "Compra" */
     @Column(length = 50)
     private String name;
     @Column(length = 50)
