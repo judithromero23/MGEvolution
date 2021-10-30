@@ -28,6 +28,7 @@ public class Stylist implements Serializable {
     lastName = Apellido del estilista,
     area = Especialidad del estilista,
     salary = Sueldo del estilista,
+    email = Correo del estilista,
     Como cualquier estilista puede ser administrador tambien vamos a guardar un login
     y un password.
     login = Nombre usuario Estilista.
