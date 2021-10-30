@@ -27,7 +27,11 @@ public class Stylist implements Serializable {
     name = Nombre del estilista,
     lastName = Apellido del estilista,
     area = Especialidad del estilista,
-    salary = Sueldo del estilista.
+    salary = Sueldo del estilista,
+    Como cualquier estilista puede ser administrador tambien vamos a guardar un login
+    y un password.
+    login = Nombre usuario Estilista.
+    password = Contraseña del estilista
     Estilista tiene una relación N:M con la entidad Cliente de donde
     nace la tabla "Servicios"*/
     @Column(length = 80)
@@ -40,7 +44,36 @@ public class Stylist implements Serializable {
     private float salary;
     @Column(length = 35)
     private Boolean admin;
+    @Column(length = 35, unique = true)
+    private String login;
+    @Column(length = 35)
+    private String password;
+    @Column(length = 50)
+    private String email;
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getCorreo() {
+        return email;
+    }
+
+    public void setCorreo(String correo) {
+        this.email = correo;
+    }
 
     public String getName() {
         return name;
@@ -81,14 +114,14 @@ public class Stylist implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-      public Boolean getAdmin() {
+
+    public Boolean getAdmin() {
         return admin;
     }
 
     public void setAdmin(Boolean administrador) {
         this.admin = administrador;
     }
-
 
     @Override
     public int hashCode() {
