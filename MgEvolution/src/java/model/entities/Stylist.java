@@ -37,8 +37,6 @@ public class Stylist implements Serializable {
     nace la tabla "Servicios"*/
     @Column(length = 80)
     private String name;
-    @Column(length = 80)
-    private String lastName;
     @Column(length = 50)
     private String area;
     @Column(length = 50)
@@ -68,11 +66,11 @@ public class Stylist implements Serializable {
         this.password = password;
     }
 
-    public String getCorreo() {
+    public String getEmail() {
         return email;
     }
 
-    public void setCorreo(String correo) {
+    public void setEmail(String correo) {
         this.email = correo;
     }
 
@@ -82,14 +80,6 @@ public class Stylist implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getArea() {

@@ -26,11 +26,20 @@ public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long codBarras;
+
+    public Float getCostSupplier() {
+        return costSupplier;
+    }
+
+    public void setCostSupplier(Float costSupplier) {
+        this.costSupplier = costSupplier;
+    }
     /*Declaracion de los atributos de Producto, entre ellos se encuentra:
     Name = Nombre del producto,
     Brand = Marca del producto (ID del proveedor),
     Category = Categoria a la que el producto pertenece,
-    Price = Precio del producto,
+    costClient = Precio del producto para el cliente,
+    costSupplier = Precio del producto del proveedor,
     Stock = cantidad en stock del producto,
     El ID del producto es codBarras = Código de barras del producto.
     Producto tiene dos relaciones. Una es N:M con cliente de donde sale la
@@ -43,6 +52,8 @@ public class Product implements Serializable {
     private float price;
     @Column(length = 50)
     private Integer stock;
+    @Column(length = 50)
+    private Float costSupplier;
 
     @ManyToOne()
     @JoinColumn(name = "brand", nullable = false, updatable = false)

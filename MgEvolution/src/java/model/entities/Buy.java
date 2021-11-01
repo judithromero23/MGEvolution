@@ -7,12 +7,12 @@ package model.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -24,18 +24,48 @@ public class Buy implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-   @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date date;
+    private Long numTicket;
     /*Declaracion de los atributos de Compra, entre ellos se encuentra:
     product = ID del producto,
     client = ID del cliente,
-    El ID del producto es date = Fecha de la compra.
+    date = fecha de la compra,
+    totalBuy = total de la compra,
+    El ID del producto es numTicket = numero del ticket.
     Compra es una tabla que nace de la relacion de Producto y Cliente 
     por eso sus campos son los id de las dos tablas que une además de su propio id*/
+    @Column(length = 50)
+    private Date date;
+    @Column(length = 50)
+    private Float totalBuy;
+    
     @ManyToOne
     private Product product;
     @ManyToOne
     private Client client;
+
+    public Long getNumTicket() {
+        return numTicket;
+    }
+
+    public void setNumTicket(Long numTicket) {
+        this.numTicket = numTicket;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Float getTotalBuy() {
+        return totalBuy;
+    }
+
+    public void setTotalBuy(Float totalBuy) {
+        this.totalBuy = totalBuy;
+    }
     
     public Client getClient(){
         return client;
@@ -53,18 +83,12 @@ public class Buy implements Serializable {
         this.product = product;
     }
     
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
+   
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (date != null ? date.hashCode() : 0);
+        hash += (numTicket != null ? numTicket.hashCode() : 0);
         return hash;
     }
 
@@ -75,7 +99,7 @@ public class Buy implements Serializable {
             return false;
         }
         Buy other = (Buy) object;
-        if ((this.date == null && other.date != null) || (this.date != null && !this.date.equals(other.date))) {
+        if ((this.numTicket == null && other.numTicket != null) || (this.numTicket != null && !this.numTicket.equals(other.numTicket))) {
             return false;
         }
         return true;
@@ -83,7 +107,7 @@ public class Buy implements Serializable {
 
     @Override
     public String toString() {
-        return "model.entities.But[ date=" + date + " ]";
+        return "model.entities.But[ date=" + numTicket + " ]";
     }
     
 }

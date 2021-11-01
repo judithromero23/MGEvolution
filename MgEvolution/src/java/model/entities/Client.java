@@ -36,7 +36,7 @@ public class Client implements Serializable {
     private String name;
     @Column(length = 50)
     private String lastName;
-    @Column(length = 50)
+    @Column(length = 9)
     private Integer phone;
     @Column(length = 20)
     @Temporal(javax.persistence.TemporalType.DATE)

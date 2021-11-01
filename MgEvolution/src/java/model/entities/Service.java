@@ -7,12 +7,12 @@ package model.entities;
 
 import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.Temporal;
 
 /**
  *
@@ -24,18 +24,48 @@ public class Service implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date date;
+    private Long id;
     /*Declaracion de los atributos de Servicio, entre ellos se encuentra:
     stylist = ID del estilista,
     client = ID del cliente,
-    El ID del producto es date = Fecha del servicio.
+    date = Fecha del servicio,
+    cost = precio del servicio,
+    El ID del producto es id = id del servicio.
     Servicio es una tabla que nace de la relacion de Estilista y Cliente 
     por eso sus campos son los id de las dos tablas que une además de su propio id*/
+    @Column(length = 50)
+    private Date date;
+    @Column(length = 50)
+    private Float cost;
+    
     @ManyToOne
     private Stylist stylist;
     @ManyToOne
     private Client client;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Float getCost() {
+        return cost;
+    }
+
+    public void setCost(Float cost) {
+        this.cost = cost;
+    }
 
     public Stylist getStylist(){
         return stylist;
@@ -52,19 +82,11 @@ public class Service implements Serializable {
     public void setClient(Client client){
         this.client = client;
     }
-    
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (date != null ? date.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -75,7 +97,7 @@ public class Service implements Serializable {
             return false;
         }
         Service other = (Service) object;
-        if ((this.date == null && other.date != null) || (this.date != null && !this.date.equals(other.date))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -83,7 +105,7 @@ public class Service implements Serializable {
 
     @Override
     public String toString() {
-        return "model.entities.service[ date=" + date + " ]";
+        return "model.entities.service[ date=" + id + " ]";
     }
     
 }
