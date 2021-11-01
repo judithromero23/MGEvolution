@@ -40,14 +40,15 @@ public class createAdmin extends HttpServlet {
             
             Stylist stylistAdmin = new Stylist();
             stylistAdmin.setName("Administrador");
-            stylistAdmin.setLastName("");
             stylistAdmin.setArea("Corte, Colorimetría");
             stylistAdmin.setSalary(0);
+            stylistAdmin.setEmail("noliguillen50@gmail.com");
+            stylistAdmin.setLogin("admin");
+            stylistAdmin.setPassword("admin");
             stylistAdmin.setAdmin(true);
 
             String mensaje = "Se ha creado el Administrador";
-            StylistJpaController  ejc
-                    = new StylistJpaController (Persistence.createEntityManagerFactory("MgEvolutionPU"));
+            StylistJpaController  ejc = new StylistJpaController (Persistence.createEntityManagerFactory("MgEvolutionPU"));
             try {
                 ejc.create(stylistAdmin);
             } catch (Exception ex) {
