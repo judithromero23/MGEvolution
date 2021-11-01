@@ -39,7 +39,6 @@ public class login extends HttpServlet {
         String login = request.getParameter("login");
         String password = request.getParameter("password");
         String error = null;
-        System.out.println(login + " + " + password);
         if (login == null || password == null) {
             error = "Debe acceder por la página de login";
         } else {
