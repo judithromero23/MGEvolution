@@ -1,0 +1,121 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 30-oct-2021, 17:19:07
+    Author     : judith
+*/
+
+header{
+    background-color: #212529;
+    margin-bottom: 2rem;
+}
+body{
+    background-image: url("../imagen/pather3.svg");
+    background-repeat: no-repeat;
+    background-position: 45% -40%;
+}
+section{
+    width: 80%;
+    margin: auto;
+    background-image: url("../imagen/pather3.svg");
+    background-repeat: no-repeat;
+    background-position: 80% -100%;
+    -webkit-box-shadow: 10px 10px 43px 0px rgba(77,75,77,1);
+    -moz-box-shadow: 10px 10px 43px 0px rgba(77,75,77,1);
+    box-shadow: 10px 10px 43px 0px rgba(77,75,77,1);
+}
+/*Tamaño del logotipo del encabezado*/
+#logotipoEncabezado{
+    width: 5rem;
+    transition: transform 4s ;
+}
+#logotipoEncabezado2{
+    margin-left: -1.5rem;
+    width: 15rem;
+}
+/*Color en naranja de las letras y el boton hamburguesa del encabezado*/
+#navbarNav a{
+    margin-left: 1rem;
+    color: #ff1800;
+}
+#btnHamburguesa{
+    background-color: #c42514;
+}
+/*Animación del logotipo*/
+#divEncabezado:hover  #logotipoEncabezado{
+    transform: rotateY(360deg);
+}
+#peluqueria{
+    color: #c42514;
+}
+/*Letra h1*/
+.tipoLetra1{
+    font-family: 'Lexend Mega', sans-serif;
+}
+/*Letra del nav*/
+.letraQuicksand{
+    font-family: 'Quicksand', sans-serif;
+}
+/*Clase que otorga espaciado entre una sección y otra*/
+.marginSeccion{
+    margin-top: 4rem;
+}
+.marginbottom{
+    margin-bottom: 2rem;
+}
+.paddingTop{
+    padding-top: 2rem;
+}
+#formulario{
+    border: 2px solid #999999;
+    margin: auto;
+    padding-top: 2rem;
+    border-radius: 10px;
+    padding-bottom: 2rem;
+}
+/*Movimiento de los input con hover*/
+form{
+    margin: auto;
+    width: 60%;
+}
+input{
+    margin-bottom: 1rem;
+}
+
+input[type="password"]{
+    width: 15rem;
+    transition-property: width;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
+input[type="password"]:hover{
+    width: 20rem;
+}
+input[type="email"]:hover{
+    width: 20rem;
+}
+input[type="text"]{
+    width: 15rem;
+    transition-property: width;
+    transition-duration: 1s;
+    transition-timing-function: linear;
+}
+input[type="text"]:hover{
+    width: 20rem;
+}
+#btnCrearCuenta{
+    position: relative;
+    left: 47%;
+}
+/*Color del h5 en el footer*/
+footer{
+    background-color: #212529;
+    color: #ff1800;
+    padding-bottom: 0.2rem;
+    padding-top: 1rem;
+    position: absolute;
+    bottom: 0;
+}

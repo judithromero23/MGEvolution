@@ -1,0 +1,139 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28-oct-2021, 20:01:33
+    Author     : judith
+*/
+
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    overflow-x: hidden;
+}
+header{
+    background-color: #212529;
+}
+/*Tamaño del logotipo del encabezado*/
+#logotipoEncabezado{
+    width: 5rem;
+    transition: transform 4s ;
+}
+#logotipoEncabezado2{
+    margin-left: -1.5rem;
+    width: 15rem;
+}
+/*Color en naranja de las letras y el boton hamburguesa del encabezado*/
+#navbarNav a{
+    margin-left: 1rem;
+    color: #ff1800;
+}
+#btnHamburguesa{
+    background-color: #c42514;
+}
+/*Animación del logotipo*/
+#divEncabezado:hover  #logotipoEncabezado{
+    transform: rotateY(360deg);
+}
+#peluqueria{
+    color: #c42514;
+}
+/*Imagenes carrucel*/
+.imagenesc{
+    margin: auto;
+    width: 100%;
+    height: 70%;
+}
+/*Flechas carrrucel*/
+.flechac{
+    width: 4rem;
+}
+/*clase que otorga espaciado entre una sección y otra*/
+.marginSeccion{
+    margin-top: 4rem;
+}
+.marginbottom{
+    margin-bottom: 2rem;
+}
+/*Separacion dentro de cada seccion*/
+.paddingInterno{
+    padding-top: 3rem;
+}
+.paddingBottom{
+    padding-bottom: 5rem;
+}
+/*FontGoogle*/
+.letraQuicksand{
+    font-family: 'Quicksand', sans-serif;
+}
+.tipoLetra1{
+    font-family: 'Lexend Mega', sans-serif;
+}
+.marginRight{
+    margin-right: 5rem;
+}
+.width15{
+    width: 15rem;
+}
+/*Seccion quienes somos, fondo de la sección*/
+#quienesSomos{
+    background-image: linear-gradient(to right bottom, #c42514, #961622, #651322, #351119, #000000);
+    color: silver;
+    margin-bottom: 4rem;
+}
+/*Link a quienes somos*/
+#conocerMas{
+    color: silver;
+}
+/*Carrucel Marcas*/
+#carrucelMarcas{
+    height: 25rem;
+}
+.flechaMarcas{
+    color: black;
+}
+/*Sección tienda*/
+#tienda{
+    background-image: linear-gradient(to right bottom, #c42514, #961622, #651322, #351119, #000000);
+    color: silver;
+}
+#btnTienda{
+    margin-top: 3rem;
+}
+
+/*Footer*/
+footer{
+    background-color: #212529;
+    color: #ff1800;
+    padding-bottom: 0.2rem;
+    padding-top: 1rem;
+}
+/*Movimiento del logotipo dependiendo de donde se haga :hover en "Contactanos"*/
+#redesSociales a{
+    color: black;
+}
+#redesSociales img{
+    width: 3rem;
+    margin-right: 1rem;
+    transition: transform 2s;
+}
+#correo:hover #imgCorreo{
+    transform: rotate(360deg);
+}
+#instagram:hover #imgInstagram{
+    transform: rotate(360deg);
+}
+#facebook:hover #imgFacebook{
+    transform: rotate(360deg);
+}
+#movil:hover #imgMovil{
+    transform: rotate(360deg);
+}
+#movil{
+    text-decoration: none;
+}
+
