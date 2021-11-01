@@ -1,0 +1,65 @@
+<?xml version="1.0"?><svg width="793.7007874015749" height="1122.5196850393702" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="linearGradient23388">
+   <stop stop-color="black" id="stop23390" offset="0"/>
+   <stop stop-color="black" stop-opacity="0" id="stop23392" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient20701">
+   <stop stop-color="#ff2b2b" stop-opacity="0" id="stop20703" offset="0"/>
+   <stop stop-color="#ff9191" offset="0.5" id="stop20705"/>
+   <stop stop-color="#ff1d1d" id="stop20707" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient19808">
+   <stop stop-color="black" id="stop19810" offset="0"/>
+   <stop stop-color="black" stop-opacity="0" id="stop19812" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient18860">
+   <stop stop-color="#ff2b2b" offset="0" id="stop18862"/>
+   <stop stop-color="#ff9191" id="stop18864" offset="0.5"/>
+   <stop stop-color="#ff1d1d" offset="1" id="stop18866"/>
+  </linearGradient>
+  <linearGradient id="linearGradient14369">
+   <stop stop-color="#e20000" id="stop14371" offset="0"/>
+   <stop stop-color="#ff6767" offset="0.5" id="stop14373"/>
+   <stop stop-color="#e20000" id="stop14375" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient12587">
+   <stop stop-color="#ff0202" offset="0" id="stop12589"/>
+   <stop stop-color="#ff8c8c" id="stop12591" offset="0.5"/>
+   <stop stop-color="#ff0202" offset="1" id="stop12593"/>
+  </linearGradient>
+  <linearGradient id="linearGradient11682">
+   <stop stop-color="#ff4c4c" id="stop11684" offset="0"/>
+   <stop stop-color="#ffd6d6" offset="0.5" id="stop11690"/>
+   <stop stop-color="#ff4d4d" id="stop11686" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient5439">
+   <stop stop-color="#eec7c7" stop-opacity="0" offset="0" id="stop5441"/>
+   <stop stop-color="#f3d9d9" offset="1" id="stop5443"/>
+  </linearGradient>
+  <linearGradient id="linearGradient5431">
+   <stop stop-color="#a6a6a6" id="stop5433" offset="0"/>
+   <stop stop-color="black" stop-opacity="0" id="stop5435" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient4536">
+   <stop stop-color="#6a3209" id="stop4538" offset="0"/>
+   <stop stop-color="#c65300" id="stop4540" offset="1"/>
+  </linearGradient>
+  <linearGradient y2="0.495247" x2="-0.30099" y1="0.467889" x1="1" id="linearGradient13482" xlink:href="#linearGradient14369"/>
+  <linearGradient y2="1" x2="1" y1="0" x1="0" id="linearGradient15281" xlink:href="#linearGradient11682"/>
+  <linearGradient y2="0.497131" x2="1.299597" y1="0.42063" x1="-0.002937" id="linearGradient15284" xlink:href="#linearGradient12587"/>
+  <radialGradient r="250" fy="640.59998" fx="352.85715" cy="640.59998" cx="352.85715" gradientTransform="matrix(2.264488,-5.085407e-7,3.667582e-7,1.035155,-446.1839,-99.92615)" gradientUnits="userSpaceOnUse" id="radialGradient18877" xlink:href="#linearGradient4536"/>
+  <linearGradient y2="2.569745" x2="0.5" y1="0.200926" x1="0.5" id="linearGradient18879" xlink:href="#linearGradient5439"/>
+  <linearGradient y2="-0.112435" x2="1.226998" y1="0.81327" x1="0.909287" id="linearGradient23402" xlink:href="#linearGradient12587"/>
+  <linearGradient y2="1.278234" x2="0.438306" y1="0.240751" x1="0.762132" id="linearGradient23404" xlink:href="#linearGradient14369"/>
+  <linearGradient y2="-0.201559" x2="0.777985" y1="0.945578" x1="0.198117" id="linearGradient23406" xlink:href="#linearGradient14369"/>
+  <linearGradient y2="0.269385" x2="1.255006" y1="0.774332" x1="0" id="linearGradient23408" xlink:href="#linearGradient11682"/>
+ </defs>
+ <metadata id="metadata7">image/svg+xml</metadata>
+ <g>
+  <title>Layer 1</title>
+  <g externalResourcesRequired="false" id="layer1">
+   <path fill="black" fill-opacity="0.117647" fill-rule="evenodd" stroke-width="1px" id="path24315" d="m432.667969,528.351563c-277.065903,-131.850555 119.282837,-275.911316 -97.462433,-430.805183c289.180206,113.925774 -110.962936,267.566292 97.462433,430.805183z"/>
+  </g>
+ </g>
+</svg>
