@@ -52,7 +52,7 @@ public class login extends HttpServlet {
                     if (stylist.getLogin().equals(login) && stylist.getPassword().equals(password)) {
                         // Login correcto
                         HttpSession sesion = request.getSession();
-                        sesion.setAttribute("usuario", stylist);
+                        sesion.setAttribute("stylist", stylist);
                         sesion.setAttribute("peluqueria", new Hairdresser());
                         response.sendRedirect("adminOption.jsp");
                         return;

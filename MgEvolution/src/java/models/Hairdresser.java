@@ -27,7 +27,7 @@ public class Hairdresser {
         return ejc.findStylistEntities();
     }
 
-    public List<Stylist> getSanitariosAlfabeticamente() {
+    public List<Stylist> getStylistAlfabeticamente() {
         List<Stylist> stylist = getStylist();
         Collections.sort(stylist, (e1, e2)
                 -> (e1.getName()).compareTo(e2.getName()));
@@ -60,7 +60,7 @@ public class Hairdresser {
         System.out.println(stylist);
     }
 
-    public Stylist buscarSanitarios(Long id) {
+    public Stylist searchStylist(Long id) {
         StylistJpaController ejc = new StylistJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         return ejc.findStylist(id);
     }
