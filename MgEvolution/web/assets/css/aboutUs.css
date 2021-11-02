@@ -1,0 +1,147 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 02-nov-2021, 20:59:53
+    Author     : judith
+*/
+header{
+    background-color: #212529;
+    margin-bottom: 2rem;
+}
+section{
+    width: 75%;
+    margin: auto;
+}
+/*Tamaño del logotipo del encabezado*/
+#logotipoEncabezado{
+    width: 5rem;
+    transition: transform 4s ;
+}
+#logotipoEncabezado2{
+    margin-left: -1.5rem;
+    width: 15rem;
+}
+/*Color en naranja de las letras y el boton hamburguesa del encabezado*/
+#navbarNav a{
+    margin-left: 1rem;
+    color: #ff1800;
+}
+#btnHamburguesa{
+    background-color: #c42514;
+}
+/*Animación del logotipo*/
+#divEncabezado:hover  #logotipoEncabezado{
+    transform: rotateY(360deg);
+}
+#peluqueria{
+    color: #c42514;
+}
+/*Letra h1*/
+.tipoLetra1{
+    font-family: 'Lexend Mega', sans-serif;
+}
+/*Letra del nav*/
+.letraQuicksand{
+    font-family: 'Quicksand', sans-serif;
+}
+/*Clase que otorga espaciado entre una sección y otra*/
+.marginSeccion{
+    margin-top: 3rem;
+}
+.marginbottom{
+    margin-bottom: 2rem;
+}
+.paddingTop {
+    padding-top: 2rem;
+}
+.textCenter{
+    text-align: center;
+}
+.marginRight{
+    margin-right: 0.5rem;
+}
+.btnCerrar{
+    border: none;
+    background: white;
+}
+/*Movimiento del logotipo dependiendo de donde se haga :hover en "Contactanos"*/
+#redesSociales a{
+    color: black;
+}
+#redesSociales img{
+    width: 3rem;
+    margin-right: 1rem;
+    transition: transform 2s;
+}
+#correo:hover #imgCorreo{
+    transform: rotate(360deg);
+}
+#instagram:hover #imgInstagram{
+    transform: rotate(360deg);
+}
+#facebook:hover #imgFacebook{
+    transform: rotate(360deg);
+}
+#movil:hover #imgMovil{
+    transform: rotate(360deg);
+}
+#movil{
+    text-decoration: none;
+}
+/*botones de "Mi cuenta"*/
+.ACuenta{
+    text-decoration: none;
+    color: white;
+}
+.ACuenta:hover{
+    color: black;
+}
+.btnMicuenta{
+    width: 10rem;
+}
+#olvidarContraseña{
+    cursor: pointer;
+}
+/*Color del h5 en el footer*/
+footer{
+    background-color: #212529;
+    color: #ff1800;
+    padding-bottom: 0.2rem;
+    padding-top: 1rem;
+}
+/*Border de los divs*/
+.borderDiv{
+    border: 2px solid grey;
+    border-radius: 2%;
+    padding: 2rem;
+    -webkit-box-shadow: 10px 5px 44px -12px rgb(184, 178, 178);
+    -moz-box-shadow: 10px 5px 44px -12px rgb(184, 178, 178);
+    box-shadow: 10px 5px 44px -12px rgb(184, 178, 178);
+}
+body{
+    background-image: url("../images/pather3.svg");
+    background-repeat: no-repeat;
+    background-position: 130% 150%;
+}
+section{
+    background-image: url("../images/pather3.svg");
+    background-repeat: no-repeat;
+    background-position: -50% 90%;
+}
+#migas{
+    margin-left: 2rem;
+}
+.aGris{
+    color: dimgrey;
+}
+h1{
+   /* -webkit-box-shadow: 5px 5px 15px -3px rgba(196,37,20,0.54);
+    box-shadow: 5px 5px 15px -3px rgba(196,37,20,0.54);
+    padding: 2rem;*/
+    letter-spacing: 5px;
+}
+
+
