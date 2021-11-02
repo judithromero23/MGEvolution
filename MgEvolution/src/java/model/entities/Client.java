@@ -41,6 +41,16 @@ public class Client implements Serializable {
     @Column(length = 20)
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date birthDate;
+    @Column(length = 50)
+    private String city;
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
 
     public String getName() {
         return name;
