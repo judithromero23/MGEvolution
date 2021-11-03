@@ -24,7 +24,7 @@ public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long dni;
     /*Declaracion de los atributos de Cliente, entre ellos se encuentra:
     name = Nombre del cliente,
     lastName = Apellido del cliente,
@@ -84,29 +84,29 @@ public class Client implements Serializable {
         this.birthDate = birthDate;
     }
 
-    public Long getId() {
-        return id;
+    public Long getDNI() {
+        return dni;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setDNI(Long dni) {
+        this.dni = dni;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        hash += (dni != null ? dni.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        // TODO: Warning - this method won't work in the case the dni fields are not set
         if (!(object instanceof Client)) {
             return false;
         }
         Client other = (Client) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.dni == null && other.dni != null) || (this.dni != null && !this.dni.equals(other.dni))) {
             return false;
         }
         return true;
@@ -114,7 +114,7 @@ public class Client implements Serializable {
 
     @Override
     public String toString() {
-        return "model.entities.Client[ id=" + id + " ]";
+        return "model.entities.Client[ id=" + dni + " ]";
     }
 
 }
