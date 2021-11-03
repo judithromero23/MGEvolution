@@ -75,7 +75,7 @@ public class ClientJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Long id = client.getId();
+                Long id = client.getDNI();
                 if (findClient(id) == null) {
                     throw new NonexistentEntityException("The client with id " + id + " no longer exists.");
                 }
@@ -88,7 +88,7 @@ public class ClientJpaController implements Serializable {
         }
     }
 
-    public void destroy(Long id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Long dni) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         EntityTransaction etx = null;
         try {
@@ -97,10 +97,10 @@ public class ClientJpaController implements Serializable {
             etx.begin();
             Client client;
             try {
-                client = em.getReference(Client.class, id);
-                client.getId();
+                client = em.getReference(Client.class, dni);
+                client.getDNI();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The client with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The client with id " + dni + " no longer exists.", enfe);
             }
             em.remove(client);
             etx.commit();
@@ -142,10 +142,10 @@ public class ClientJpaController implements Serializable {
         }
     }
 
-    public Client findClient(Long id) {
+    public Client findClient(Long dni) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Client.class, id);
+            return em.find(Client.class, dni);
         } finally {
             em.close();
         }
