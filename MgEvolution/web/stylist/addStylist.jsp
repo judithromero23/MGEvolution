@@ -1,13 +1,11 @@
 <%-- 
-    Document   : allStylist
-    Created on : 01-nov-2021, 20:19:10
+    Document   : addStylist
+    Created on : 04-nov-2021, 19:32:59
     Author     : judith
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<jsp:useBean id="hairdresser" class="models.Hairdresser"/>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -21,14 +19,14 @@
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <!--CSS-->
-        <link rel="stylesheet" href="../assets/css/tables.css">
+        <link rel="stylesheet" href="../assets/css/add.css">
         <!--Icon and Name-->
-        <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title>Estilistas</title>
+        <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
+        <title>Nuevo Estilista</title>
     </head>
     <body>
         <header>
-            <!--Encabezado con Logotipo y seguidamente de una barra de navegaciÃ³n que se convertirÃ¡ en botÃ³n hamburguesa-->
+            <!--Encabezado con Logotipo y seguidamente de una barra de navegación que se convertirá en botón hamburguesa-->
             <nav class="navbar navbar-expand-lg navbar-light bg-dark container-fluid">
                 <!--Imagenes del encabezado-->
                 <div id="divEncabezado" class="navbar-brand">
@@ -42,50 +40,47 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="../adminOption.jsp"><i class="fa fa-caret-square-o-left"></i> Atr&aacute;s</a>
+                            <a class="nav-link" href="allStylist.jsp"><i class="fa fa-caret-square-o-left"></i> Atr&aacute;s</a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2>Estilistas</h2>
-            <h5>Lista de todos los estilistas contratados.</h5>
-            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href='addStylist.jsp'">Nuevo Estilista</button>
-            <table class="table">
-                <thead class="thead-light">
-                    <tr>
-                        <th scope="col">Usuario</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Especialidad/es</th>
-                        <th scope="col">Salario</th>
-                        <th scope="col">Â¿Es Admin?</th>
-                        <th scope="col">Modificar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach var="stylist" items="${hairdresser.stylist}">
-                        <tr>
-                            <td scope="col">${stylist.login}</td>
-                            <td>${stylist.name}</td>
-                            <td>${stylist.email}</td>
-                            <td>${stylist.area}</td>
-                            <td>${stylist.salary}</td>
-                            <td>${stylist.admin}</td>
-                            <td><button type="button" class="btn btn-warning">Editar</button></td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-            <br>
-            <c:if test="${not empty error}">
+            <h2>Nuevo Estilista</h2>
+            <h5>Complete todos los campos para dar de alta a un estilista.</h5>
+            <form action="../addStylist" method="POST">
+                <label for="name">Nombre:</label>
+                <input type="text" name="name" id="name" maxlength="20" value="${name}" required>
                 <br>
-                <div class="error alert alert-warning">
-                    ${error}
-                </div>
-            </c:if>
+                <label for="login">Usuario:</label>
+                <input type="text" name="login" id="login" maxlength="35" value="${login}" required>
+                <br>
+                <label for="password">Contraseña</label>
+                <input type="password" name="password" id="password" maxlength="40" value="${password}" required>
+                <br>
+                <label for="email">Correo:</label>
+                <input type="email" name="email" id="email" maxlength="50" value="${correo}" required>
+                <br>
+                <label for="area">Especialidad:</label>
+                <input type="text" name="area" id="area" maxlength="35" value="${area}" required>
+                <br>
+                <label for="salary">Sueldo:</label>
+                <input type="number" name="salary" id="salary" value="${salary}" required>
+                <br>
+                <label for="admin">Administrador</label>
+                <input type="checkbox" name="admin" id="admin" value="true" ${checked}>
+                
+                <input type="submit" value="Crear Estilista" class="btn btn-success">
+                <br>
+            </form>
         </section>
+        <c:if test="${not empty error}">
+            <br>
+            <div class="error alert alert-warning">
+                ${error}
+            </div>
+        </c:if>
         <footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
         </footer>

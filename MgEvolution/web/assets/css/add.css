@@ -4,7 +4,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 01-nov-2021, 20:39:09
+    Created on : 04-nov-2021, 21:19:41
     Author     : judith
 */
 
@@ -14,17 +14,29 @@ header{
 }
 section {
     width: 80%;
-    margin: auto;
     text-align: center;
     margin-bottom: 5rem;
 }
 section h5{
     margin-bottom: 3rem;
 }
-section #addButton{
+label {
+    position: absolute;
+    left: 30vw;
+    margin-bottom: 1rem;
+}
+
+input[type='submit']{
     position: relative;
-    left: 35vw;
-    bottom: 1rem;
+    left: 0;
+    top: 5rem;
+    margin-bottom: 1rem;
+}
+
+input {
+    position: relative;
+    left: 15vw;
+    margin-bottom: 1rem;
 }
 /*Tamaño del logotipo del encabezado*/
 #logotipoEncabezado{

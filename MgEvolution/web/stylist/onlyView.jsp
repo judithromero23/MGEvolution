@@ -1,6 +1,6 @@
 <%-- 
-    Document   : allStylist
-    Created on : 01-nov-2021, 20:19:10
+    Document   : onlyView
+    Created on : 05-nov-2021, 21:48:45
     Author     : judith
 --%>
 
@@ -21,9 +21,9 @@
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <!--CSS-->
-        <link rel="stylesheet" href="../assets/css/tables.css">
+        <link rel="stylesheet" href="assets/css/tables.css">
         <!--Icon and Name-->
-        <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
+        <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
         <title>Estilistas</title>
     </head>
     <body>
@@ -32,8 +32,8 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-dark container-fluid">
                 <!--Imagenes del encabezado-->
                 <div id="divEncabezado" class="navbar-brand">
-                    <a href="#"><img id="logotipoEncabezado" class="navbar-brand" src="../assets/images/LOGO_2.png" alt="Mg-Evolution Logo"></a>
-                    <a href="#"><img id="logotipoEncabezado2" class="navbar-brand" src="../assets/images/MGEvolution.png" alt="Mg-Evolution"></a>
+                    <a href="#"><img id="logotipoEncabezado" class="navbar-brand" src="assets/images/LOGO_2.png" alt="Mg-Evolution Logo"></a>
+                    <a href="#"><img id="logotipoEncabezado2" class="navbar-brand" src="assets/images/MGEvolution.png" alt="Mg-Evolution"></a>
                 </div>
                 <button id="btnHamburguesa" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon" id="icon"></span>
@@ -42,7 +42,7 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="../adminOption.jsp"><i class="fa fa-caret-square-o-left"></i> Atr&aacute;s</a>
+                            <a class="nav-link" href="adminOption.jsp"><i class="fa fa-caret-square-o-left"></i> Atr&aacute;s</a>
                         </li>
                     </ul>
                 </div>
@@ -51,7 +51,7 @@
         <section class="container letraQuicksand">
             <h2>Estilistas</h2>
             <h5>Lista de todos los estilistas contratados.</h5>
-            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href='addStylist.jsp'">Nuevo Estilista</button>
+
             <table class="table">
                 <thead class="thead-light">
                     <tr>
@@ -61,7 +61,7 @@
                         <th scope="col">Especialidad/es</th>
                         <th scope="col">Salario</th>
                         <th scope="col">¿Es Admin?</th>
-                        <th scope="col">Modificar</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -73,7 +73,7 @@
                             <td>${stylist.area}</td>
                             <td>${stylist.salary}</td>
                             <td>${stylist.admin}</td>
-                            <td><button type="button" class="btn btn-warning">Editar</button></td>
+
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -95,6 +95,5 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-
     </body>
 </html>
