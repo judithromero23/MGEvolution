@@ -49,20 +49,18 @@ public class login extends HttpServlet {
                 List<Stylist> stylists = ejc.findStylistEntities();
                 System.out.println(stylists.toString());
                 for (Stylist stylist : stylists) {
-                    if (stylist.getLogin().equals(login) && stylist.getPassword().equals(password)) {
-                        // Login correcto
+                    if (stylist.getLogin().equals(login) && stylist.getPassword().equals(password) && stylist.getAdmin().equals(true)) {
                         HttpSession sesion = request.getSession();
                         sesion.setAttribute("stylist", stylist);
-                        sesion.setAttribute("peluqueria", new Hairdresser());
+                        sesion.setAttribute("hairdresser", new Hairdresser());
                         response.sendRedirect("adminOption.jsp");
                         return;
                     }
                 }
-                error = "Usuario o contraseña incorrecto";
+                error ="El usuario con el que intenta acceder no es estilista o no es administrador. Prueba con otro usuario o otra contraseña.";
             }
 
         }
-        // Guardar el error y saltar a la vista de login
         request.setAttribute("error", error);
         getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
     }

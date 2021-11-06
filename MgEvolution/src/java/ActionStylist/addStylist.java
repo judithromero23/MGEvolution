@@ -1,27 +1,25 @@
-package utilities;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package ActionStylist;
+
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.controllers.StylistJpaController;
 import model.entities.Stylist;
+import models.Hairdresser;
 
 /**
  *
  * @author judith
  */
-@WebServlet(urlPatterns = {"/createAdmin"})
-public class createAdmin extends HttpServlet {
+@WebServlet(name = "addStylist", urlPatterns = {"/addStylist"})
+public class addStylist extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,34 +33,44 @@ public class createAdmin extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        String error = null;
+        String name = request.getParameter("name");
+        String login = request.getParameter("login");
+        String password = request.getParameter("password");
+        String area = request.getParameter("area");
+        Integer salary = Integer.parseInt(request.getParameter("salary"));
+        String email = request.getParameter("email");
+        boolean admin = (request.getParameter("admin") != null);
 
-            Stylist stylistAdmin = new Stylist();
-            stylistAdmin.setName("Administrador");
-            stylistAdmin.setArea("Corte, Colorimetría");
-            stylistAdmin.setSalary(0);
-            stylistAdmin.setEmail("noliguillen50@gmail.com");
-            stylistAdmin.setLogin("admin");
-            stylistAdmin.setPassword("admin");
-            stylistAdmin.setAdmin(true);
-
-            String mensaje = "Se ha creado el Administrador";
-            StylistJpaController ejc = new StylistJpaController(Persistence.createEntityManagerFactory("MgEvolutionPU"));
-            try {
-                ejc.create(stylistAdmin);
-            } catch (Exception ex) {
-                mensaje = "An error occurred while creating the admin stylist";
-                System.err.println(ex.getClass().getName() + ":" + ex.getMessage());
-            }
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet createAdmin</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>" + mensaje + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        Stylist newStylist = new Stylist();
+        newStylist.setName(name);
+        newStylist.setLogin(login);
+        newStylist.setPassword(password);
+        newStylist.setArea(area);
+        newStylist.setSalary(salary);
+        newStylist.setEmail(email);
+        newStylist.setAdmin(admin);
+        System.out.println(name + " " + login + " " + password + " " + area + " " + salary + " " + email+ " " + admin);
+        System.out.println(newStylist);
+        Hairdresser hairdresser = (Hairdresser) request.getSession().getAttribute("hairdresser");
+        System.out.println("Nuevo Estilista " + newStylist);
+        try {
+            hairdresser.addStylist(newStylist);
+        } catch (Exception ex) {
+            error = "Error al crear el usuario '" + login + "', pruebe con otro nombre";
+        }
+        if (error != null) {
+            request.setAttribute("error", error);
+            request.setAttribute("name", name);
+            request.setAttribute("login", login);
+            request.setAttribute("password", password);
+            request.setAttribute("area", area);
+            request.setAttribute("email", email);
+            request.setAttribute("checked", admin ? "checked" : "");
+            System.out.println(newStylist);
+            getServletContext().getRequestDispatcher("/stylist/onlyView.jsp").forward(request, response);
+        } else {
+            response.sendRedirect(response.encodeRedirectURL("/MgEvolution/onlyViewStylist.jsp?mensaje="));
         }
     }
 
@@ -103,6 +111,6 @@ public class createAdmin extends HttpServlet {
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
 
 }
