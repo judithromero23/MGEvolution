@@ -67,7 +67,7 @@
                 <tbody>
                     <c:forEach var="stylist" items="${hairdresser.stylist}">
                         <tr>
-                            <td scope="col">${stylist.login}</td>
+                            <th scope="col">${stylist.login}</th>
                             <td>${stylist.name}</td>
                             <td>${stylist.email}</td>
                             <td>${stylist.area}</td>

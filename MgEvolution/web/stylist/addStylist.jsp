@@ -5,7 +5,9 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
+<%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<fmt:setBundle basename="bundles.text" var="text"/>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -22,11 +24,11 @@
         <link rel="stylesheet" href="../assets/css/add.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
-        <title>Nuevo Estilista</title>
+        <title><fmt:message key="estilistas" bundle="${text}"/></title>
     </head>
     <body>
         <header>
-            <!--Encabezado con Logotipo y seguidamente de una barra de navegación que se convertirá en botón hamburguesa-->
+            <!--Encabezado con Logotipo y seguidamente de una barra de navegaciÃ³n que se convertirÃ¡ en botÃ³n hamburguesa-->
             <nav class="navbar navbar-expand-lg navbar-light bg-dark container-fluid">
                 <!--Imagenes del encabezado-->
                 <div id="divEncabezado" class="navbar-brand">
@@ -40,35 +42,35 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="allStylist.jsp"><i class="fa fa-caret-square-o-left"></i> Atr&aacute;s</a>
+                            <a class="nav-link" href="allStylist.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2>Nuevo Estilista</h2>
-            <h5>Complete todos los campos para dar de alta a un estilista.</h5>
+            <h2><fmt:message key="nuevoEstilista" bundle="${text}"/></h2>
+            <h5><fmt:message key="completarEstilista" bundle="${text}"/></h5>
             <form action="../addStylist" method="POST">
-                <label for="name">Nombre:</label>
+                <label for="name"><fmt:message key="inputName" bundle="${text}"/></label>
                 <input type="text" name="name" id="name" maxlength="20" value="${name}" required>
                 <br>
-                <label for="login">Usuario:</label>
+                <label for="login"><fmt:message key="inputLogin" bundle="${text}"/></label>
                 <input type="text" name="login" id="login" maxlength="35" value="${login}" required>
                 <br>
-                <label for="password">Contraseña</label>
+                <label for="password"><fmt:message key="inputPass" bundle="${text}"/></label>
                 <input type="password" name="password" id="password" maxlength="40" value="${password}" required>
                 <br>
-                <label for="email">Correo:</label>
+                <label for="email"><fmt:message key="inputMail" bundle="${text}"/></label>
                 <input type="email" name="email" id="email" maxlength="50" value="${correo}" required>
                 <br>
-                <label for="area">Especialidad:</label>
+                <label for="area"><fmt:message key="inputArea" bundle="${text}"/></label>
                 <input type="text" name="area" id="area" maxlength="35" value="${area}" required>
                 <br>
-                <label for="salary">Sueldo:</label>
+                <label for="salary"><fmt:message key="inputSalary" bundle="${text}"/></label>
                 <input type="number" name="salary" id="salary" value="${salary}" required>
                 <br>
-                <label for="admin">Administrador</label>
+                <label for="admin"><fmt:message key="inputAdmin" bundle="${text}"/></label>
                 <input type="checkbox" name="admin" id="admin" value="true" ${checked}>
                 
                 <input type="submit" value="Crear Estilista" class="btn btn-success">

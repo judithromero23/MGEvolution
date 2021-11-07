@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<fmt:setBundle basename="bundles.text" var="text"/>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -23,7 +24,7 @@
         <link rel="stylesheet" href="assets/css/adminOption.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
-        <title>Indice Admin</title>
+        <title><fmt:message key="indice" bundle="${text}"/></title>
     <c:if test="${!empty param.mensaje}">
         <script>
                 alert("${param.mensaje}");
@@ -36,8 +37,8 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-dark container-fluid">
             <!--Imagenes del encabezado-->
             <div id="divEncabezado" class="navbar-brand">
-                <a href="index.html"><img id="logotipoEncabezado" class="navbar-brand" src="assets/images/LOGO_2.png" alt="Mg-Evolution Logo"></a>
-                <a href="index.html"><img id="logotipoEncabezado2" class="navbar-brand" src="assets/images/MGEvolution.png" alt="Mg-Evolution"></a>
+                <a href="#"><img id="logotipoEncabezado" class="navbar-brand" src="assets/images/LOGO_2.png" alt="Mg-Evolution Logo"></a>
+                <a href="#"><img id="logotipoEncabezado2" class="navbar-brand" src="assets/images/MGEvolution.png" alt="Mg-Evolution"></a>
             </div>
             <button id="btnHamburguesa" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon" id="icon"></span>
@@ -46,7 +47,8 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" id="close" href="#">Salir <i class="fas fa-sign-out-alt"></i> </a>
+                        <a class="nav-link" id="close" href="#">
+                            <fmt:message key="salir" bundle="${text}"/> <i class="fas fa-sign-out-alt"></i> </a>
                     </li>
                 </ul>
             </div>
@@ -54,27 +56,27 @@
     </header>
     <section class="container letraQuicksand">
          <c:if test="${stylist.admin}">
-        <h2>Bienvenid@ <c:out value="${stylist.name}"/></h2>
-        <h5>Seleccione una opción</h5>
+        <h2><fmt:message key="bienvenido" bundle="${text}"/> <c:out value="${stylist.name}"/></h2>
+        <h5><fmt:message key="seleccioneOpcion" bundle="${text}"/></h5>
         <div class="d-flex justify-content-around row marginbottom">
             <button type="button" class="btn btn-secondary col-sm margin10px btnsize" onclick="window.location.href='stylist/allStylist.jsp'">
-                <i class="fas fa-cut paddingRight"></i> Estilistas</button>
+                <i class="fas fa-cut paddingRight"></i> <fmt:message key="estilistas" bundle="${text}"/></button>
             <button type="button" class="btn btn-secondary col-sm margin10px btnsize">
-                <i class="fas fa-users paddingRight"></i> Clientes</button>
+                <i class="fas fa-users paddingRight"></i> <fmt:message key="clientes" bundle="${text}"/></button>
             <button type="button" class="btn btn-secondary col-sm margin10px btnsize">
-                <i class="fas fa-info paddingRight"></i> Productos</button>
+                <i class="fas fa-info paddingRight"></i> <fmt:message key="productos" bundle="${text}"/></button>
         </div>
 
         <div class="d-flex justify-content-around row marginbottom">
             <button type="button" class="btn btn-secondary col-sm margin10px btnsize">
-                <i class="far fa-calendar-alt paddingRight"></i> Citas</button>
+                <i class="far fa-calendar-alt paddingRight"></i> <fmt:message key="citas" bundle="${text}"/></button>
             <button type="button" class="btn btn-secondary col-sm margin10px btnsize">
-                <i class="far fa-credit-card paddingRight"></i> Ventas</button>
+                <i class="far fa-credit-card paddingRight"></i> <fmt:message key="ventas" bundle="${text}"/></button>
         </div>
 
         <div class="d-flex justify-content-around row marginbottom">
             <button type="button" class="btn btn-secondary col-sm margin10px btnsize">
-                <i class="far fa-id-badge paddingRight"></i> Proveedores</button>
+                <i class="far fa-id-badge paddingRight"></i> <fmt:message key="proveedores" bundle="${text}"/></button>
         </div>
     </section>
         </c:if>

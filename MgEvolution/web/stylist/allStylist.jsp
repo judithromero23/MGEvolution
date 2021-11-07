@@ -5,9 +5,11 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<jsp:useBean id="hairdresser" class="models.Hairdresser"/>
+<%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<fmt:setBundle basename="bundles.text" var="text"/>
+<jsp:useBean id="hairdresser" class="models.Hairdresser"/>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -24,7 +26,7 @@
         <link rel="stylesheet" href="../assets/css/tables.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title>Estilistas</title>
+        <title><fmt:message key="estilistas" bundle="${text}"/></title>
     </head>
     <body>
         <header>
@@ -42,38 +44,43 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="../adminOption.jsp"><i class="fa fa-caret-square-o-left"></i> Atr&aacute;s</a>
+                            <a class="nav-link" href="../adminOption.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2>Estilistas</h2>
-            <h5>Lista de todos los estilistas contratados.</h5>
-            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href='addStylist.jsp'">Nuevo Estilista</button>
+            <h2><fmt:message key="estilistas" bundle="${text}"/></h2>
+            <h5><fmt:message key="listaEstilistas" bundle="${text}"/></h5>
+            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href = 'addStylist.jsp'"><fmt:message key="nuevoEstilista" bundle="${text}"/></button>
             <table class="table">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Usuario</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Especialidad/es</th>
-                        <th scope="col">Salario</th>
-                        <th scope="col">¿Es Admin?</th>
-                        <th scope="col">Modificar</th>
+                        <th scope="col"><fmt:message key="tableUsuario" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableNombre" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCorreo" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableArea" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableSalary" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableAdmin" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableModificar" bundle="${text}"/></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="stylist" items="${hairdresser.stylist}">
+                    <c:forEach var="stylist" items="${hairdresser.getStylistAlfabeticamente()}">
                         <tr>
-                            <td scope="col">${stylist.login}</td>
+                            <th scope="col">${stylist.login}</th>
                             <td>${stylist.name}</td>
                             <td>${stylist.email}</td>
                             <td>${stylist.area}</td>
-                            <td>${stylist.salary}</td>
+                            <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="2" minFractionDigits="2" /></td>
                             <td>${stylist.admin}</td>
-                            <td><button type="button" class="btn btn-warning">Editar</button></td>
+                            <td>
+                                <form action="editStylist" method="POST">
+                                    <input type="hidden" name="id" id="id" value="${stylist.id}">
+                                    <input type="submit" value="Editar" class="btn btn-warning">
+                                </form>
+                            </td>
                         </tr>
                     </c:forEach>
                 </tbody>
