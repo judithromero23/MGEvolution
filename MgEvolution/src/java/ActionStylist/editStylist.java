@@ -13,14 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.entities.Stylist;
 import models.Hairdresser;
-import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author judith
  */
-@WebServlet(name = "addStylist", urlPatterns = {"/addStylist"})
-public class addStylist extends HttpServlet {
+@WebServlet(name = "editStylist", urlPatterns = {"/editStylist"})
+public class editStylist extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,46 +32,59 @@ public class addStylist extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String error = null;
-        String name = request.getParameter("name");
-        String loginOriginal = request.getParameter("login");
-        String login = StringUtils.lowerCase(loginOriginal);
-        String password = request.getParameter("password");
-        String area = request.getParameter("area");
-        Integer salary = Integer.parseInt(request.getParameter("salary"));
-        String email = request.getParameter("email");
-        boolean admin = (request.getParameter("admin") != null);
 
-        Stylist newStylist = new Stylist();
-        newStylist.setName(name);
-        newStylist.setLogin(login);
-        newStylist.setPassword(password);
-        newStylist.setArea(area);
-        newStylist.setSalary(salary);
-        newStylist.setEmail(email);
-        newStylist.setAdmin(admin);
-        System.out.println(name + " " + login + " " + password + " " + area + " " + salary + " " + email+ " " + admin);
-        System.out.println(newStylist);
         Hairdresser hairdresser = (Hairdresser) request.getSession().getAttribute("hairdresser");
-        System.out.println("Nuevo Estilista " + newStylist);
-        try {
-            hairdresser.addStylist(newStylist);
-        } catch (Exception ex) {
-            error = "Error al crear el usuario '" + login + "', pruebe con otro nombre";
-        }
-        if (error != null) {
+        Long id = Long.parseLong(request.getParameter("id"));
+        Stylist stylist = hairdresser.searchStylist(id);
+        if (stylist == null) {
+            String error = "Se ha producido un error al actualizar el estilista";
             request.setAttribute("error", error);
-            request.setAttribute("name", name);
-            request.setAttribute("login", login);
-            request.setAttribute("password", password);
-            request.setAttribute("area", area);
-            request.setAttribute("email", email);
-            request.setAttribute("checked", admin ? "checked" : "");
-            System.out.println(newStylist);
             getServletContext().getRequestDispatcher("/stylist/onlyView.jsp").forward(request, response);
+        }
+
+        if (request.getParameter("actualizar") != null) {
+            stylist.setName(request.getParameter("name"));
+            stylist.setPassword(request.getParameter("password"));
+            stylist.setEmail(request.getParameter("email"));
+            stylist.setArea(request.getParameter("area"));
+            stylist.setSalary(Integer.parseInt(request.getParameter("salary")));
+            if (request.getParameter("admin") != null) {
+                stylist.setAdmin(true);
+            } else {
+                stylist.setAdmin(false);
+            }
+            if (!request.getParameter("password").isEmpty()) {
+                stylist.setPassword(request.getParameter("password"));
+            }
+
+            try {
+                hairdresser.updateStylist(stylist);
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + " : " + e.getMessage());
+            }
+            response.sendRedirect("onlyView.jsp");
         } else {
-            response.sendRedirect(response.encodeRedirectURL("/MgEvolution/onlyViewStylist.jsp?mensaje=200"));
+            if (request.getParameter("eliminar") != null) {
+                try {
+                    hairdresser.deleteStylist(id);
+                } catch (Exception e) {
+                    String error = e.getMessage();
+                    request.setAttribute("error", error);
+                    getServletContext().getRequestDispatcher("/stylist/onlyView.jsp").forward(request, response);
+                }
+                response.sendRedirect("onlyView.jsp");
+                return;
+            } else {
+                request.setAttribute("id", stylist.getId());
+                request.setAttribute("name", stylist.getName());
+                request.setAttribute("login", stylist.getLogin());
+                request.setAttribute("password", stylist.getPassword());
+                request.setAttribute("area", stylist.getArea());
+                request.setAttribute("email", stylist.getEmail());
+                request.setAttribute("checked", stylist.getAdmin() ? "checked" : "");
+                System.out.println(stylist);
+                getServletContext().getRequestDispatcher("/stylist/onlyView.jsp").forward(request, response);
+            }
         }
     }
 

@@ -39,7 +39,7 @@ public class Hairdresser {
         List<Stylist> filter = new ArrayList();
         if (!filtro.isEmpty()) {
             for (Stylist e : stylist) {
-                if (e.getName().contains(filtro)) {
+                if (e.getLogin().contains(filtro)) {
                     filter.add(e);
                 }
             }
