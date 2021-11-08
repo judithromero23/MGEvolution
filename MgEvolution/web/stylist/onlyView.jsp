@@ -5,9 +5,10 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <jsp:useBean id="hairdresser" class="models.Hairdresser"/>
+<%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<fmt:setBundle basename="bundles.text" var="text"/>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -24,7 +25,7 @@
         <link rel="stylesheet" href="assets/css/tables.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
-        <title>Estilistas</title>
+        <title><fmt:message key="estilistas" bundle="${text}"/></title>
     </head>
     <body>
         <header>
@@ -42,25 +43,25 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="adminOption.jsp"><i class="fa fa-caret-square-o-left"></i> Atr&aacute;s</a>
+                            <a class="nav-link" href="adminOption.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2>Estilistas</h2>
-            <h5>Lista de todos los estilistas contratados.</h5>
+            <h2><fmt:message key="estilistas" bundle="${text}"/></h2>
+            <h5><fmt:message key="listaEstilistas" bundle="${text}"/>.</h5>
 
             <table class="table">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col">Usuario</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Correo</th>
-                        <th scope="col">Especialidad/es</th>
-                        <th scope="col">Salario</th>
-                        <th scope="col">¿Es Admin?</th>
+                        <th scope="col"><fmt:message key="tableUsuario" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableNombre" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCorreo" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableArea" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableSalary" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableAdmin" bundle="${text}"/></th>
 
                     </tr>
                 </thead>

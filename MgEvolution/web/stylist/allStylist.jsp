@@ -76,7 +76,7 @@
                             <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="2" minFractionDigits="2" /></td>
                             <td>${stylist.admin}</td>
                             <td>
-                                <form action="editStylist" method="POST">
+                                <form action="editStylist.jsp" method="POST">
                                     <input type="hidden" name="id" id="id" value="${stylist.id}">
                                     <input type="submit" value="Editar" class="btn btn-warning">
                                 </form>

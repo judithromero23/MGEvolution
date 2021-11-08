@@ -96,7 +96,7 @@
                        //Espera a que termine la promesa y nos redirige a login.jsp
                        alert("Cerrando sesión...");
                        await esperar(450);
-                       location.href = "index.html";
+                       location.href = "index.jsp";
                    });
 
                    function esperar(milisegundos) {

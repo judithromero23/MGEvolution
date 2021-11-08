@@ -4,7 +4,11 @@
     Author     : judith
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<fmt:setBundle basename="bundles.text" var="text"/>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -21,7 +25,7 @@
     <link rel="stylesheet" href="assets/css/login.css">
     <!--Icono y nombre del sitio Web-->
     <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
-    <title>Acceso Admin</title>
+    <title><fmt:message key="accesoAdmin" bundle="${text}"/></title>
 </head>
 <body class="letraQuicksand">
 <header>
@@ -29,8 +33,8 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-dark container-fluid">
         <!--Imagenes del encabezado-->
         <div id="divEncabezado" class="navbar-brand">
-            <a href="index.html"><img id="logotipoEncabezado" class="navbar-brand" src="assets/images/LOGO_2.png" alt="Mg-Evolution Logo"></a>
-            <a href="index.html"><img id="logotipoEncabezado2" class="navbar-brand" src="assets/images/MGEvolution.png" alt="Mg-Evolution"></a>
+            <a href="index.jsp"><img id="logotipoEncabezado" class="navbar-brand" src="assets/images/LOGO_2.png" alt="Mg-Evolution Logo"></a>
+            <a href="index.jsp"><img id="logotipoEncabezado2" class="navbar-brand" src="assets/images/MGEvolution.png" alt="Mg-Evolution"></a>
         </div>
         <button id="btnHamburguesa" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon" id="icon"></span>
@@ -39,7 +43,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html"><i class="fa fa-caret-square-o-left"></i> Atr&aacute;s</a>
+                    <a class="nav-link" href="index.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                 </li>
             </ul>
         </div>
@@ -47,15 +51,15 @@
 </header>
 <section class="marginbottom">
     <div id="formulario">
-    <h1 class="text-center tipoLetra1 marginbottom">Acceso Admin</h1>
+    <h1 class="text-center tipoLetra1 marginbottom"><fmt:message key="acessoAdmin" bundle="${text}"/></h1>
     <div class="container">
         <form action="login" method="post">
             <div class="form-group">
-                <label for="login">Nombre:</label>
+                <label for="login"><fmt:message key="inputName" bundle="${text}"/></label>
                 <input type="text" name="login" class="form-control" id="login" placeholder="Escriba su nombre..." required>
             </div>
             <div class="form-group">
-                <label for="password">Contraseña:</label>
+                <label for="password"><fmt:message key="inputPass" bundle="${text}"/></label>
                 <input type="password" name="password" class="form-control" id="password" placeholder="Escriba su contraseña..."  required>
             </div>
             <br>
