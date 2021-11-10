@@ -40,7 +40,7 @@ public class Stylist implements Serializable {
     @Column(length = 50)
     private String area;
     @Column(length = 50)
-    private int salary;
+    private float salary;
     @Column(length = 35)
     private Boolean admin;
     @Column(length = 35, unique = true)
@@ -94,7 +94,7 @@ public class Stylist implements Serializable {
         return salary;
     }
 
-    public void setSalary(int salary) {
+    public void setSalary(float salary) {
         this.salary = salary;
     }
 
