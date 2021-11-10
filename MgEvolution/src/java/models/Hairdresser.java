@@ -8,8 +8,11 @@ package models;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Persistence;
+import model.controllers.ProductJpaController;
 import model.controllers.StylistJpaController;
+import model.entities.Product;
 import model.entities.Stylist;
 
 /**
@@ -69,4 +72,55 @@ public class Hairdresser {
         StylistJpaController ejc = new StylistJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         ejc.edit(stylist);
     }
+    
+    
+//Product
+    public List<Product> getProduct() {
+        ProductJpaController ejc = new ProductJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        return ejc.findProductEntities();
+    }
+
+    public List<Product> getProducttAlfabeticamente() {
+        List<Product> product = getProduct();
+        Collections.sort(product, (e1, e2)
+                -> (e1.getName()).compareTo(e2.getName()));
+        return product;
+    }
+
+    public List<Product> filterProduct(String filtro) {
+        List<Product> product = getProduct();
+        List<Product> filter = new ArrayList();
+        if (!filtro.isEmpty()) {
+            for (Product e : product) {
+                if (Objects.equals(e.getCodBarras(), filtro)) {
+                    filter.add(e);
+                }
+            }
+        } else {
+            filter = product;
+        }
+        return filter;
+    }
+
+    public void deleteProduct(Long id) throws Exception {
+        ProductJpaController ejc = new ProductJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        ejc.destroy(id);
+    }
+
+    public void addProduct(Product product) throws Exception {
+        ProductJpaController ejc = new ProductJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        ejc.create(product);
+        System.out.println(product);
+    }
+
+    public Product searchProduct(Long codBarras) {
+        ProductJpaController ejc = new ProductJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        return ejc.findProduct(codBarras);
+    }
+
+    public void updateProduct(Product product) throws Exception {
+        ProductJpaController ejc = new ProductJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        ejc.edit(product);
+    }
 }
+

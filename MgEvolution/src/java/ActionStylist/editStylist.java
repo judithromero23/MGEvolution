@@ -32,7 +32,6 @@ public class editStylist extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         Hairdresser hairdresser = (Hairdresser) request.getSession().getAttribute("hairdresser");
         Long id = Long.parseLong(request.getParameter("id"));
         Stylist stylist = hairdresser.searchStylist(id);
@@ -47,7 +46,7 @@ public class editStylist extends HttpServlet {
             stylist.setPassword(request.getParameter("password"));
             stylist.setEmail(request.getParameter("email"));
             stylist.setArea(request.getParameter("area"));
-            stylist.setSalary(Integer.parseInt(request.getParameter("salary")));
+            stylist.setSalary(Float.parseFloat(request.getParameter("salary")));
             if (request.getParameter("admin") != null) {
                 stylist.setAdmin(true);
             } else {
@@ -62,7 +61,7 @@ public class editStylist extends HttpServlet {
             } catch (Exception e) {
                 System.err.println(e.getClass().getName() + " : " + e.getMessage());
             }
-            response.sendRedirect("onlyView.jsp");
+            response.sendRedirect("onlyViewStylist.jsp?option=2");
         } else {
             if (request.getParameter("eliminar") != null) {
                 try {
@@ -72,7 +71,7 @@ public class editStylist extends HttpServlet {
                     request.setAttribute("error", error);
                     getServletContext().getRequestDispatcher("/stylist/onlyView.jsp").forward(request, response);
                 }
-                response.sendRedirect("onlyView.jsp");
+                response.sendRedirect("onlyViewStylist.jsp?option=3");
                 return;
             } else {
                 request.setAttribute("id", stylist.getId());
@@ -80,6 +79,7 @@ public class editStylist extends HttpServlet {
                 request.setAttribute("login", stylist.getLogin());
                 request.setAttribute("password", stylist.getPassword());
                 request.setAttribute("area", stylist.getArea());
+                request.setAttribute("salary", stylist.getSalary());
                 request.setAttribute("email", stylist.getEmail());
                 request.setAttribute("checked", stylist.getAdmin() ? "checked" : "");
                 System.out.println(stylist);

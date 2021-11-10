@@ -40,7 +40,7 @@ public class addStylist extends HttpServlet {
         String login = StringUtils.lowerCase(loginOriginal);
         String password = request.getParameter("password");
         String area = request.getParameter("area");
-        Integer salary = Integer.parseInt(request.getParameter("salary"));
+        Float salary = Float.parseFloat(request.getParameter("salary"));
         String email = request.getParameter("email");
         boolean admin = (request.getParameter("admin") != null);
 
@@ -52,7 +52,7 @@ public class addStylist extends HttpServlet {
         newStylist.setSalary(salary);
         newStylist.setEmail(email);
         newStylist.setAdmin(admin);
-        System.out.println(name + " " + login + " " + password + " " + area + " " + salary + " " + email+ " " + admin);
+        System.out.println(name + " " + login + " " + password + " " + area + " " + salary + " " + email + " " + admin);
         System.out.println(newStylist);
         Hairdresser hairdresser = (Hairdresser) request.getSession().getAttribute("hairdresser");
         System.out.println("Nuevo Estilista " + newStylist);
@@ -67,12 +67,13 @@ public class addStylist extends HttpServlet {
             request.setAttribute("login", login);
             request.setAttribute("password", password);
             request.setAttribute("area", area);
+            request.setAttribute("salary", salary);
             request.setAttribute("email", email);
             request.setAttribute("checked", admin ? "checked" : "");
             System.out.println(newStylist);
             getServletContext().getRequestDispatcher("/stylist/onlyView.jsp").forward(request, response);
         } else {
-            response.sendRedirect(response.encodeRedirectURL("/MgEvolution/onlyViewStylist.jsp?mensaje=200"));
+            response.sendRedirect(response.encodeRedirectURL("/MgEvolution/onlyViewStylist.jsp?option=1"));
         }
     }
 
