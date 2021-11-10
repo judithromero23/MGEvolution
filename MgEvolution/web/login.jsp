@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="assets/css/login.css">
     <!--Icono y nombre del sitio Web-->
     <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
-    <title><fmt:message key="accesoAdmin" bundle="${text}"/></title>
+    <title><fmt:message key="acessoAdmin" bundle="${text}"/></title>
 </head>
 <body class="letraQuicksand">
 <header>

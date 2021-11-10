@@ -66,13 +66,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="stylist" items="${hairdresser.stylist}">
+                    <c:forEach var="stylist" items="${hairdresser.getStylistAlfabeticamente()}">
                         <tr>
                             <th scope="col">${stylist.login}</th>
                             <td>${stylist.name}</td>
                             <td>${stylist.email}</td>
                             <td>${stylist.area}</td>
-                            <td>${stylist.salary}</td>
+                            <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="1" minFractionDigits="1" /></td>
                             <td>${stylist.admin}</td>
 
                         </tr>

@@ -4,7 +4,6 @@
     Author     : judith
 --%>
 
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -31,7 +30,7 @@
         <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
         <title><fmt:message key="estilistas" bundle="${text}"/></title>
     </head>
-    <body onload="sweetAlert()">
+    <body onload="alertSwicht()">
 
         <header>
             <!--Encabezado con Logotipo y seguidamente de una barra de navegación que se convertirá en botón hamburguesa-->
@@ -71,26 +70,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="stylist" items="${hairdresser.stylist}">
+                    <c:forEach var="stylist" items="${hairdresser.getStylistAlfabeticamente()}">
                         <tr>
                             <th scope="col">${stylist.login}</th>
                             <td>${stylist.name}</td>
                             <td>${stylist.email}</td>
                             <td>${stylist.area}</td>
-                            <td>${stylist.salary}</td>
+                            <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="1" minFractionDigits="1" /></td>
                             <td>${stylist.admin}</td>
 
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-            <br>
-            <c:if test="${not empty error}">
-                <br>
-                <div class="error alert alert-success">
-                    ${error}
-                </div>
-            </c:if>
+
         </section>
         <footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
@@ -102,15 +95,41 @@
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
         <script>
-        function sweetAlert() {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Estilista creado correctamente',
+
+        function alertSwicht() {
+        <!--función que coge los parametros de la url y deoendiendo del numero aparecerá un mensaje u otro-->
+        var queryString = window.location.search;
+        var urlParams = new URLSearchParams(queryString);
+        var optionSwitch = urlParams.get('option');
+        console.log(optionSwitch);
+        var action;
+        
+        switch (optionSwitch) {
+                case '1': action = 'Estilista creado correctamente';
+                break;
+                case '2': action = 'Estilista modificado correctamente';
+                console.log('Estilista modificado correctamente');
+                break;
+                case '3': action = 'Estilista eliminado correctamente';
+                console.log('Estilista eliminado correctamente');
+                break;
+                default: action = 'Acción realizada con éxito';
+                break;
+        }
+        
+        sweetAlert(action);
+        }
+        
+        function sweetAlert(action) {
+                Swal.fire({
+                position: 'top-start',
+                icon:
+                'success',
+                title: action,
                 showConfirmButton: false,
                 timer: 1500
             })
-        }
+            }
         </script>
     </body>
 </html>

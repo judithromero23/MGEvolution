@@ -6,12 +6,12 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
 <fmt:setBundle basename="bundles.text" var="text"/>
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
         <!--Font Awesome-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -29,7 +29,7 @@
         <title><fmt:message key="estilistas" bundle="${text}"/></title>
         <script>
             function deleteStylist() {
-                return confirm('Â¿EstÃ¡ seguro que desea eliminar al estilista?');
+                return confirm('¿Está seguro que desea eliminar al estilista?');
             }
             function actualizar() {
                 return confirm('Estilista actualizad@');
@@ -38,7 +38,7 @@
     </head>
     <body>
         <header>
-            <!--Encabezado con Logotipo y seguidamente de una barra de navegaciÃ³n que se convertirÃ¡ en botÃ³n hamburguesa-->
+            <!--Encabezado con Logotipo y seguidamente de una barra de navegación que se convertirá en botón hamburguesa-->
             <nav class="navbar navbar-expand-lg navbar-light bg-dark container-fluid">
                 <!--Imagenes del encabezado-->
                 <div id="divEncabezado" class="navbar-brand">
@@ -58,32 +58,39 @@
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2><fmt:message key="editarEstilista" bundle="${text}"/><c:out value="${id}"/></h2>
-            <h5><fmt:message key="completarEditStylist" bundle="${text}"/></h5>
             
-            <form action="../editStylist" method="POST">
-                
-                <input type="hidden" name="id" id="id" value="${id}">
+            <% String id = request.getParameter("id");
+               String login = request.getParameter("login");
+               String name = request.getParameter("name");
+               String email = request.getParameter("email");
+               String area = request.getParameter("area");
+               String password = request.getParameter("password");
+               Float salary = Float.parseFloat(request.getParameter("salary"));
+             %>
+             
+            <h2><fmt:message key="editarEstilista" bundle="${text}"/></h2>
+            <h5><fmt:message key="completarEditStylist" bundle="${text}"/> <strong><%out.print(login);%></strong> </h5>
+
+            <form action="../editStylist" method="POST" id="form">
+
+                <input type="hidden" name="id" value=<%out.print(id);%>>
                 <label for="name">Nombre:</label>
-                <input type="text" name="name" id="name" maxlength="35" value="${name}">
+                <input type="text" name="name" id="name" maxlength="35" required value=<%out.print(name);%>>
                 <br>
-                <label for="login">Usuario:</label>
-                <input type="text" name="login" id="login" maxlength="35" value="${login}" disabled="true">
-                <br>
-                <label for="password">ContraseÃ±a</label>
-                <input type="password" name="password" id="password" maxlength="40" value="${password}">
+                <label for="password">Contraseña</label>
+                <input type="password" name="password" id="password" maxlength="40" required value=<%out.print(password);%>>
                 <br>
                 <label for="email">Correo:</label>
-                <input type="email" name="email" id="email" maxlength="50" value="${correo}">
+                <input type="email" name="email" id="email" maxlength="50" required value=<%out.print(email);%>>
                 <br>
                 <label for="area">Especialidad:</label>
-                <input type="text" name="area" id="area" maxlength="35" value="${area}">
+                <input type="text" name="area" id="area" maxlength="35" required value=<%out.print(area);%>>
                 <br>
                 <label for="salary">Sueldo:</label>
-                <input type="number" name="salary" id="salary" value="${salary}">
+                <input type="number" name="salary" id="salary" required maxFractionDigits="0" minFractionDigits="0" value=<%out.print(salary);%>>
                 <br>
                 <label for="admin">Administrador</label>
-                <input type="checkbox" name="admin" id="admin" value="true" ${checked} style="left: 15rem">
+                <input type="checkbox" name="admin" id="admin" style=" bottom: 10px;left: 15rem">
 
                 <input type="submit" name="actualizar" value="Actualizar" class="btn btn-success" onclick="return actualizar()">
                 <input type="submit" name="eliminar" value="Eliminar" class="borrar btn btn-danger" onclick="return deleteStylist()"/>

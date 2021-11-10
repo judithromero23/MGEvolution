@@ -63,7 +63,7 @@
                 <i class="fas fa-cut paddingRight"></i> <fmt:message key="estilistas" bundle="${text}"/></button>
             <button type="button" class="btn btn-secondary col-sm margin10px btnsize">
                 <i class="fas fa-users paddingRight"></i> <fmt:message key="clientes" bundle="${text}"/></button>
-            <button type="button" class="btn btn-secondary col-sm margin10px btnsize">
+            <button type="button" class="btn btn-secondary col-sm margin10px btnsize" onclick="window.location.href='product/allProduct.jsp'">
                 <i class="fas fa-info paddingRight"></i> <fmt:message key="productos" bundle="${text}"/></button>
         </div>
 

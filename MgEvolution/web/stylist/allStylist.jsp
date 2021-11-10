@@ -8,7 +8,6 @@
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <fmt:setBundle basename="bundles.text" var="text"/>
-<jsp:useBean id="hairdresser" class="models.Hairdresser"/>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -73,11 +72,18 @@
                             <td>${stylist.name}</td>
                             <td>${stylist.email}</td>
                             <td>${stylist.area}</td>
-                            <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="2" minFractionDigits="2" /></td>
-                            <td>${stylist.admin}</td>
+                            <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="1" minFractionDigits="1" /></td>
+                            <td>${stylist.admin?"Sí":"No"}</td>
                             <td>
                                 <form action="editStylist.jsp" method="POST">
-                                    <input type="hidden" name="id" id="id" value="${stylist.id}">
+                                    <input type="hidden" value="${stylist.id}" name="id">
+                                    <input type="hidden" value="${stylist.login}" name="login">
+                                    <input type="hidden" value="${stylist.name}" name="name">
+                                    <input type="hidden" value="${stylist.password}" name="password">
+                                    <input type="hidden" value="${stylist.email}" name="email">
+                                    <input type="hidden" value="${stylist.area}" name="area">
+                                    <input type="hidden" value="${stylist.salary}" name="salary">
+                                    <input type="hidden" value="${stylist.admin}" name="admin">
                                     <input type="submit" value="Editar" class="btn btn-warning">
                                 </form>
                             </td>
