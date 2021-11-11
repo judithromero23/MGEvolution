@@ -5,7 +5,7 @@
  */
 package action;
 
-import org.apache.commons.lang3.StringUtils;
+/*import org.apache.commons.lang3.StringUtils;*/
 import java.io.IOException;
 import java.util.List;
 import javax.persistence.Persistence;
@@ -39,8 +39,7 @@ public class login extends HttpServlet {
             throws ServletException, IOException {
         String loginOriginal = request.getParameter("login");
         String password = request.getParameter("password");
-        /*Login usuario pasado a minusculas con lowerCase*/
-        String login = StringUtils.lowerCase(loginOriginal);
+        String login = loginOriginal.toLowerCase();
         String error = null;
         if (login == null || password == null) {
             error = "Debe acceder por la página de login";
