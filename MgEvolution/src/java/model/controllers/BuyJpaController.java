@@ -74,9 +74,9 @@ public class BuyJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Date id = buy.getDate();
-                if (findBuy(id) == null) {
-                    throw new NonexistentEntityException("The buy with id " + id + " no longer exists.");
+                Long numTicket = buy.getNumTicket();
+                if (findBuy(numTicket) == null) {
+                    throw new NonexistentEntityException("The buy with id " + numTicket + " no longer exists.");
                 }
             }
             throw ex;
@@ -87,7 +87,7 @@ public class BuyJpaController implements Serializable {
         }
     }
 
-    public void destroy(Date id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Long numTicket) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         EntityTransaction etx = null;
         try {
@@ -96,10 +96,10 @@ public class BuyJpaController implements Serializable {
             etx.begin();
             Buy buy;
             try {
-                buy = em.getReference(Buy.class, id);
-                buy.getDate();
+                buy = em.getReference(Buy.class, numTicket);
+                buy.getNumTicket();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The buy with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The buy with id " + numTicket + " no longer exists.", enfe);
             }
             em.remove(buy);
             etx.commit();
@@ -141,10 +141,10 @@ public class BuyJpaController implements Serializable {
         }
     }
 
-    public Buy findBuy(Date id) {
+    public Buy findBuy(Long numTicket) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Buy.class, id);
+            return em.find(Buy.class, numTicket);
         } finally {
             em.close();
         }

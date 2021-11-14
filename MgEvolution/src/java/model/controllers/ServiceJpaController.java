@@ -74,7 +74,7 @@ public class ServiceJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                Date id = service.getDate();
+                Long id = service.getId();
                 if (findService(id) == null) {
                     throw new NonexistentEntityException("The service with id " + id + " no longer exists.");
                 }
@@ -87,7 +87,7 @@ public class ServiceJpaController implements Serializable {
         }
     }
 
-    public void destroy(Date id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Long id) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         EntityTransaction etx = null;
         try {
@@ -97,7 +97,7 @@ public class ServiceJpaController implements Serializable {
             Service service;
             try {
                 service = em.getReference(Service.class, id);
-                service.getDate();
+                service.getId();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The service with id " + id + " no longer exists.", enfe);
             }
@@ -141,7 +141,7 @@ public class ServiceJpaController implements Serializable {
         }
     }
 
-    public Service findService(Date id) {
+    public Service findService(Long id) {
         EntityManager em = getEntityManager();
         try {
             return em.find(Service.class, id);
