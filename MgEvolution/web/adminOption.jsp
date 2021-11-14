@@ -75,7 +75,7 @@
         </div>
 
         <div class="d-flex justify-content-around row marginbottom">
-            <button type="button" class="btn btn-secondary col-sm margin10px btnsize">
+            <button type="button" class="btn btn-secondary col-sm margin10px btnsize" onclick="window.location.href='supplier/allSupplier.jsp'">
                 <i class="far fa-id-badge paddingRight"></i> <fmt:message key="proveedores" bundle="${text}"/></button>
         </div>
     </section>

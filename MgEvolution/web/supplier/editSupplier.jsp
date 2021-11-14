@@ -1,6 +1,6 @@
 <%-- 
-    Document   : editStylist
-    Created on : 06-nov-2021, 23:09:37
+    Document   : editSupplier
+    Created on : 12-nov-2021, 12:42:56
     Author     : judith
 --%>
 
@@ -23,16 +23,16 @@
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <!--CSS-->
-        <link rel="stylesheet" href="../assets/css/add.css">
+        <link rel="stylesheet" href="../assets/css/edit.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="estilistas" bundle="${text}"/></title>
+        <title><fmt:message key="proveedores" bundle="${text}"/></title>
         <script>
             function deleteStylist() {
-                return confirm('¿Está seguro que desea eliminar al estilista?');
+                return confirm('¿Está seguro que desea eliminar al proveedor?');
             }
             function actualizar() {
-                return confirm('Estilista actualizad@');
+                return confirm('Proveedor actualizado');
             }
         </script>
     </head>
@@ -51,48 +51,31 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="allStylist.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="allSupplier.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            
-            <% String id = request.getParameter("id");
-               String login = request.getParameter("login");
-               String name = request.getParameter("name");
-               String email = request.getParameter("email");
-               String area = request.getParameter("area");
-               String password = request.getParameter("password");
-               Float salary = Float.parseFloat(request.getParameter("salary"));
-               String firtsLetter = login.substring(0, 1).toUpperCase();
-               String restLetters = login.substring(1).toLowerCase();
-             %>
-             
-            <h2><fmt:message key="editarEstilista" bundle="${text}"/></h2>
-            <h5><fmt:message key="completarEditStylist" bundle="${text}"/> <strong><%out.print(firtsLetter + restLetters);%></strong> </h5>
 
-            <form action="../editStylist" method="POST" id="form">
+            <% String brand = request.getParameter("brand");
+                String nameSupplier = request.getParameter("nameSupplier");
+                String phoneSupplier = request.getParameter("phoneSupplier");
+                String firtsLetter = brand.substring(0, 1).toUpperCase();
+                String restLetters = brand.substring(1).toLowerCase();
+            %>
 
-                <input type="hidden" name="id" value=<%out.print(id);%>>
-                <label for="name"><fmt:message key="inputName" bundle="${text}"/></label>
-                <input type="text" name="name" id="name" maxlength="35" required value=<%out.print(name);%>>
+            <h2><fmt:message key="editarProveedor" bundle="${text}"/></h2>
+            <h5><fmt:message key="completarEditSupplier" bundle="${text}"/> <strong><%out.print(firtsLetter + restLetters);%></strong> </h5>
+
+            <form action="../editSupplier" method="POST" id="form">
+                <input type="hidden" name="brand" id="brand" value=<%out.print(brand);%>>
+                <label for="nameSupplier"><fmt:message key="inputNameSupplier" bundle="${text}"/></label>
+                <input type="text" name="nameSupplier" id="nameSupplier" maxlength="35" required value=<%out.print(nameSupplier);%>>
                 <br>
-                <label for="password"><fmt:message key="inputPass" bundle="${text}"/></label>
-                <input type="password" name="password" id="password" maxlength="40" required value=<%out.print(password);%>>
-                <br>
-                <label for="email"><fmt:message key="inputMail" bundle="${text}"/></label>
-                <input type="email" name="email" id="email" maxlength="50" required value=<%out.print(email);%>>
-                <br>
-                <label for="area"><fmt:message key="inputArea" bundle="${text}"/></label>
-                <input type="text" name="area" id="area" maxlength="35" required value=<%out.print(area);%>>
-                <br>
-                <label for="salary"><fmt:message key="inputSalary" bundle="${text}"/></label>
-                <input type="number" name="salary" id="salary" required maxFractionDigits="0" minFractionDigits="0" value=<%out.print(salary);%>>
-                <br>
-                <label for="admin"><fmt:message key="inputAdmin" bundle="${text}"/></label>
-                <input type="checkbox" name="admin" id="admin" style=" bottom: 10px;left: 15rem">
+                <label for="phoneSupplier"><fmt:message key="inputPhoneSupplier" bundle="${text}"/></label>
+                <input type="number" name="phoneSupplier" id="phoneSupplier" maxlength="9" required value=<%out.print(phoneSupplier);%>>
 
                 <input type="submit" name="actualizar" value="Actualizar" class="btn btn-success" onclick="return actualizar()">
                 <input type="submit" name="eliminar" value="Eliminar" class="borrar btn btn-danger" onclick="return deleteStylist()"/>

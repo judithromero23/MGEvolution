@@ -1,6 +1,6 @@
 <%-- 
-    Document   : editStylist
-    Created on : 06-nov-2021, 23:09:37
+    Document   : addStylist
+    Created on : 04-nov-2021, 19:32:59
     Author     : judith
 --%>
 
@@ -11,30 +11,20 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <meta charset="UTF-8">
         <!--Font Awesome-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <!--GoogleFont-->
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200&family=Lexend+Mega&family=Quicksand:wght@500&display=swap" rel="stylesheet">
-        <!--SweetAlert-->
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <!--CSS-->
         <link rel="stylesheet" href="../assets/css/add.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="estilistas" bundle="${text}"/></title>
-        <script>
-            function deleteStylist() {
-                return confirm('¿Está seguro que desea eliminar al estilista?');
-            }
-            function actualizar() {
-                return confirm('Estilista actualizad@');
-            }
-        </script>
+        <title><fmt:message key="proveedores" bundle="${text}"/></title>
     </head>
     <body>
         <header>
@@ -48,54 +38,31 @@
                 <button id="btnHamburguesa" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon" id="icon"></span>
                 </button>
+                <!--Links del encabezado justificados a la derecha-->
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="allStylist.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="allSupplier.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            
-            <% String id = request.getParameter("id");
-               String login = request.getParameter("login");
-               String name = request.getParameter("name");
-               String email = request.getParameter("email");
-               String area = request.getParameter("area");
-               String password = request.getParameter("password");
-               Float salary = Float.parseFloat(request.getParameter("salary"));
-               String firtsLetter = login.substring(0, 1).toUpperCase();
-               String restLetters = login.substring(1).toLowerCase();
-             %>
-             
-            <h2><fmt:message key="editarEstilista" bundle="${text}"/></h2>
-            <h5><fmt:message key="completarEditStylist" bundle="${text}"/> <strong><%out.print(firtsLetter + restLetters);%></strong> </h5>
-
-            <form action="../editStylist" method="POST" id="form">
-
-                <input type="hidden" name="id" value=<%out.print(id);%>>
-                <label for="name"><fmt:message key="inputName" bundle="${text}"/></label>
-                <input type="text" name="name" id="name" maxlength="35" required value=<%out.print(name);%>>
+            <h2><fmt:message key="nuevoProveedor" bundle="${text}"/></h2>
+            <h5><fmt:message key="completarProveedor" bundle="${text}"/></h5>
+            <form action="../addSupplier" method="POST">
+                <label for="brand"><fmt:message key="inputBrand" bundle="${text}"/></label>
+                <input type="text" name="brand" id="brand" maxlength="20" required>
                 <br>
-                <label for="password"><fmt:message key="inputPass" bundle="${text}"/></label>
-                <input type="password" name="password" id="password" maxlength="40" required value=<%out.print(password);%>>
+                <label for="nameSupplier"><fmt:message key="inputNameSupplier" bundle="${text}"/></label>
+                <input type="text" name="nameSupplier" id="nameSupplier" required>
                 <br>
-                <label for="email"><fmt:message key="inputMail" bundle="${text}"/></label>
-                <input type="email" name="email" id="email" maxlength="50" required value=<%out.print(email);%>>
+                <label for="phoneSupplier"><fmt:message key="inputPhoneSupplier" bundle="${text}"/></label>
+                <input type="number" name="phoneSupplier" id="phoneSupplier" maxlength="9" required>
                 <br>
-                <label for="area"><fmt:message key="inputArea" bundle="${text}"/></label>
-                <input type="text" name="area" id="area" maxlength="35" required value=<%out.print(area);%>>
-                <br>
-                <label for="salary"><fmt:message key="inputSalary" bundle="${text}"/></label>
-                <input type="number" name="salary" id="salary" required maxFractionDigits="0" minFractionDigits="0" value=<%out.print(salary);%>>
-                <br>
-                <label for="admin"><fmt:message key="inputAdmin" bundle="${text}"/></label>
-                <input type="checkbox" name="admin" id="admin" style=" bottom: 10px;left: 15rem">
-
-                <input type="submit" name="actualizar" value="Actualizar" class="btn btn-success" onclick="return actualizar()">
-                <input type="submit" name="eliminar" value="Eliminar" class="borrar btn btn-danger" onclick="return deleteStylist()"/>
+               
+                <input type="submit" value="Crear Proveedor" class="btn btn-success">
                 <br>
             </form>
         </section>

@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="assets/css/tables.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="estilistas" bundle="${text}"/></title>
+        <title><fmt:message key="proveedores" bundle="${text}"/></title>
     </head>
     <body onload="alertSwicht()">
 
@@ -53,37 +53,35 @@
                 </div>
             </nav>
         </header>
-        <section class="container letraQuicksand">
-            <h2><fmt:message key="estilistas" bundle="${text}"/></h2>
-            <h5><fmt:message key="listaEstilistas" bundle="${text}"/></h5>
+     <section class="container letraQuicksand">
+            <h2><fmt:message key="proveedores" bundle="${text}"/></h2>
+            <h5><fmt:message key="listaProveedores" bundle="${text}"/>.</h5>
 
             <table class="table">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col"><fmt:message key="tableUsuario" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableNombre" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableCorreo" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableArea" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableSalary" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableAdmin" bundle="${text}"/></th>
-
+                        <th scope="col"><fmt:message key="tableBrand" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableNameSupplier" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tablePhoneSupplier" bundle="${text}"/></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="stylist" items="${hairdresser.getStylistAlfabeticamente()}">
+                    <c:forEach var="supplier" items="${hairdresser.getSupplierAlfabeticamente()}">
                         <tr>
-                            <th scope="col">${stylist.login}</th>
-                            <td>${stylist.name}</td>
-                            <td>${stylist.email}</td>
-                            <td>${stylist.area}</td>
-                            <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="1" minFractionDigits="1" /></td>
-                            <td>${stylist.admin}</td>
-
+                            <th scope="col">${supplier.brand}</th>
+                            <td>${supplier.nameSupplier}</td>
+                            <td>${supplier.phoneSupplier}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
             </table>
-
+            <br>
+            <c:if test="${not empty error}">
+                <br>
+                <div class="error alert alert-warning">
+                    ${error}
+                </div>
+            </c:if>
         </section>
         <footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
@@ -105,13 +103,13 @@
         var action;
         
         switch (optionSwitch) {
-                case '1': action = 'Estilista creado correctamente';
+                case '1': action = 'Proveedor creado correctamente';
                 break;
-                case '2': action = 'Estilista modificado correctamente';
-                console.log('Estilista modificado correctamente');
+                case '2': action = 'Proveedor modificado correctamente';
+                console.log('Proveedor modificado correctamente');
                 break;
-                case '3': action = 'Estilista eliminado correctamente';
-                console.log('Estilista eliminado correctamente');
+                case '3': action = 'Proveedor eliminado correctamente';
+                console.log('Proveedor eliminado correctamente');
                 break;
                 default: action = 'Acción realizada con éxito';
                 break;

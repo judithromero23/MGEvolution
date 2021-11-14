@@ -7,7 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="hairdresser" class="models.Hairdresser"/>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
 <fmt:setBundle basename="bundles.text" var="text"/>
 <!DOCTYPE html>
 <html lang="es">
@@ -29,7 +29,7 @@
     </head>
     <body>
         <header>
-            <!--Encabezado con Logotipo y seguidamente de una barra de navegaciÃ³n que se convertirÃ¡ en botÃ³n hamburguesa-->
+            <!--Encabezado con Logotipo y seguidamente de una barra de navegación que se convertirá en botón hamburguesa-->
             <nav class="navbar navbar-expand-lg navbar-light bg-dark container-fluid">
                 <!--Imagenes del encabezado-->
                 <div id="divEncabezado" class="navbar-brand">

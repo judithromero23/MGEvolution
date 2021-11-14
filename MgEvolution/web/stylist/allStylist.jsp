@@ -6,7 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="iso-8859-1"%>
 <fmt:setBundle basename="bundles.text" var="text"/>
 
 <!DOCTYPE html>
@@ -29,7 +29,7 @@
     </head>
     <body>
         <header>
-            <!--Encabezado con Logotipo y seguidamente de una barra de navegaciÃ³n que se convertirÃ¡ en botÃ³n hamburguesa-->
+            <!--Encabezado con Logotipo y seguidamente de una barra de navegación que se convertirá en botón hamburguesa-->
             <nav class="navbar navbar-expand-lg navbar-light bg-dark container-fluid">
                 <!--Imagenes del encabezado-->
                 <div id="divEncabezado" class="navbar-brand">
@@ -73,7 +73,7 @@
                             <td>${stylist.email}</td>
                             <td>${stylist.area}</td>
                             <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="1" minFractionDigits="1" /></td>
-                            <td>${stylist.admin?"SÃ­":"No"}</td>
+                            <td>${stylist.admin?"Sí":"No"}</td>
                             <td>
                                 <form action="editStylist.jsp" method="POST">
                                     <input type="hidden" value="${stylist.id}" name="id">

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : addStylist
-    Created on : 04-nov-2021, 19:32:59
+    Document   : editSupplier
+    Created on : 12-nov-2021, 12:35:25
     Author     : judith
 --%>
 
@@ -8,6 +8,7 @@
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="iso-8859-1"%>
 <fmt:setBundle basename="bundles.text" var="text"/>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -21,10 +22,10 @@
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <!--CSS-->
-        <link rel="stylesheet" href="../assets/css/add.css">
+        <link rel="stylesheet" href="../assets/css/tables.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="estilistas" bundle="${text}"/></title>
+        <title><fmt:message key="proveedores" bundle="${text}"/></title>
     </head>
     <body>
         <header>
@@ -42,47 +43,51 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="allStylist.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="../adminOption.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2><fmt:message key="nuevoEstilista" bundle="${text}"/></h2>
-            <h5><fmt:message key="completarEstilista" bundle="${text}"/></h5>
-            <form action="../addStylist" method="POST">
-                <label for="name"><fmt:message key="inputName" bundle="${text}"/></label>
-                <input type="text" name="name" id="name" maxlength="20" value="${name}" required>
-                <br>
-                <label for="login"><fmt:message key="inputLogin" bundle="${text}"/></label>
-                <input type="text" name="login" id="login" maxlength="35" value="${login}" required>
-                <br>
-                <label for="password"><fmt:message key="inputPass" bundle="${text}"/></label>
-                <input type="password" name="password" id="password" maxlength="40" value="${password}" required>
-                <br>
-                <label for="email"><fmt:message key="inputMail" bundle="${text}"/></label>
-                <input type="email" name="email" id="email" maxlength="50" value="${correo}" required>
-                <br>
-                <label for="area"><fmt:message key="inputArea" bundle="${text}"/></label>
-                <input type="text" name="area" id="area" maxlength="35" value="${area}" required>
-                <br>
-                <label for="salary"><fmt:message key="inputSalary" bundle="${text}"/></label>
-                <input type="number" name="salary" id="salary" value="${salary}" required>
-                <br>
-                <label for="admin"><fmt:message key="inputAdmin" bundle="${text}"/></label>
-                <input type="checkbox" name="admin" id="admin" value="true" ${checked}>
-                
-                <input type="submit" value="Crear Estilista" class="btn btn-success">
-                <br>
-            </form>
-        </section>
-        <c:if test="${not empty error}">
+            <h2><fmt:message key="proveedores" bundle="${text}"/></h2>
+            <h5><fmt:message key="listaProveedores" bundle="${text}"/></h5>
+            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href = 'addSupplier.jsp'"><fmt:message key="nuevoProveedor" bundle="${text}"/></button>
+            <table class="table">
+                <thead class="thead-light">
+                   <tr>
+                        <th scope="col"><fmt:message key="tableBrand" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableNameSupplier" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tablePhoneSupplier" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableModificar" bundle="${text}"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach var="supplier" items="${hairdresser.getSupplierAlfabeticamente()}">
+                        <tr>
+                            <th scope="col">${supplier.brand}</th>
+                            <td>${supplier.nameSupplier}</td>
+                            <td>${supplier.phoneSupplier}</td>
+                            <td>
+                                <form action="editSupplier.jsp" method="POST">
+                                    <input type="hidden" value="${supplier.brand}" name="brand">
+                                    <input type="hidden" value="${supplier.nameSupplier}" name="nameSupplier">
+                                    <input type="hidden" value="${supplier.phoneSupplier}" name="phoneSupplier">
+                                    <input type="submit" value="Editar" class="btn btn-warning">
+                                </form>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
             <br>
-            <div class="error alert alert-warning">
-                ${error}
-            </div>
-        </c:if>
+            <c:if test="${not empty error}">
+                <br>
+                <div class="error alert alert-warning">
+                    ${error}
+                </div>
+            </c:if>
+        </section>
         <footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
         </footer>
