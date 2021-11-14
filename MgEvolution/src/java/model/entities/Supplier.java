@@ -8,6 +8,7 @@ package model.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,6 +31,7 @@ public class Supplier implements Serializable {
     nameSupplier = Nombre del proveedor,
     El ID del producto es brand = Código de barras del proveedor.
     Proveedor tiene una relacion 1:N con la entidad producto.*/
+    @Column(length = 50)
     private Integer phoneSupplier;
     private String nameSupplier;
     

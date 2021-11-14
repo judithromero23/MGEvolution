@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ActionStylist;
+package actionSupplier;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,17 +11,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
-import model.entities.Stylist;
+import model.entities.Supplier;
 import models.Hairdresser;
-
 
 /**
  *
  * @author judith
  */
-@WebServlet(name = "addStylist", urlPatterns = {"/addStylist"})
-public class addStylist extends HttpServlet {
+@WebServlet(name = "editSupplier", urlPatterns = {"/editSupplier"})
+public class editSupplier extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,47 +32,44 @@ public class addStylist extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String error = null;
-        String name = request.getParameter("name");
-        String loginOriginal = request.getParameter("login");
-        String login = StringUtils.lowerCase(loginOriginal);
-        String password = request.getParameter("password");
-        String area = request.getParameter("area");
-        Float salary = Float.parseFloat(request.getParameter("salary"));
-        String email = request.getParameter("email");
-        boolean admin = (request.getParameter("admin") != null);
-
-        Stylist newStylist = new Stylist();
-        newStylist.setName(name);
-        newStylist.setLogin(login);
-        newStylist.setPassword(password);
-        newStylist.setArea(area);
-        newStylist.setSalary(salary);
-        newStylist.setEmail(email);
-        newStylist.setAdmin(admin);
-        System.out.println(name + " " + login + " " + password + " " + area + " " + salary + " " + email + " " + admin);
-        System.out.println(newStylist);
         Hairdresser hairdresser = (Hairdresser) request.getSession().getAttribute("hairdresser");
-        System.out.println("Nuevo Estilista " + newStylist);
-        try {
-            hairdresser.addStylist(newStylist);
-        } catch (Exception ex) {
-            error = "Error al crear el usuario '" + login + "', pruebe con otro nombre";
-        }
-        if (error != null) {
+        String brand = request.getParameter("brand");
+        System.out.println(brand);
+        Supplier supplier = hairdresser.searchSupplier(brand);
+        if (supplier == null) {
+            String error = "Se ha producido un error al actualizar a el proveedor.";
             request.setAttribute("error", error);
-            request.setAttribute("name", name);
-            request.setAttribute("login", login);
-            request.setAttribute("password", password);
-            request.setAttribute("area", area);
-            request.setAttribute("salary", salary);
-            request.setAttribute("email", email);
-            request.setAttribute("checked", admin ? "checked" : "");
-            System.out.println(newStylist);
-            getServletContext().getRequestDispatcher("/stylist/onlyView.jsp").forward(request, response);
+            getServletContext().getRequestDispatcher("/supplier/onlyView.jsp").forward(request, response);
+        }
+
+        if (request.getParameter("actualizar") != null) {
+            supplier.setNameSupplier(request.getParameter("nameSupplier"));
+            supplier.setPhoneSupplier(Integer.parseInt(request.getParameter("phoneSupplier")));
+           
+            try {
+                hairdresser.updateSupplier(supplier);
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + " : " + e.getMessage());
+            }
+            response.sendRedirect("onlyViewSupplier.jsp?option=2");
         } else {
-            response.sendRedirect(response.encodeRedirectURL("/MgEvolution/onlyViewStylist.jsp?option=1"));
+            if (request.getParameter("eliminar") != null) {
+                try {
+                    hairdresser.deleteSupplier(brand);
+                } catch (Exception e) {
+                    String error = e.getMessage();
+                    request.setAttribute("error", error);
+                    getServletContext().getRequestDispatcher("/supplier/onlyView.jsp").forward(request, response);
+                }
+                response.sendRedirect("onlyViewSupplier.jsp?option=3");
+                return;
+            } else {
+                request.setAttribute("brand", supplier.getBrand());
+                request.setAttribute("nameSupplier", supplier.getNameSupplier());
+                request.setAttribute("phoneSupplier", supplier.getPhoneSupplier());
+                System.out.println(supplier);
+                getServletContext().getRequestDispatcher("/supplier/onlyView.jsp").forward(request, response);
+            }
         }
     }
 

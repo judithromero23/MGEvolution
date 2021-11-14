@@ -86,7 +86,7 @@ public class SupplierJpaController implements Serializable {
         }
     }
 
-    public void destroy(String id) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(String brand) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         EntityTransaction etx = null;
         try {
@@ -95,10 +95,10 @@ public class SupplierJpaController implements Serializable {
             etx.begin();
             Supplier supplier;
             try {
-                supplier = em.getReference(Supplier.class, id);
+                supplier = em.getReference(Supplier.class, brand);
                 supplier.getBrand();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The supplier with id " + id + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The supplier with id " + brand + " no longer exists.", enfe);
             }
             em.remove(supplier);
             etx.commit();
@@ -140,10 +140,10 @@ public class SupplierJpaController implements Serializable {
         }
     }
 
-    public Supplier findSupplier(String id) {
+    public Supplier findSupplier(String brand) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Supplier.class, id);
+            return em.find(Supplier.class, brand);
         } finally {
             em.close();
         }

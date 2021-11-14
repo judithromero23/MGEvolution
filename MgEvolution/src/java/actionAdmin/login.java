@@ -3,25 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ActionStylist;
+package actionAdmin;
 
+/*import org.apache.commons.lang3.StringUtils;*/
 import java.io.IOException;
+import java.util.List;
+import javax.persistence.Persistence;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
+import javax.servlet.http.HttpSession;
+import model.controllers.StylistJpaController;
 import model.entities.Stylist;
 import models.Hairdresser;
-
 
 /**
  *
  * @author judith
  */
-@WebServlet(name = "addStylist", urlPatterns = {"/addStylist"})
-public class addStylist extends HttpServlet {
+@WebServlet(name = "login", urlPatterns = {"/login"})
+public class login extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,48 +37,34 @@ public class addStylist extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String error = null;
-        String name = request.getParameter("name");
         String loginOriginal = request.getParameter("login");
-        String login = StringUtils.lowerCase(loginOriginal);
         String password = request.getParameter("password");
-        String area = request.getParameter("area");
-        Float salary = Float.parseFloat(request.getParameter("salary"));
-        String email = request.getParameter("email");
-        boolean admin = (request.getParameter("admin") != null);
-
-        Stylist newStylist = new Stylist();
-        newStylist.setName(name);
-        newStylist.setLogin(login);
-        newStylist.setPassword(password);
-        newStylist.setArea(area);
-        newStylist.setSalary(salary);
-        newStylist.setEmail(email);
-        newStylist.setAdmin(admin);
-        System.out.println(name + " " + login + " " + password + " " + area + " " + salary + " " + email + " " + admin);
-        System.out.println(newStylist);
-        Hairdresser hairdresser = (Hairdresser) request.getSession().getAttribute("hairdresser");
-        System.out.println("Nuevo Estilista " + newStylist);
-        try {
-            hairdresser.addStylist(newStylist);
-        } catch (Exception ex) {
-            error = "Error al crear el usuario '" + login + "', pruebe con otro nombre";
-        }
-        if (error != null) {
-            request.setAttribute("error", error);
-            request.setAttribute("name", name);
-            request.setAttribute("login", login);
-            request.setAttribute("password", password);
-            request.setAttribute("area", area);
-            request.setAttribute("salary", salary);
-            request.setAttribute("email", email);
-            request.setAttribute("checked", admin ? "checked" : "");
-            System.out.println(newStylist);
-            getServletContext().getRequestDispatcher("/stylist/onlyView.jsp").forward(request, response);
+        String login = loginOriginal.toLowerCase();
+        String error = null;
+        if (login == null || password == null) {
+            error = "Debe acceder por la página de login";
         } else {
-            response.sendRedirect(response.encodeRedirectURL("/MgEvolution/onlyViewStylist.jsp?option=1"));
+            if (login.isEmpty() || password.isEmpty()) {
+                error = "Se deben rellenar los campos usuario y contraseña";
+            } else {
+                StylistJpaController ejc = new StylistJpaController(Persistence.createEntityManagerFactory("MgEvolutionPU"));
+                List<Stylist> stylists = ejc.findStylistEntities();
+                System.out.println(stylists.toString());
+                for (Stylist stylist : stylists) {
+                    if (stylist.getLogin().equals(login) && stylist.getPassword().equals(password) && stylist.getAdmin().equals(true)) {
+                        HttpSession sesion = request.getSession();
+                        sesion.setAttribute("stylist", stylist);
+                        sesion.setAttribute("hairdresser", new Hairdresser());
+                        response.sendRedirect("adminOption.jsp");
+                        return;
+                    }
+                }
+                error ="El usuario con el que intenta acceder no es estilista o no es administrador. Prueba con otro usuario o otra contraseña.";
+            }
+
         }
+        request.setAttribute("error", error);
+        getServletContext().getRequestDispatcher("/login.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

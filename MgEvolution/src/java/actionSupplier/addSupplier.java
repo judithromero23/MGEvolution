@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ActionStylist;
+package actionSupplier;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,17 +11,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
-import model.entities.Stylist;
+import model.entities.Supplier;
 import models.Hairdresser;
-
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author judith
  */
-@WebServlet(name = "addStylist", urlPatterns = {"/addStylist"})
-public class addStylist extends HttpServlet {
+@WebServlet(name = "addSupplier", urlPatterns = {"/addSupplier"})
+public class addSupplier extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,45 +35,33 @@ public class addStylist extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String error = null;
-        String name = request.getParameter("name");
-        String loginOriginal = request.getParameter("login");
-        String login = StringUtils.lowerCase(loginOriginal);
-        String password = request.getParameter("password");
-        String area = request.getParameter("area");
-        Float salary = Float.parseFloat(request.getParameter("salary"));
-        String email = request.getParameter("email");
-        boolean admin = (request.getParameter("admin") != null);
+        String brandOriginal = request.getParameter("brand");
+        String nameSupplier = request.getParameter("nameSupplier");
+        Integer phoneSupplier = Integer.parseInt(request.getParameter("phoneSupplier"));
+        String brand = StringUtils.lowerCase(brandOriginal);
+      
 
-        Stylist newStylist = new Stylist();
-        newStylist.setName(name);
-        newStylist.setLogin(login);
-        newStylist.setPassword(password);
-        newStylist.setArea(area);
-        newStylist.setSalary(salary);
-        newStylist.setEmail(email);
-        newStylist.setAdmin(admin);
-        System.out.println(name + " " + login + " " + password + " " + area + " " + salary + " " + email + " " + admin);
-        System.out.println(newStylist);
+        Supplier newSupplier = new Supplier();
+        newSupplier.setBrand(brand);
+        newSupplier.setNameSupplier(nameSupplier);
+        newSupplier.setPhoneSupplier(phoneSupplier);
+     
+        System.out.println("Brand: " + brand + ", NameSupplier: " + nameSupplier + ", PhoneSupplier: " + phoneSupplier);
         Hairdresser hairdresser = (Hairdresser) request.getSession().getAttribute("hairdresser");
-        System.out.println("Nuevo Estilista " + newStylist);
+        System.out.println("Nuevo Proveedor " + newSupplier);
         try {
-            hairdresser.addStylist(newStylist);
+            hairdresser.addSupplier(newSupplier);
         } catch (Exception ex) {
-            error = "Error al crear el usuario '" + login + "', pruebe con otro nombre";
+            error = "Error al crear el proveedor '" + brand + "', pruebe con otro nombre";
         }
         if (error != null) {
             request.setAttribute("error", error);
-            request.setAttribute("name", name);
-            request.setAttribute("login", login);
-            request.setAttribute("password", password);
-            request.setAttribute("area", area);
-            request.setAttribute("salary", salary);
-            request.setAttribute("email", email);
-            request.setAttribute("checked", admin ? "checked" : "");
-            System.out.println(newStylist);
-            getServletContext().getRequestDispatcher("/stylist/onlyView.jsp").forward(request, response);
+            request.setAttribute("brand", brand);
+            request.setAttribute("nameSupplier", nameSupplier);
+            request.setAttribute("phoneSupplier", phoneSupplier);
+            getServletContext().getRequestDispatcher("/supplier/onlyView.jsp").forward(request, response);
         } else {
-            response.sendRedirect(response.encodeRedirectURL("/MgEvolution/onlyViewStylist.jsp?option=1"));
+            response.sendRedirect(response.encodeRedirectURL("/MgEvolution/onlyViewSupplier.jsp?option=1"));
         }
     }
 

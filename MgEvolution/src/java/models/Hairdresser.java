@@ -12,8 +12,10 @@ import java.util.Objects;
 import javax.persistence.Persistence;
 import model.controllers.ProductJpaController;
 import model.controllers.StylistJpaController;
+import model.controllers.SupplierJpaController;
 import model.entities.Product;
 import model.entities.Stylist;
+import model.entities.Supplier;
 
 /**
  *
@@ -21,7 +23,7 @@ import model.entities.Stylist;
  */
 public class Hairdresser {
     
-     //Persistence
+    //Persistence
     public static final String PERSISTENCIA = "MgEvolutionPU";
 
     //Stylist
@@ -60,7 +62,6 @@ public class Hairdresser {
     public void addStylist(Stylist stylist) throws Exception {
         StylistJpaController ejc = new StylistJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         ejc.create(stylist);
-        System.out.println(stylist);
     }
 
     public Stylist searchStylist(Long id) {
@@ -110,7 +111,6 @@ public class Hairdresser {
     public void addProduct(Product product) throws Exception {
         ProductJpaController ejc = new ProductJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         ejc.create(product);
-        System.out.println(product);
     }
 
     public Product searchProduct(Long codBarras) {
@@ -122,5 +122,55 @@ public class Hairdresser {
         ProductJpaController ejc = new ProductJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         ejc.edit(product);
     }
+    
+    
+    //Supplier
+    public List<Supplier> getSupplier() {
+        SupplierJpaController ejc = new SupplierJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        return ejc.findSupplierEntities();
+    }
+
+    public List<Supplier> getSupplierAlfabeticamente() {
+        List<Supplier> supplier = getSupplier();
+        Collections.sort(supplier, (e1, e2)
+                -> (e1.getBrand()).compareTo(e2.getBrand()));
+        return supplier;
+    }
+
+    public List<Supplier> filterSupplier(String filtro) {
+        List<Supplier> supplier = getSupplier();
+        List<Supplier> filter = new ArrayList();
+        if (!filtro.isEmpty()) {
+            for (Supplier e : supplier) {
+                if (e.getBrand().contains(filtro)) {
+                    filter.add(e);
+                }
+            }
+        } else {
+            filter = supplier;
+        }
+        return filter;
+    }
+
+    public void deleteSupplier(String brand) throws Exception {
+        SupplierJpaController ejc = new SupplierJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        ejc.destroy(brand);
+    }
+
+    public void addSupplier(Supplier supplier) throws Exception {
+        SupplierJpaController ejc = new SupplierJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        ejc.create(supplier);
+    }
+
+    public Supplier searchSupplier(String brand) {
+        SupplierJpaController ejc = new SupplierJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        return ejc.findSupplier(brand);
+    }
+
+    public void updateSupplier(Supplier supplier) throws Exception {
+        SupplierJpaController ejc = new SupplierJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        ejc.edit(supplier);
+    }
 }
+
 
