@@ -13,7 +13,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 /**
  *
@@ -27,13 +26,6 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long codBarras;
 
-    public Float getCostSupplier() {
-        return costSupplier;
-    }
-
-    public void setCostSupplier(Float costSupplier) {
-        this.costSupplier = costSupplier;
-    }
     /*Declaracion de los atributos de Producto, entre ellos se encuentra:
     Name = Nombre del producto,
     Brand = Marca del producto (ID del proveedor),
@@ -49,7 +41,7 @@ public class Product implements Serializable {
     @Column(length = 50)
     private String category;
     @Column(length = 50)
-    private float price;
+    private float costClient;
     @Column(length = 50)
     private Integer stock;
     @Column(length = 50)
@@ -65,6 +57,13 @@ public class Product implements Serializable {
 
     public void setBrand(Supplier brand) {
         this.brand = brand;
+    }
+     public Float getCostSupplier() {
+        return costSupplier;
+    }
+
+    public void setCostSupplier(Float costSupplier) {
+        this.costSupplier = costSupplier;
     }
 
     public Long getCodBarras() {
@@ -92,11 +91,11 @@ public class Product implements Serializable {
     }
 
     public float getPrice() {
-        return price;
+        return costClient;
     }
 
     public void setPrice(float price) {
-        this.price = price;
+        this.costClient = price;
     }
 
     public Integer getStock() {

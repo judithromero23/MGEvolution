@@ -35,16 +35,7 @@ public class Supplier implements Serializable {
     private Integer phoneSupplier;
     private String nameSupplier;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "brand")
-    private List<Product> products;
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
+    
 
     
     public String getBrand() {
