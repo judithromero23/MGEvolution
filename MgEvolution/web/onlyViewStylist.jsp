@@ -1,5 +1,5 @@
 <%-- 
-    Document   : onlyView
+    Document   : onlyViewStylist
     Created on : 05-nov-2021, 21:48:45
     Author     : judith
 --%>
