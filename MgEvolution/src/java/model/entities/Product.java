@@ -36,27 +36,35 @@ public class Product implements Serializable {
     El ID del producto es codBarras = Código de barras del producto.
     Producto tiene dos relaciones. Una es N:M con cliente de donde sale la
     tabla compra y otra relacion es N:1 con proveedor*/
-    @Column(length = 80)
+    @Column(length = 50)
     private String name;
     @Column(length = 50)
     private String category;
     @Column(length = 50)
     private float costClient;
+
+    public float getCostClient() {
+        return costClient;
+    }
+
+    public void setCostClient(float costClient) {
+        this.costClient = costClient;
+    }
     @Column(length = 50)
     private Integer stock;
     @Column(length = 50)
     private Float costSupplier;
 
     @ManyToOne()
-    @JoinColumn(name = "brand", nullable = false, updatable = false)
-    private Supplier brand;
+    @JoinColumn(name = "id_brand", nullable = false, updatable = false)
+    private Supplier id_brand;
 
-    public Supplier getBrand() {
-        return brand;
+    public Supplier getId_brand() {
+        return id_brand;
     }
 
-    public void setBrand(Supplier brand) {
-        this.brand = brand;
+    public void setId_brand(Supplier id_brand) {
+        this.id_brand = id_brand;
     }
      public Float getCostSupplier() {
         return costSupplier;

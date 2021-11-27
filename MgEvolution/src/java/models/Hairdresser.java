@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import model.controllers.BuyJpaController;
 import model.controllers.ClientJpaController;
 import model.controllers.ProductJpaController;
@@ -80,6 +83,7 @@ public class Hairdresser {
         ejc.edit(stylist);
     }
 //Supplier
+
     public List<Supplier> getSupplier() {
         SupplierJpaController ejc = new SupplierJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         return ejc.findSupplierEntities();
@@ -92,7 +96,7 @@ public class Hairdresser {
         return supplier;
     }
 
-    public List<Supplier> filterSupplier(String filtro) {
+    /*public List<Supplier> filterSupplier(String filtro) {
         List<Supplier> supplier = getSupplier();
         List<Supplier> filter = new ArrayList();
         if (!filtro.isEmpty()) {
@@ -105,11 +109,11 @@ public class Hairdresser {
             filter = supplier;
         }
         return filter;
-    }
+    }*/
 
-    public void deleteSupplier(String brand) throws Exception {
+    public void deleteSupplier(Long id_brand) throws Exception {
         SupplierJpaController ejc = new SupplierJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
-        ejc.destroy(brand);
+        ejc.destroy(id_brand);
     }
 
     public void addSupplier(Supplier supplier) throws Exception {
@@ -117,17 +121,16 @@ public class Hairdresser {
         ejc.create(supplier);
     }
 
-    public Supplier searchSupplier(String brand) {
+    public static Supplier searchSupplier(Long id_brand) {
         SupplierJpaController ejc = new SupplierJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
-        return ejc.findSupplier(brand);
+        return ejc.findSupplier(id_brand);
     }
 
     public void updateSupplier(Supplier supplier) throws Exception {
         SupplierJpaController ejc = new SupplierJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         ejc.edit(supplier);
     }
-    
-    
+
 //Product 
     public List<Product> getProduct() {
         ProductJpaController ejc = new ProductJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
@@ -177,7 +180,7 @@ public class Hairdresser {
     }
 
    
-//Client 
+        //Client 
     public List<Client> getClient() {
         ClientJpaController ejc = new ClientJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         return ejc.findClientEntities();
@@ -224,7 +227,7 @@ public class Hairdresser {
         ClientJpaController ejc = new ClientJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         ejc.edit(client);
     }
-    
+
 //Service 
     public List<Service> getService() {
         ServiceJpaController ejc = new ServiceJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
@@ -265,7 +268,7 @@ public class Hairdresser {
         ServiceJpaController ejc = new ServiceJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         ejc.edit(service);
     }
-    
+
 //Buy 
     public List<Buy> getBuy() {
         BuyJpaController ejc = new BuyJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));

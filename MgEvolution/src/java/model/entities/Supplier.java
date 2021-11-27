@@ -25,18 +25,28 @@ public class Supplier implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id_brand;
+    @Column(length = 50)
     private String brand;
     /*Declaracion de los atributos de Proveedor, entre ellos se encuentra:
     phoneSupplier = Número del proveedor,
     nameSupplier = Nombre del proveedor,
-    El ID del producto es brand = Código de barras del proveedor.
+    brand = Nombre de la marca,
+    El ID del proveedor es id_brand = ID marca.
     Proveedor tiene una relacion 1:N con la entidad producto.*/
     @Column(length = 50)
     private Integer phoneSupplier;
+    @Column(length = 50)
     private String nameSupplier;
-    
-    
 
+    public Long getId_brand() {
+        return id_brand;
+    }
+
+    public void setId_brand(Long id_brand) {
+        this.id_brand = id_brand;
+    }
+    
     
     public String getBrand() {
         return brand;
@@ -76,7 +86,7 @@ public class Supplier implements Serializable {
             return false;
         }
         Supplier other = (Supplier) object;
-        if ((this.brand == null && other.brand != null) || (this.brand != null && !this.brand.equals(other.brand))) {
+        if ((this.id_brand == null && other.id_brand != null) || (this.id_brand != null && !this.id_brand.equals(other.id_brand))) {
             return false;
         }
         return true;
@@ -84,7 +94,7 @@ public class Supplier implements Serializable {
 
     @Override
     public String toString() {
-        return "model.entities.Supplier[ id=" + brand + " ]";
+        return "model.entities.Supplier[ id=" + id_brand + " ]";
     }
     
 }

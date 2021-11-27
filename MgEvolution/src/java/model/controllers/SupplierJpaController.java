@@ -73,9 +73,9 @@ public class SupplierJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = supplier.getBrand();
-                if (findSupplier(id) == null) {
-                    throw new NonexistentEntityException("The supplier with id " + id + " no longer exists.");
+                Long id_brand = supplier.getId_brand();
+                if (findSupplier(id_brand) == null) {
+                    throw new NonexistentEntityException("The supplier with id " + id_brand + " no longer exists.");
                 }
             }
             throw ex;
@@ -86,7 +86,7 @@ public class SupplierJpaController implements Serializable {
         }
     }
 
-    public void destroy(String brand) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Long id_brand) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         EntityTransaction etx = null;
         try {
@@ -95,10 +95,10 @@ public class SupplierJpaController implements Serializable {
             etx.begin();
             Supplier supplier;
             try {
-                supplier = em.getReference(Supplier.class, brand);
-                supplier.getBrand();
+                supplier = em.getReference(Supplier.class, id_brand);
+                supplier.getId_brand();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The supplier with id " + brand + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The supplier with id " + id_brand + " no longer exists.", enfe);
             }
             em.remove(supplier);
             etx.commit();
@@ -140,10 +140,10 @@ public class SupplierJpaController implements Serializable {
         }
     }
 
-    public Supplier findSupplier(String brand) {
+    public Supplier findSupplier(Long id_brand) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Supplier.class, brand);
+            return em.find(Supplier.class, id_brand);
         } finally {
             em.close();
         }

@@ -33,9 +33,9 @@ public class Buy implements Serializable {
     El ID del producto es numTicket = numero del ticket.
     Compra es una tabla que nace de la relacion de Producto y Cliente 
     por eso sus campos son los id de las dos tablas que une además de su propio id*/
-    @Column(length = 50)
+    @Column(length = 25)
     private Date date;
-    @Column(length = 50)
+    @Column(length = 25)
     private Float totalBuy;
     
     @ManyToOne

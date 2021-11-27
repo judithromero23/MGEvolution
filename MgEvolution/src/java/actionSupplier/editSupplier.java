@@ -33,9 +33,10 @@ public class editSupplier extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Hairdresser hairdresser = (Hairdresser) request.getSession().getAttribute("hairdresser");
+        Long id_brand = Long.parseLong(request.getParameter("id_brand"));
         String brand = request.getParameter("brand");
         System.out.println(brand);
-        Supplier supplier = hairdresser.searchSupplier(brand);
+        Supplier supplier = hairdresser.searchSupplier(id_brand);
         if (supplier == null) {
             String error = "Se ha producido un error al actualizar a el proveedor.";
             request.setAttribute("error", error);
@@ -55,7 +56,7 @@ public class editSupplier extends HttpServlet {
         } else {
             if (request.getParameter("eliminar") != null) {
                 try {
-                    hairdresser.deleteSupplier(brand);
+                    hairdresser.deleteSupplier(id_brand);
                 } catch (Exception e) {
                     String error = e.getMessage();
                     request.setAttribute("error", error);

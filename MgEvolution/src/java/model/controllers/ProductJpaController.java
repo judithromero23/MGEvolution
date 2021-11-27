@@ -8,6 +8,7 @@ package model.controllers;
 import model.controllers.exceptions.NonexistentEntityException;
 import model.controllers.exceptions.RollbackFailureException;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -27,7 +28,7 @@ public class ProductJpaController implements Serializable {
     public ProductJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
+
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
@@ -163,5 +164,7 @@ public class ProductJpaController implements Serializable {
             em.close();
         }
     }
-    
+
+
+
 }
