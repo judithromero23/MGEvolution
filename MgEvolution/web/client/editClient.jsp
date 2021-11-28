@@ -1,6 +1,6 @@
 <%-- 
-    Document   : editStylist
-    Created on : 06-nov-2021, 23:09:37
+    Document   : editClient
+    Created on : 27-nov-2021, 22:57:09
     Author     : judith
 --%>
 
@@ -23,16 +23,16 @@
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <!--CSS-->
-        <link rel="stylesheet" href="../assets/css/add.css">
+        <link rel="stylesheet" href="../assets/css/edit.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="estilistas" bundle="${text}"/></title>
+        <title><fmt:message key="clientes" bundle="${text}"/></title>
         <script>
             function deleteStylist() {
-                return confirm('¿Está seguro que desea eliminar al estilista?');
+                return confirm('¿Está seguro que desea eliminar a el cliente?');
             }
             function actualizar() {
-                return confirm('Estilista actualizad@');
+                return confirm('Cliente actualizado');
             }
         </script>
     </head>
@@ -51,46 +51,37 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="allStylist.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="allClient.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            
-            <%
-               String login = request.getParameter("login");
-               String firtsLetter = login.substring(0, 1).toUpperCase();
-               String restLetters = login.substring(1).toLowerCase();
-             %>
-             
-            <h2><fmt:message key="editarEstilista" bundle="${text}"/></h2>
-            <h5><fmt:message key="completarEditStylist" bundle="${text}"/> <strong><%out.print(firtsLetter + restLetters);%></strong> </h5>
+            <h2><fmt:message key="editarCliente" bundle="${text}"/></h2>
+            <h5><fmt:message key="completarEditClient" bundle="${text}"/> <strong><%out.print(request.getParameter("dni"));%></strong> </h5>
 
-            <form action="../editStylist" method="POST" id="form">
-
-                <input type="hidden" name="id" value=<%out.print(request.getParameter("id"));%>>
+            <form action="../editClient" method="POST" id="form">
+                <input type="hidden" name="dni" id="dni" value=<%out.print(request.getParameter("dni"));%>>
                 <label for="name"><fmt:message key="inputName" bundle="${text}"/></label>
                 <input type="text" name="name" id="name" maxlength="35" required value=<%out.print(request.getParameter("name"));%>>
                 <br>
-                <label for="password"><fmt:message key="inputPass" bundle="${text}"/></label>
-                <input type="password" name="password" id="password" maxlength="40" required value=<%out.print(request.getParameter("password"));%>>
+                <label for="lastName"><fmt:message key="inputLastName" bundle="${text}"/></label>
+                <input type="text" name="lastName" id="lastName" maxlength="35" required value=<%out.print(request.getParameter("lastName"));%>>
                 <br>
-                <label for="email"><fmt:message key="inputMail" bundle="${text}"/></label>
-                <input type="email" name="email" id="email" maxlength="50" required value=<%out.print(request.getParameter("email"));%>>
+                <label for="bithDate"><fmt:message key="inputFechaNacimiento" bundle="${text}"/></label>
+                <input type="date" name="bithDate" id="bithDate" required value=<%out.print(request.getParameter("bithDate"));%>>
                 <br>
-                <label for="area"><fmt:message key="inputArea" bundle="${text}"/></label>
-                <input type="text" name="area" id="area" maxlength="35" required value=<%out.print(request.getParameter("area"));%>>
+                <label for="phone"><fmt:message key="inputPhone" bundle="${text}"/></label>
+                <input type="number" name="phone" id="phone"  required value=<%out.print(request.getParameter("phone"));%>>
                 <br>
-                <label for="salary"><fmt:message key="inputSalary" bundle="${text}"/></label>
-                <input type="decimal" name="salary" id="salary" required maxFractionDigits="0" minFractionDigits="0" value=<%out.print(Float.parseFloat(request.getParameter("salary")));%>>
+                <label for="city"><fmt:message key="inputCity" bundle="${text}"/></label>
+                <input type="text" name="city" id="city"  required value=<%out.print(request.getParameter("city"));%>>
                 <br>
-                <label for="admin"><fmt:message key="inputAdmin" bundle="${text}"/></label>
-                <input type="checkbox" name="admin" id="admin" style=" bottom: 10px;left: 15rem">
-
+                <div class="buttonsLeft">
                 <input type="submit" name="actualizar" value="Actualizar" class="btn btn-success" onclick="return actualizar()">
                 <input type="submit" name="eliminar" value="Eliminar" class="borrar btn btn-danger" onclick="return deleteStylist()"/>
+                </div>
                 <br>
             </form>
         </section>
@@ -100,9 +91,9 @@
                 ${error}
             </div>
         </c:if>
-         <!--<footer class="container-fluid text-center">
+        <%--<footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
-        </footer>-->
+        </footer>--%>
 
 
         <!--Bootstrap-->

@@ -1,6 +1,6 @@
 <%-- 
     Document   : onlyView
-    Created on : 05-nov-2021, 21:48:45
+    Created on : 28-nov-2021, 0:01:21
     Author     : judith
 --%>
 
@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="assets/css/view.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="estilistas" bundle="${text}"/></title>
+        <title><fmt:message key="clientes" bundle="${text}"/></title>
     </head>
     <body>
         <header>
@@ -43,38 +43,37 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="allStylist.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="allClient.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2><fmt:message key="estilistas" bundle="${text}"/></h2>
-            <h5><fmt:message key="listaEstilistas" bundle="${text}"/>.</h5>
+            <h2><fmt:message key="proveedores" bundle="${text}"/></h2>
+            <h5><fmt:message key="listaProveedores" bundle="${text}"/></h5>
 
             <table class="table">
                 <thead class="thead-light">
-                    <tr>
-                        <th scope="col"><fmt:message key="tableUsuario" bundle="${text}"/></th>
+                     <tr>
+                        <th scope="col"><fmt:message key="tableDNI" bundle="${text}"/></th>
                         <th scope="col"><fmt:message key="tableNombre" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableCorreo" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableArea" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableSalary" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableAdmin" bundle="${text}"/></th>
-
+                        <th scope="col"><fmt:message key="tableLastName" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableFechaNacimiento" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tablePhone" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCity" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableModificar" bundle="${text}"/></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="stylist" items="${hairdresser.getStylistAlfabeticamente()}">
+                    <c:forEach var="client" items="${hairdresser.getClientAlfabeticamente()}">
                         <tr>
-                            <th scope="col">${stylist.login}</th>
-                            <td>${stylist.name}</td>
-                            <td>${stylist.email}</td>
-                            <td>${stylist.area}</td>
-                            <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="1" minFractionDigits="1" /></td>
-                            <td>${stylist.admin}</td>
-
+                            <th scope="col">${client.dni}</th>
+                            <td>${client.name}</td>
+                            <td>${client.lastName}</td>
+                            <td>${client.birthday}</td>
+                            <td>${client.phone}</td>
+                            <td>${client.city}</td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -87,7 +86,7 @@
                 </div>
             </c:if>
         </section>
-         <!--<footer class="container-fluid text-center">
+       <!-- <footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
         </footer>-->
 

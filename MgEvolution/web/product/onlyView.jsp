@@ -4,6 +4,9 @@
     Author     : judith
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="models.Conexion"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:useBean id="hairdresser" class="models.Hairdresser"/>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -25,7 +28,7 @@
         <link rel="stylesheet" href="assets/css/view.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="estilistas" bundle="${text}"/></title>
+        <title><fmt:message key="productos" bundle="${text}"/></title>
     </head>
     <body>
         <header>
@@ -43,40 +46,55 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="allStylist.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="allProduct.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2><fmt:message key="estilistas" bundle="${text}"/></h2>
-            <h5><fmt:message key="listaEstilistas" bundle="${text}"/>.</h5>
+            <h2><fmt:message key="productos" bundle="${text}"/></h2>
+            <h5><fmt:message key="listaProductos" bundle="${text}"/></h5>
+            <%
+                Statement smt;
+                ResultSet rs = null;
 
+                try {
+                    Conexion con = new Conexion();
+                    smt = con.getConnection().createStatement();
+
+                    rs = smt.executeQuery("SELECT product.*, supplier.BRAND FROM product INNER JOIN supplier ON "
+                            + "product.ID_BRAND=supplier.ID_BRAND ORDER BY `CATEGORY`, `NAME`");
+
+                } catch (java.sql.SQLException sqle) {
+                    System.out.println("Error: " + sqle);
+                    throw (sqle);
+                }
+            %>
             <table class="table">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col"><fmt:message key="tableUsuario" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCodBarras" bundle="${text}"/></th>
                         <th scope="col"><fmt:message key="tableNombre" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableCorreo" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableArea" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableSalary" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableAdmin" bundle="${text}"/></th>
-
+                        <th scope="col"><fmt:message key="tableBrand" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCategory" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCostClient" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCostSupplier" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableStock" bundle="${text}"/></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="stylist" items="${hairdresser.getStylistAlfabeticamente()}">
-                        <tr>
-                            <th scope="col">${stylist.login}</th>
-                            <td>${stylist.name}</td>
-                            <td>${stylist.email}</td>
-                            <td>${stylist.area}</td>
-                            <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="1" minFractionDigits="1" /></td>
-                            <td>${stylist.admin}</td>
-
-                        </tr>
-                    </c:forEach>
+                    <%   while (rs.next()) { %>
+                    <tr>
+                        <th scope="col"><%= rs.getString("CODBARRAS")%></th>
+                        <th scope="col"><%= rs.getString("NAME")%></th>
+                        <td><%= rs.getString("BRAND")%></td>
+                        <td><%= rs.getString("CATEGORY")%></td>
+                        <td><%= rs.getFloat("COSTCLIENT")%></td>
+                        <td><%= rs.getFloat("COSTSUPPLIER")%></td>
+                        <td><%= rs.getInt("STOCK")%></td>
+                    </tr>
+                    <%  }%>
                 </tbody>
             </table>
             <br>
@@ -87,7 +105,7 @@
                 </div>
             </c:if>
         </section>
-         <!--<footer class="container-fluid text-center">
+        <!--<footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
         </footer>-->
 

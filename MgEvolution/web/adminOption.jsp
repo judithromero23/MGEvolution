@@ -63,17 +63,17 @@
                 <div class="d-flex justify-content-around row marginbottom">
                     <button type="button" class="btn btn-secondary col-sm margin10px btnsize" onclick="window.location.href = 'stylist/allStylist.jsp'">
                         <i class="fas fa-cut paddingRight"></i> <fmt:message key="estilistas" bundle="${text}"/></button>
-                    <button type="button" class="btn btn-secondary col-sm margin10px btnsize">
+                    <button type="button" class="btn btn-secondary col-sm margin10px btnsize" onclick="window.location.href = 'client/allClient.jsp'">
                         <i class="fas fa-users paddingRight"></i> <fmt:message key="clientes" bundle="${text}"/></button>
                     <button type="button" class="btn btn-secondary col-sm margin10px btnsize" onclick="window.location.href = 'product/allProduct.jsp'">
                         <i class="fas fa-info paddingRight"></i> <fmt:message key="productos" bundle="${text}"/></button>
                 </div>
 
                 <div class="d-flex justify-content-around row marginbottom">
-                    <button type="button" class="btn btn-secondary col-sm margin10px btnsize">
-                        <i class="far fa-calendar-alt paddingRight"></i> <fmt:message key="citas" bundle="${text}"/></button>
-                    <button type="button" class="btn btn-secondary col-sm margin10px btnsize">
-                        <i class="far fa-credit-card paddingRight"></i> <fmt:message key="ventas" bundle="${text}"/></button>
+                    <button type="button" class="btn btn-secondary col-sm margin10px btnsize" onclick="window.location.href = 'service/allService.jsp'">
+                        <i class="far fa-calendar-alt paddingRight"></i> <fmt:message key="servicios" bundle="${text}"/></button>
+                    <button type="button" class="btn btn-secondary col-sm margin10px btnsize" onclick="window.location.href = 'detailService/allDetailService.jsp'">
+                        <i class="far fa-credit-card paddingRight"></i> <fmt:message key="detalleServicio" bundle="${text}"/></button>
                 </div>
 
                 <div class="d-flex justify-content-around row marginbottom">
@@ -103,28 +103,28 @@
                                 showCancelButton: true,
                                 confirmButtonColor: '#3085d6',
                                 cancelButtonColor: '#d33',
-                                confirmButtonText: 'Sí, salir'
+                                confirmButtonText: 'Salir'
                         }).then((result) => {
                         if (result.isConfirmed) {
                         
                                 
                                 Swal.fire({
                                 title: 'Cerrando sesión',
-                                        timer: 6000,
+                                        timer: 5000,
                                         timerProgressBar: true,
                                         didOpen: () => {
                                 Swal.showLoading()
                                         const b = Swal.getHtmlContainer().querySelector('b')
                                         timerInterval = setInterval(() => {
                                         b.textContent = Swal.getTimerLeft()
-                                        }, 100)
+                                        }, 600)
                                 },
                                         willClose: () => {
                                 clearInterval(timerInterval)
                                 }
                                 }).then((result) => {})
                                 location.href = "index.jsp";
-                        }
+                        };
                         })
                         }
                         );

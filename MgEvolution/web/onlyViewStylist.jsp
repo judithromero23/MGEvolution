@@ -25,7 +25,7 @@
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <!--CSS-->
-        <link rel="stylesheet" href="assets/css/tables.css">
+        <link rel="stylesheet" href="assets/css/view.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
         <title><fmt:message key="estilistas" bundle="${text}"/></title>
@@ -77,7 +77,7 @@
                             <td>${stylist.email}</td>
                             <td>${stylist.area}</td>
                             <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="1" minFractionDigits="1" /></td>
-                            <td>${stylist.admin}</td>
+                            <td>${stylist.admin?"Si":"No"}</td>
 
                         </tr>
                     </c:forEach>
@@ -85,9 +85,9 @@
             </table>
 
         </section>
-        <footer class="container-fluid text-center">
+       <!-- <footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
-        </footer>
+        </footer>-->
 
 
         <!--Bootstrap-->

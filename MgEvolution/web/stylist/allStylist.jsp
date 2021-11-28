@@ -4,6 +4,9 @@
     Author     : judith
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="models.Conexion"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="iso-8859-1"%>
@@ -53,6 +56,30 @@
             <h2><fmt:message key="estilistas" bundle="${text}"/></h2>
             <h5><fmt:message key="listaEstilistas" bundle="${text}"/></h5>
             <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href = 'addStylist.jsp'"><fmt:message key="nuevoEstilista" bundle="${text}"/></button>
+            <form id="formBuscar">
+                <input id="inputBuscar" name="inputSearch" type="search" placeholder="Buscar...">
+                <i class="fa fa-search"></i>
+            </form>
+            <%
+                Statement smt;
+                ResultSet rs = null;
+                String inputSearch = request.getParameter("inputSearch");
+
+                try {
+                    Conexion con = new Conexion();
+                    smt = con.getConnection().createStatement();
+                    if (inputSearch != null) {
+
+                        rs = smt.executeQuery("SELECT stylist.* FROM stylist WHERE (stylist.LOGIN LIKE '" + inputSearch + "%') "
+                                + "OR (stylist.NAME LIKE '" + inputSearch + "%') OR (stylist.AREA LIKE'" + inputSearch + "%') OR (stylist.EMAIL LIKE'" + inputSearch + "%') ORDER BY `NAME`");
+                    } else {
+                        rs = smt.executeQuery("SELECT stylist.* FROM stylist ORDER BY `NAME`");
+                    }
+                } catch (java.sql.SQLException sqle) {
+                    System.out.println("Error: " + sqle);
+                    throw (sqle);
+                }
+            %>
             <table class="table">
                 <thead class="thead-light">
                     <tr>
@@ -66,29 +93,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <c:forEach var="stylist" items="${hairdresser.getStylistAlfabeticamente()}">
+                    <%   while (rs.next()) { 
+                    String answer;
+                    boolean var = rs.getBoolean("ADMIN");
+                   //If ternario
+                    answer = (var==true)?  "Sí" : "No";
+                    %>
                         <tr>
-                            <th scope="col">${stylist.login}</th>
-                            <td>${stylist.name}</td>
-                            <td>${stylist.email}</td>
-                            <td>${stylist.area}</td>
-                            <td><fmt:formatNumber value="${stylist.salary}" maxFractionDigits="1" minFractionDigits="1" /></td>
-                            <td>${stylist.admin?"Sí":"No"}</td>
+                            <th scope="col"><%= rs.getString("LOGIN")%></th>
+                            <td><%= rs.getString("NAME")%></td>
+                            <td><%= rs.getString("EMAIL")%></td>
+                            <td><%= rs.getString("AREA")%></td>
+                            <td><%= rs.getFloat("SALARY")%></td>
+                            <td><%out.print(answer);%></td>
                             <td>
                                 <form action="editStylist.jsp" method="POST">
-                                    <input type="hidden" value="${stylist.id}" name="id">
-                                    <input type="hidden" value="${stylist.login}" name="login">
-                                    <input type="hidden" value="${stylist.name}" name="name">
-                                    <input type="hidden" value="${stylist.password}" name="password">
-                                    <input type="hidden" value="${stylist.email}" name="email">
-                                    <input type="hidden" value="${stylist.area}" name="area">
-                                    <input type="hidden" value="${stylist.salary}" name="salary">
-                                    <input type="hidden" value="${stylist.admin}" name="admin">
+                                    <input type="hidden" name="id" value=<%= rs.getString("ID")%>>
+                                    <input type="hidden" name="login" value=<%= rs.getString("LOGIN")%>>
+                                    <input type="hidden" name="name" value=<%= rs.getString("NAME")%>>
+                                    <input type="hidden" name="password" value=<%= rs.getString("PASSWORD")%>>
+                                    <input type="hidden" name="email" value=<%= rs.getString("EMAIL")%>>
+                                    <input type="hidden" name="area" value=<%= rs.getString("AREA")%>>
+                                    <input type="hidden" name="salary" value=<%= rs.getFloat("SALARY")%>>
+                                    <input type="hidden" name="admin" value="<%out.print(answer);%>">
                                     <input type="submit" value="Editar" class="btn btn-warning">
                                 </form>
                             </td>
                         </tr>
-                    </c:forEach>
+                      <%  }%>
                 </tbody>
             </table>
             <br>
@@ -99,9 +131,9 @@
                 </div>
             </c:if>
         </section>
-        <footer class="container-fluid text-center">
+        <%--<footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
-        </footer>
+        </footer>--%>
 
 
         <!--Bootstrap-->

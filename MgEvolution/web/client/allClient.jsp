@@ -1,6 +1,6 @@
 <%-- 
-    Document   : editSupplier
-    Created on : 12-nov-2021, 12:35:25
+    Document   : allClient
+    Created on : 18-nov-2021, 15:36:47
     Author     : judith
 --%>
 
@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="../assets/css/tables.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="proveedores" bundle="${text}"/></title>
+        <title><fmt:message key="clientes" bundle="${text}"/></title>
     </head>
     <body>
         <header>
@@ -53,9 +53,9 @@
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2><fmt:message key="proveedores" bundle="${text}"/></h2>
-            <h5><fmt:message key="listaProveedores" bundle="${text}"/></h5>
-            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href = 'addSupplier.jsp'"><fmt:message key="nuevoProveedor" bundle="${text}"/></button>
+            <h2><fmt:message key="clientes" bundle="${text}"/></h2>
+            <h5><fmt:message key="listaClientes" bundle="${text}"/></h5>
+            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href = 'addClient.jsp'"><fmt:message key="nuevoCliente" bundle="${text}"/></button>
             <form id="formBuscar">
                 <input id="inputBuscar" name="inputSearch" type="search" placeholder="Buscar...">
                 <i class="fa fa-search"></i>
@@ -70,10 +70,13 @@
                     smt = con.getConnection().createStatement();
                     if (inputSearch != null) {
 
-                        rs = smt.executeQuery("SELECT supplier.* FROM supplier WHERE (supplier.BRAND LIKE '" + inputSearch + "%') "
-                                + "OR (supplier.NAMESUPPLIER LIKE '" + inputSearch + "%') OR (supplier.PHONESUPPLIER='" + inputSearch + "') ORDER BY `BRAND`");
+                        rs = smt.executeQuery("SELECT client.* FROM client WHERE "
+                                + "(client.NAME LIKE '" + inputSearch + "%') OR (client.LASTNAME LIKE '" + inputSearch + "%') "
+                                + "OR (client.DNI='" + inputSearch + "') OR (client.CITY LIKE '" + inputSearch + "%') "
+                                + "OR (client.PHONE='" + inputSearch + "') OR (client.BIRTHDATE='" + inputSearch + "')"
+                                + " ORDER BY `NAME`");
                     } else {
-                        rs = smt.executeQuery("SELECT supplier.* FROM supplier ORDER BY `BRAND`");
+                        rs = smt.executeQuery("SELECT client.* FROM client ORDER BY `NAME`");
                     }
                 } catch (java.sql.SQLException sqle) {
                     System.out.println("Error: " + sqle);
@@ -83,28 +86,36 @@
             <table class="table">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col"><fmt:message key="tableBrand" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableNameSupplier" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tablePhoneSupplier" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableDNI" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableNombre" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableLastName" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableFechaNacimiento" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tablePhone" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCity" bundle="${text}"/></th>
                         <th scope="col"><fmt:message key="tableModificar" bundle="${text}"/></th>
                     </tr>
                 </thead>
                 <tbody>
                     <%   while (rs.next()) {%>
-                    <tr>
-                        <th scope="col"><%= rs.getString("BRAND")%></th>
-                        <td><%= rs.getString("NAMESUPPLIER")%></td>
-                        <td><%= rs.getInt("PHONESUPPLIER")%></td>
-                        <td>
-                            <form action="editSupplier.jsp" method="POST">
-                                <input type="hidden"  name="id_brand" value=<%= rs.getLong("ID_BRAND")%>>
-                                <input type="hidden" name="brand" value=<%= rs.getString("BRAND")%>>
-                                <input type="hidden" name="nameSupplier" value=<%= rs.getString("NAMESUPPLIER")%>>
-                                <input type="hidden" name="phoneSupplier" value=<%= rs.getInt("PHONESUPPLIER")%>>
-                                <input type="submit" value="Editar" class="btn btn-warning">
-                            </form>
-                        </td>
-                    </tr>
+                        <tr>
+                            <th scope="col"><%= rs.getString("DNI")%></th>
+                            <td><%= rs.getString("NAME")%></td>
+                            <td><%= rs.getString("LASTNAME")%></td>
+                            <td><%= rs.getDate("BIRTHDATE")%></td>
+                            <td><%= rs.getInt("PHONE")%></td>
+                            <td><%= rs.getString("CITY")%></td>
+                            <td>
+                                <form action="editClient.jsp" method="POST">
+                                    <input type="hidden" name="dni" value=<%= rs.getString("DNI")%>>
+                                    <input type="hidden" name="name" value=<%= rs.getString("NAME")%>>
+                                    <input type="hidden" name="lastName" value=<%= rs.getString("LASTNAME")%>>
+                                    <input type="hidden" name="bithDate" value=<%= rs.getDate("BIRTHDATE")%>>
+                                    <input type="hidden" name="phone" value=<%= rs.getInt("PHONE")%>>
+                                    <input type="hidden" name="city" value=<%= rs.getString("CITY")%>>
+                                    <input type="submit" value="Editar" class="btn btn-warning">
+                                </form>
+                            </td>
+                        </tr>
                     <%  }%>
                 </tbody>
             </table>
@@ -116,9 +127,9 @@
                 </div>
             </c:if>
         </section>
-       <%-- <footer class="container-fluid text-center">
+        <!--<footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
-        </footer>--%>
+        </footer>-->
 
 
         <!--Bootstrap-->

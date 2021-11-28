@@ -37,13 +37,18 @@ label {
     padding-top: 0.5rem;
 }
 
+.buttonsLeft{
+    position: relative;
+    left: 5rem;
+}
+
 input[type='submit']{
     position: relative;
     left: -6rem;
     top: 5rem;
     margin-bottom: 1rem;
 }
-input[type='number']{
+.inputNumber{
     position: relative;
     left: 20.4rem;
     margin-bottom: 1rem;

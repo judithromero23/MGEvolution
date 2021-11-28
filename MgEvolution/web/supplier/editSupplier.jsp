@@ -59,9 +59,7 @@
         </header>
         <section class="container letraQuicksand">
 
-            <% String brand = request.getParameter("brand");
-                String nameSupplier = request.getParameter("nameSupplier");
-                String phoneSupplier = request.getParameter("phoneSupplier");
+            <%  String brand = request.getParameter("brand");
                 String firtsLetter = brand.substring(0, 1).toUpperCase();
                 String restLetters = brand.substring(1).toLowerCase();
             %>
@@ -70,12 +68,12 @@
             <h5><fmt:message key="completarEditSupplier" bundle="${text}"/> <strong><%out.print(firtsLetter + restLetters);%></strong> </h5>
 
             <form action="../editSupplier" method="POST" id="form">
-                <input type="hidden" name="brand" id="brand" value=<%out.print(brand);%>>
+                <input type="hidden" name="id_brand" id="id_brand" value=<%out.print(request.getParameter("id_brand"));%>>
                 <label for="nameSupplier"><fmt:message key="inputNameSupplier" bundle="${text}"/></label>
-                <input type="text" name="nameSupplier" id="nameSupplier" maxlength="35" required value=<%out.print(nameSupplier);%>>
+                <input type="text" name="nameSupplier" id="nameSupplier" maxlength="35" required value=<%out.print(request.getParameter("nameSupplier"));%>>
                 <br>
                 <label for="phoneSupplier"><fmt:message key="inputPhoneSupplier" bundle="${text}"/></label>
-                <input type="number" name="phoneSupplier" id="phoneSupplier" maxlength="9" required value=<%out.print(phoneSupplier);%>>
+                <input type="number" name="phoneSupplier" class="inputNumber" id="phoneSupplier" maxlength="9" required value=<%out.print(request.getParameter("phoneSupplier"));%>>
 
                 <input type="submit" name="actualizar" value="Actualizar" class="btn btn-success" onclick="return actualizar()">
                 <input type="submit" name="eliminar" value="Eliminar" class="borrar btn btn-danger" onclick="return deleteStylist()"/>
@@ -88,9 +86,9 @@
                 ${error}
             </div>
         </c:if>
-        <footer class="container-fluid text-center">
+        <!--<footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
-        </footer>
+        </footer>-->
 
 
         <!--Bootstrap-->

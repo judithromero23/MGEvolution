@@ -1,6 +1,6 @@
 <%-- 
-    Document   : addStylist
-    Created on : 04-nov-2021, 19:32:59
+    Document   : addSupplier
+    Created on : 12-nov-2021, 12:49:26
     Author     : judith
 --%>
 
@@ -72,9 +72,9 @@
                 ${error}
             </div>
         </c:if>
-        <footer class="container-fluid text-center">
+       <!-- <footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
-        </footer>
+        </footer>-->
 
 
         <!--Bootstrap-->

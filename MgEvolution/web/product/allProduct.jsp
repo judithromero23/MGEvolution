@@ -1,7 +1,7 @@
 <%-- 
-    Document   : editSupplier
-    Created on : 12-nov-2021, 12:35:25
-    Author     : judith
+    Document   : allProduct
+    Created on : 14-nov-2021, 20:09:08
+    Author     : judit
 --%>
 
 <%@page import="java.sql.ResultSet"%>
@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="../assets/css/tables.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="proveedores" bundle="${text}"/></title>
+        <title><fmt:message key="productos" bundle="${text}"/></title>
     </head>
     <body>
         <header>
@@ -46,16 +46,16 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="../adminOption.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="../adminOption.jsp"> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2><fmt:message key="proveedores" bundle="${text}"/></h2>
-            <h5><fmt:message key="listaProveedores" bundle="${text}"/></h5>
-            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href = 'addSupplier.jsp'"><fmt:message key="nuevoProveedor" bundle="${text}"/></button>
+            <h2><fmt:message key="productos" bundle="${text}"/></h2>
+            <h5><fmt:message key="listaProductos" bundle="${text}"/></h5>
+            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href = 'addProduct.jsp'"><fmt:message key="nuevoProducto" bundle="${text}"/></button>
             <form id="formBuscar">
                 <input id="inputBuscar" name="inputSearch" type="search" placeholder="Buscar...">
                 <i class="fa fa-search"></i>
@@ -70,10 +70,14 @@
                     smt = con.getConnection().createStatement();
                     if (inputSearch != null) {
 
-                        rs = smt.executeQuery("SELECT supplier.* FROM supplier WHERE (supplier.BRAND LIKE '" + inputSearch + "%') "
-                                + "OR (supplier.NAMESUPPLIER LIKE '" + inputSearch + "%') OR (supplier.PHONESUPPLIER='" + inputSearch + "') ORDER BY `BRAND`");
+                        rs = smt.executeQuery("SELECT product.*, supplier.BRAND FROM product "
+                                + "INNER JOIN supplier ON product.ID_BRAND=supplier.ID_BRAND WHERE "
+                                + "(product.CATEGORY LIKE '" + inputSearch + "%') OR (product.NAME LIKE '" + inputSearch + "%') "
+                                + "OR (product.CODBARRAS='" + inputSearch + "') OR "
+                                + "(supplier.BRAND LIKE '" + inputSearch + "%')  ORDER BY `NAME`");
                     } else {
-                        rs = smt.executeQuery("SELECT supplier.* FROM supplier ORDER BY `BRAND`");
+                        rs = smt.executeQuery("SELECT product.*, supplier.BRAND FROM product INNER JOIN supplier ON "
+                                + "product.ID_BRAND=supplier.ID_BRAND ORDER BY `CATEGORY`, `NAME`");
                     }
                 } catch (java.sql.SQLException sqle) {
                     System.out.println("Error: " + sqle);
@@ -83,24 +87,36 @@
             <table class="table">
                 <thead class="thead-light">
                     <tr>
+                        <th scope="col"><fmt:message key="tableCodBarras" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableNombre" bundle="${text}"/></th>
                         <th scope="col"><fmt:message key="tableBrand" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableNameSupplier" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tablePhoneSupplier" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCategory" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCostClient" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCostSupplier" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableStock" bundle="${text}"/></th>
                         <th scope="col"><fmt:message key="tableModificar" bundle="${text}"/></th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    <%   while (rs.next()) {%>
+                    <%   while (rs.next()) { %>
                     <tr>
-                        <th scope="col"><%= rs.getString("BRAND")%></th>
-                        <td><%= rs.getString("NAMESUPPLIER")%></td>
-                        <td><%= rs.getInt("PHONESUPPLIER")%></td>
+                        <th scope="col"><%= rs.getString("CODBARRAS")%></th>
+                        <th scope="col"><%= rs.getString("NAME")%></th>
+                        <td><%= rs.getString("BRAND")%></td>
+                        <td><%= rs.getString("CATEGORY")%></td>
+                        <td><%= rs.getFloat("COSTCLIENT")%></td>
+                        <td><%= rs.getFloat("COSTSUPPLIER")%></td>
+                        <td><%= rs.getInt("STOCK")%></td>
                         <td>
-                            <form action="editSupplier.jsp" method="POST">
-                                <input type="hidden"  name="id_brand" value=<%= rs.getLong("ID_BRAND")%>>
-                                <input type="hidden" name="brand" value=<%= rs.getString("BRAND")%>>
-                                <input type="hidden" name="nameSupplier" value=<%= rs.getString("NAMESUPPLIER")%>>
-                                <input type="hidden" name="phoneSupplier" value=<%= rs.getInt("PHONESUPPLIER")%>>
+                            <form action="editProduct.jsp" method="POST">
+                                <input type="hidden" name="codBarras" value=<%= rs.getLong("CODBARRAS")%>>
+                                <input type="hidden" name="name" value=<%= rs.getString("NAME")%>>
+                                <input type="hidden" name="id_brand" value=<%= rs.getLong("ID_BRAND")%>>
+                                <input type="hidden" name="category" value=<%= rs.getString("CATEGORY")%>>
+                                <input type="hidden" name="costClient" value=<%= rs.getFloat("COSTCLIENT")%>>
+                                <input type="hidden" name="costSupplier" value=<%= rs.getFloat("COSTSUPPLIER")%> >
+                                <input type="hidden" name="stock" value=<%= rs.getInt("STOCK")%>>
                                 <input type="submit" value="Editar" class="btn btn-warning">
                             </form>
                         </td>
@@ -116,7 +132,7 @@
                 </div>
             </c:if>
         </section>
-       <%-- <footer class="container-fluid text-center">
+        <%-- <footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
         </footer>--%>
 

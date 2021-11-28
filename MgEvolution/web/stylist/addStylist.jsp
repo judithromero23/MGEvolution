@@ -83,9 +83,9 @@
                 ${error}
             </div>
         </c:if>
-        <footer class="container-fluid text-center">
+        <!--<footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
-        </footer>
+        </footer>-->
 
 
         <!--Bootstrap-->

@@ -26,10 +26,18 @@ label {
     margin-bottom: 1rem;
 }
 
+select{
+    position: relative;
+    left: 15vw;
+    margin-bottom: 1rem;
+    width: 11rem;
+    height: 2rem;
+}
+
 input[type='submit']{
     position: relative;
     left: 0;
-    top: 5rem;
+    top: 3rem;
     margin-bottom: 1rem;
 }
 
