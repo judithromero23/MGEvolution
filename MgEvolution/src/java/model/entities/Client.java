@@ -24,7 +24,7 @@ public class Client implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long dni;
+    private String dni;
     /*Declaracion de los atributos de Cliente, entre ellos se encuentra:
     name = Nombre del cliente,
     lastName = Apellido del cliente,
@@ -84,11 +84,11 @@ public class Client implements Serializable {
         this.birthDate = birthDate;
     }
 
-    public Long getDNI() {
+    public String getDNI() {
         return dni;
     }
 
-    public void setDNI(Long dni) {
+    public void setDNI(String dni) {
         this.dni = dni;
     }
 

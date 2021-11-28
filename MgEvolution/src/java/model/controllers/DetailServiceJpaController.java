@@ -5,8 +5,6 @@
  */
 package model.controllers;
 
-import model.controllers.exceptions.NonexistentEntityException;
-import model.controllers.exceptions.RollbackFailureException;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -16,36 +14,36 @@ import javax.persistence.EntityNotFoundException;
 import javax.persistence.EntityTransaction;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import model.entities.Client;
+import model.controllers.exceptions.NonexistentEntityException;
+import model.controllers.exceptions.RollbackFailureException;
+import model.entities.DetailService;
 
 /**
  *
  * @author judith
  */
-public class ClientJpaController implements Serializable {
+public class DetailServiceJpaController implements Serializable {
 
-    public ClientJpaController(EntityManagerFactory emf) {
+    public DetailServiceJpaController(EntityManagerFactory emf) {
         this.emf = emf;
     }
-    
     private EntityManagerFactory emf = null;
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
-    public void create(Client client) throws RollbackFailureException, Exception {
+    public void create(DetailService detailService) throws RollbackFailureException, Exception {
         EntityManager em = null;
         EntityTransaction etx = null;
         try {
             em = getEntityManager();
             etx = em.getTransaction();
             etx.begin();
-            em.persist(client);
+            em.persist(detailService);
             etx.commit();
         } catch (Exception ex) {
             try {
-                ex.printStackTrace();
                 etx.rollback();
             } catch (Exception re) {
                 throw new RollbackFailureException("An error occurred attempting to roll back the transaction.", re);
@@ -58,14 +56,14 @@ public class ClientJpaController implements Serializable {
         }
     }
 
-    public void edit(Client client) throws NonexistentEntityException, RollbackFailureException, Exception {
-         EntityManager em = null;
-         EntityTransaction etx = null;
+    public void edit(DetailService detailService) throws NonexistentEntityException, RollbackFailureException, Exception {
+        EntityManager em = null;
+        EntityTransaction etx = null;
         try {
             em = getEntityManager();
             etx = em.getTransaction();
             etx.begin();
-            client = em.merge(client);
+            detailService = em.merge(detailService);
             etx.commit();
         } catch (Exception ex) {
             try {
@@ -75,9 +73,9 @@ public class ClientJpaController implements Serializable {
             }
             String msg = ex.getLocalizedMessage();
             if (msg == null || msg.length() == 0) {
-                String id = client.getDNI();
-                if (findClient(id) == null) {
-                    throw new NonexistentEntityException("The client with id " + id + " no longer exists.");
+                Long id_DetailService = detailService.getId_DetailService();
+                if (findDetailService(id_DetailService) == null) {
+                    throw new NonexistentEntityException("The buy with id " + id_DetailService + " no longer exists.");
                 }
             }
             throw ex;
@@ -88,21 +86,21 @@ public class ClientJpaController implements Serializable {
         }
     }
 
-    public void destroy(String dni) throws NonexistentEntityException, RollbackFailureException, Exception {
+    public void destroy(Long id_DetailService) throws NonexistentEntityException, RollbackFailureException, Exception {
         EntityManager em = null;
         EntityTransaction etx = null;
         try {
             em = getEntityManager();
             etx = em.getTransaction();
             etx.begin();
-            Client client;
+            DetailService buy;
             try {
-                client = em.getReference(Client.class, dni);
-                client.getDNI();
+                buy = em.getReference(DetailService.class, id_DetailService);
+                buy.getId_DetailService();
             } catch (EntityNotFoundException enfe) {
-                throw new NonexistentEntityException("The client with id " + dni + " no longer exists.", enfe);
+                throw new NonexistentEntityException("The buy with id " + id_DetailService + " no longer exists.", enfe);
             }
-            em.remove(client);
+            em.remove(buy);
             etx.commit();
         } catch (Exception ex) {
             try {
@@ -118,19 +116,19 @@ public class ClientJpaController implements Serializable {
         }
     }
 
-    public List<Client> findClientEntities() {
-        return findClientEntities(true, -1, -1);
+    public List<DetailService> findDetailServiceEntities() {
+        return findDetailServiceEntities(true, -1, -1);
     }
 
-    public List<Client> findClientEntities(int maxResults, int firstResult) {
-        return findClientEntities(false, maxResults, firstResult);
+    public List<DetailService> findDetailServiceBuyEntities(int maxResults, int firstResult) {
+        return findDetailServiceEntities(false, maxResults, firstResult);
     }
 
-    private List<Client> findClientEntities(boolean all, int maxResults, int firstResult) {
+    private List<DetailService> findDetailServiceEntities(boolean all, int maxResults, int firstResult) {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            cq.select(cq.from(Client.class));
+            cq.select(cq.from(DetailService.class));
             Query q = em.createQuery(cq);
             if (!all) {
                 q.setMaxResults(maxResults);
@@ -142,20 +140,20 @@ public class ClientJpaController implements Serializable {
         }
     }
 
-    public Client findClient(String dni) {
+    public DetailService findDetailService(Long id_DetailService) {
         EntityManager em = getEntityManager();
         try {
-            return em.find(Client.class, dni);
+            return em.find(DetailService.class, id_DetailService);
         } finally {
             em.close();
         }
     }
 
-    public int getClientCount() {
+    public int getDetailServiceCount() {
         EntityManager em = getEntityManager();
         try {
             CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
-            Root<Client> rt = cq.from(Client.class);
+            Root<DetailService> rt = cq.from(DetailService.class);
             cq.select(em.getCriteriaBuilder().count(rt));
             Query q = em.createQuery(cq);
             return ((Long) q.getSingleResult()).intValue();
@@ -163,5 +161,5 @@ public class ClientJpaController implements Serializable {
             em.close();
         }
     }
-    
+
 }

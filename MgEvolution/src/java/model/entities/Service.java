@@ -29,14 +29,14 @@ public class Service implements Serializable {
     stylist = ID del estilista,
     client = ID del cliente,
     date = Fecha del servicio,
-    cost = precio del servicio,
+    totalCost = precio del servicio,
     El ID del producto es id = id del servicio.
     Servicio es una tabla que nace de la relacion de Estilista y Cliente 
     por eso sus campos son los id de las dos tablas que une además de su propio id*/
     @Column(length = 50)
     private Date date;
     @Column(length = 50)
-    private Float cost;
+    private Float totalCost;
     
     @ManyToOne
     private Stylist stylist;
@@ -59,12 +59,12 @@ public class Service implements Serializable {
         this.date = date;
     }
 
-    public Float getCost() {
-        return cost;
+    public Float getTotalCost() {
+        return totalCost;
     }
 
-    public void setCost(Float cost) {
-        this.cost = cost;
+    public void setTotalCost(Float totalCost) {
+        this.totalCost = totalCost;
     }
 
     public Stylist getStylist(){

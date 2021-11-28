@@ -13,13 +13,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
-import model.controllers.BuyJpaController;
+import model.controllers.DetailServiceJpaController;
 import model.controllers.ClientJpaController;
 import model.controllers.ProductJpaController;
 import model.controllers.ServiceJpaController;
 import model.controllers.StylistJpaController;
 import model.controllers.SupplierJpaController;
-import model.entities.Buy;
+import model.entities.DetailService;
 import model.entities.Client;
 import model.entities.Product;
 import model.entities.Service;
@@ -208,7 +208,7 @@ public class Hairdresser {
         return filter;
     }
 
-    public void deleteClient(Long DNI) throws Exception {
+    public void deleteClient(String DNI) throws Exception {
         ClientJpaController ejc = new ClientJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         ejc.destroy(DNI);
     }
@@ -218,9 +218,9 @@ public class Hairdresser {
         ejc.create(client);
     }
 
-    public Client searchClient(Long DNI) {
+    public Client searchClient(String dni) {
         ClientJpaController ejc = new ClientJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
-        return ejc.findClient(DNI);
+        return ejc.findClient(dni);
     }
 
     public void updateClient(Client client) throws Exception {
@@ -269,18 +269,18 @@ public class Hairdresser {
         ejc.edit(service);
     }
 
-//Buy 
-    public List<Buy> getBuy() {
-        BuyJpaController ejc = new BuyJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
-        return ejc.findBuyEntities();
+//DetailService 
+    public List<DetailService> getDetailService() {
+        DetailServiceJpaController ejc = new DetailServiceJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        return ejc.findDetailServiceEntities();
     }
 
-    public List<Buy> filterBuy(String filtro) {
-        List<Buy> buy = getBuy();
-        List<Buy> filter = new ArrayList();
+    public List<DetailService> filterDetailService (String filtro) {
+        List<DetailService> buy = getDetailService();
+        List<DetailService> filter = new ArrayList();
         if (!filtro.isEmpty()) {
-            for (Buy e : buy) {
-                if (Objects.equals(e.getNumTicket(), filtro)) {
+            for (DetailService e : buy) {
+                if (Objects.equals(e.getId_DetailService(), filtro)) {
                     filter.add(e);
                 }
             }
@@ -290,23 +290,23 @@ public class Hairdresser {
         return filter;
     }
 
-    public void deleteBuy(Long numTicket) throws Exception {
-        BuyJpaController ejc = new BuyJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
-        ejc.destroy(numTicket);
+    public void deleteDetailService(Long id_DetailService) throws Exception {
+        DetailServiceJpaController ejc = new DetailServiceJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        ejc.destroy(id_DetailService);
     }
 
-    public void addBuy(Buy buy) throws Exception {
-        BuyJpaController ejc = new BuyJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
-        ejc.create(buy);
+    public void addDetailService(DetailService id_DetailService) throws Exception {
+        DetailServiceJpaController ejc = new DetailServiceJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        ejc.create(id_DetailService);
     }
 
-    public Buy searchBuy(Long numTicket) {
-        BuyJpaController ejc = new BuyJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
-        return ejc.findBuy(numTicket);
+    public DetailService searchDetailService(Long id_DetailService) {
+        DetailServiceJpaController ejc = new DetailServiceJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        return ejc.findDetailService(id_DetailService);
     }
 
-    public void updateBuy(Buy buy) throws Exception {
-        BuyJpaController ejc = new BuyJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
-        ejc.edit(buy);
+    public void updateDetailService(DetailService detailService) throws Exception {
+        DetailServiceJpaController ejc = new DetailServiceJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
+        ejc.edit(detailService);
     }
 }
