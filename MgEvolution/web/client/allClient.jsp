@@ -83,7 +83,7 @@
                     throw (sqle);
                 }
             %>
-            <table class="table">
+            <table class="table table-hover">
                 <thead class="thead-light">
                     <tr>
                         <th scope="col"><fmt:message key="tableDNI" bundle="${text}"/></th>

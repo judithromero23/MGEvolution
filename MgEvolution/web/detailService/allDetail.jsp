@@ -1,11 +1,12 @@
 <%-- 
-    Document   : allStylist
-    Created on : 01-nov-2021, 20:19:10
+    Document   : allDetail
+    Created on : 29-nov-2021, 20:50:12
     Author     : judith
 --%>
 
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
+<%@page import="java.util.*"%>
 <%@page import="models.Conexion"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -28,7 +29,7 @@
         <link rel="stylesheet" href="../assets/css/tables.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="estilistas" bundle="${text}"/></title>
+        <title><fmt:message key="detailService" bundle="${text}"/></title>
     </head>
     <body>
         <header>
@@ -53,74 +54,76 @@
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2><fmt:message key="estilistas" bundle="${text}"/></h2>
-            <h5><fmt:message key="listaEstilistas" bundle="${text}"/></h5>
-            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href = 'addStylist.jsp'"><fmt:message key="nuevoEstilista" bundle="${text}"/></button>
-            <form id="formBuscar">
-                <input id="inputBuscar" name="inputSearch" type="search" placeholder="Buscar...">
-                <i class="fa fa-search"></i>
-            </form>
+            <h2><fmt:message key="detailService" bundle="${text}"/></h2>
+            <h5><fmt:message key="listaDetailService" bundle="${text}"/><strong><%out.print(request.getParameter("nameClient"));%></strong></h5>
+            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href = 'addDetail.jsp'"><fmt:message key="nuevo Detalle de Servicio" bundle="${text}"/></button>
+
             <%
                 Statement smt;
+                Statement smt1;
                 ResultSet rs = null;
-                String inputSearch = request.getParameter("inputSearch");
-
+                ResultSet rs1 = null;
+                String idServiceTotal = request.getParameter("idServiceTotal");
+                System.out.println(idServiceTotal);
                 try {
                     Conexion con = new Conexion();
+                    Conexion con1 = new Conexion();
                     smt = con.getConnection().createStatement();
-                    if (inputSearch != null) {
-
-                        rs = smt.executeQuery("SELECT stylist.* FROM stylist WHERE (stylist.LOGIN LIKE '" + inputSearch + "%') "
-                                + "OR (stylist.NAME LIKE '" + inputSearch + "%') OR (stylist.AREA LIKE'" + inputSearch + "%') OR (stylist.EMAIL LIKE'" + inputSearch + "%') ORDER BY `NAME`");
-                    } else {
-                        rs = smt.executeQuery("SELECT stylist.* FROM stylist ORDER BY `NAME`");
-                    }
+                    smt1 = con1.getConnection().createStatement();
+                    rs = smt.executeQuery("SELECT detailservice.*, product.* FROM "
+                            + "service INNER JOIN detailservice INNER JOIN product WHERE "
+                            + "(detailservice.SERVICE_ID=service.ID) AND (product.CODBARRAS=detailservice.PRODUCT_CODBARRAS)"
+                            + " AND (detailservice.SERVICE_ID='" + idServiceTotal + "')");
+                    //getTotal
+                    rs1 = smt1.executeQuery("SELECT SUM(product.COSTCLIENT*detailservice.AMOUNT) AS 'TOTAL' "
+                            + " FROM service INNER JOIN detailservice INNER JOIN product WHERE"
+                            + " (detailservice.SERVICE_ID=service.ID) AND (product.CODBARRAS=detailservice.PRODUCT_CODBARRAS) "
+                            + "AND (detailservice.SERVICE_ID='" + idServiceTotal + "')");
                 } catch (java.sql.SQLException sqle) {
                     System.out.println("Error: " + sqle);
                     throw (sqle);
                 }
+
             %>
+
             <table class="table table-hover">
                 <thead class="thead-light">
                     <tr>
-                        <th scope="col"><fmt:message key="tableUsuario" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableNombre" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableCorreo" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableArea" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableSalary" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableAdmin" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableModificar" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCodBarras" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableNameProducto" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCostClient" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableCantidad" bundle="${text}"/></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <%   while (rs.next()) { 
-                    String answer;
-                    boolean var = rs.getBoolean("ADMIN");
-                   //If ternario
-                    answer = (var==true)?  "Sí" : "No";
-                    %>
-                        <tr>
-                            <th scope="col"><%= rs.getString("LOGIN")%></th>
-                            <td><%= rs.getString("NAME")%></td>
-                            <td><%= rs.getString("EMAIL")%></td>
-                            <td><%= rs.getString("AREA")%></td>
-                            <td><%= rs.getFloat("SALARY")%></td>
-                            <td><%out.print(answer);%></td>
-                            <td>
-                                <form action="editStylist.jsp" method="POST">
-                                    <input type="hidden" name="id" value=<%= rs.getString("ID")%>>
-                                    <input type="hidden" name="login" value=<%= rs.getString("LOGIN")%>>
-                                    <input type="hidden" name="name" value=<%= rs.getString("NAME")%>>
-                                    <input type="hidden" name="password" value=<%= rs.getString("PASSWORD")%>>
-                                    <input type="hidden" name="email" value=<%= rs.getString("EMAIL")%>>
-                                    <input type="hidden" name="area" value=<%= rs.getString("AREA")%>>
-                                    <input type="hidden" name="salary" value=<%= rs.getFloat("SALARY")%>>
-                                    <input type="hidden" name="admin" value="<%out.print(answer);%>">
-                                    <input type="submit" value="Editar" class="btn btn-warning">
-                                </form>
-                            </td>
-                        </tr>
-                      <%  }%>
+                    <%   while (rs.next()) {%>
+                    <tr>
+                        <td><%= rs.getLong("product.CODBARRAS")%></td>
+                        <td><%= rs.getString("product.NAME")%></td>
+                        <td><%= rs.getString("product.COSTCLIENT")%></td>
+                        <td><%= rs.getInt("detailservice.AMOUNT")%></td>
+
+                        <td>
+                            <%--  <form action="editDetailService.jsp" method="POST">
+                                  <input type="hidden"  name="codBarrasProducto" value=<%= rs.getLong("product.CODBARRAS")%>>
+                                  <input type="hidden" name="cantidadProducto" value=<%= rs.getInt("detailservice.AMOUNT")%>>
+                                  <input type="hidden" name="totalCost" value=<%= rs.getFloat("DNI")%>>
+                                  <input type="hidden" name="idDetailService" value=<%= rs.getInt("ID_DETAILSERVICE")%>>
+                                  <input type="submit" value="Editar" class="btn btn-warning">
+                              </form> --%>
+                        </td>
+                    </tr>
+                    
+                    <% }%>
+
+                </tbody>
+                <%while (rs1.next()) {%>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td colspan="3"><strong><%= rs1.getFloat("TOTAL")%></strong></td>
+                </tr>
+
+                <% }%>
                 </tbody>
             </table>
             <br>
@@ -131,9 +134,9 @@
                 </div>
             </c:if>
         </section>
-        <%--<footer class="container-fluid text-center">
-            <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
-        </footer>--%>
+        <%-- <footer class="container-fluid text-center">
+             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
+         </footer>--%>
 
 
         <!--Bootstrap-->

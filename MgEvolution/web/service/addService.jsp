@@ -1,16 +1,18 @@
 <%-- 
-    Document   : addProduct
-    Created on : 21-nov-2021, 20:19:11
+    Document   : addService
+    Created on : 30-nov-2021, 19:15:52
     Author     : judith
 --%>
 
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
+<%@page import="java.util.*"%>
 <%@page import="models.Conexion"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="iso-8859-1"%>
 <fmt:setBundle basename="bundles.text" var="text"/>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -27,7 +29,13 @@
         <link rel="stylesheet" href="../assets/css/add.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="productos" bundle="${text}"/></title>
+        <title><fmt:message key="servicios" bundle="${text}"/></title>
+        <script>
+            function deleteService() {
+                return confirm('¿Está seguro que desea eliminar el servicio?');
+            }
+
+        </script>
     </head>
     <body>
         <header>
@@ -45,69 +53,74 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="allProduct.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="../adminOption.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
+            <h2><fmt:message key="servicios" bundle="${text}"/></h2>
+            <h5><fmt:message key="listaServicios" bundle="${text}"/></h5>
             <%
-                Statement smt;
-                ResultSet rs = null;
-                
+                Statement smtStylist;
+                ResultSet rsStylist = null;
+
+                Statement smtClient;
+                ResultSet rsClient = null;
                 try {
-                    Conexion con = new Conexion();
-                    smt = con.getConnection().createStatement();
-                    
-                        rs = smt.executeQuery("SELECT supplier.* FROM supplier");
-                   
+                    Conexion conStylist = new Conexion();
+                    Conexion conClient = new Conexion();
+
+                    smtStylist = conStylist.getConnection().createStatement();
+
+                    rsStylist = smtStylist.executeQuery("SELECT stylist.* FROM stylist");
+
+                    smtClient = conClient.getConnection().createStatement();
+
+                    rsClient = smtClient.executeQuery("SELECT client.* FROM client");
+
                 } catch (java.sql.SQLException sqle) {
                     System.out.println("Error: " + sqle);
                     throw (sqle);
                 }
             %>
-            <h2><fmt:message key="nuevoProducto" bundle="${text}"/></h2>
-            <h5><fmt:message key="completarProducto" bundle="${text}"/></h5>
-            <form action="../addProduct" method="POST">
-                <label for="codBarras"><fmt:message key="inputCodBarras" bundle="${text}"/></label>
-                <input type="number" name="codBarras" id="codBarras" minlength="13" value="${codBarras}" required>
+            <form action="../addService" method="POST">
+
+                <label for="date"><fmt:message key="inputDate" bundle="${text}"/></label>
+                <input type="datetime-local" id="date" value="2018-06-12T19:30" name="date" required max="2018-06-14T00:00">
                 <br>
-                <label for="supplier"><fmt:message key="inputBrand" bundle="${text}"/></label>
-                <select id="supplier" name="supplier" required>
-                     <%   while (rs.next()) { %>
-                        <option value=<%= rs.getLong("supplier.ID_BRAND")%>><%= rs.getString("supplier.BRAND")%></option>  
+                <label for="stylist"><fmt:message key="inputStylist" bundle="${text}"/></label>
+                <label for="stylist"><fmt:message key="inputStylist" bundle="${text}"/></label>
+                <select id="stylist" name="stylist" required>
+                    <%   while (rsStylist.next()) {%>
+                    <option value=<%= rsStylist.getLong("stylist.ID")%>><%= rsStylist.getString("stylist.NAME")%></option>  
                     <%  }%>
                 </select>
                 <br>
-                <label for="name"><fmt:message key="inputName" bundle="${text}"/></label>
-                <input type="text" name="name" id="name" maxlength="20" value="${name}" required>
+                <label for="client"><fmt:message key="inputClient" bundle="${text}"/></label>
+                <select id="client" name="client" required>
+                    <%   while (rsClient.next()) {%>
+                    <option value=<%= rsClient.getString("client.DNI")%>><%= rsClient.getString("client.NAME")%></option>  
+                    <%  }%>
+                </select>
                 <br>
-                <label for="category"><fmt:message key="inputCategory" bundle="${text}"/></label>
-                <input type="text" name="category" id="category" maxlength="50" value="${category}" required>
                 <br>
-                <label for="costClient"><fmt:message key="inputCostClient" bundle="${text}"/></label>
-                <input type="decimal" name="costClient" id="costClient" value="${costClient}" required>
-                <br>
-                <label for="costSupplier"><fmt:message key="inputCostSupplier" bundle="${text}"/></label>
-                <input type="decimal" name="costSupplier" id="costSupplier" value="${costSupplier}" required>
-                <br>
-                <label for="stock"><fmt:message key="inputStock" bundle="${text}"/></label>
-                <input type="decimal" name="stock" id="stock" value="${stock}" required>
-                <br>
-                <input type="submit" value="Insertar Producto" class="btn btn-success">
+                <input type="submit" value="Crear Servicio" class="btn btn-success">
                 <br>
             </form>
-        </section>
-        <c:if test="${not empty error}">
+
             <br>
-            <div class="error alert alert-warning">
-                ${error}
-            </div>
-        </c:if>
-        <!--<footer class="container-fluid text-center">
-            <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
-        </footer>-->
+            <c:if test="${not empty error}">
+                <br>
+                <div class="error alert alert-warning">
+                    ${error}
+                </div>
+            </c:if>
+        </section>
+        <%-- <footer class="container-fluid text-center">
+             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
+         </footer>--%>
 
 
         <!--Bootstrap-->
@@ -116,4 +129,4 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
 
     </body>
-    
+</html>

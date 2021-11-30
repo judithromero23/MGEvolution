@@ -1,12 +1,9 @@
 <%-- 
-    Document   : addProduct
-    Created on : 21-nov-2021, 20:19:11
+    Document   : editService
+    Created on : 28-nov-2021, 20:26:27
     Author     : judith
 --%>
 
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="models.Conexion"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="iso-8859-1"%>
@@ -14,20 +11,30 @@
 <!DOCTYPE html>
 <html lang="es">
     <head>
-        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
         <!--Font Awesome-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <!--GoogleFont-->
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200&family=Lexend+Mega&family=Quicksand:wght@500&display=swap" rel="stylesheet">
+        <!--SweetAlert-->
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <!--CSS-->
-        <link rel="stylesheet" href="../assets/css/add.css">
+        <link rel="stylesheet" href="../assets/css/edit.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="productos" bundle="${text}"/></title>
+        <title><fmt:message key="servicios" bundle="${text}"/></title>
+        <script>
+            function deleteStylist() {
+                return confirm('¿Está seguro que desea eliminar el servicio?');
+            }
+            function actualizar() {
+                return confirm('Servicio actualizado');
+            }
+        </script>
     </head>
     <body>
         <header>
@@ -41,61 +48,41 @@
                 <button id="btnHamburguesa" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon" id="icon"></span>
                 </button>
-                <!--Links del encabezado justificados a la derecha-->
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="allProduct.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="allService.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <%
-                Statement smt;
-                ResultSet rs = null;
-                
-                try {
-                    Conexion con = new Conexion();
-                    smt = con.getConnection().createStatement();
-                    
-                        rs = smt.executeQuery("SELECT supplier.* FROM supplier");
-                   
-                } catch (java.sql.SQLException sqle) {
-                    System.out.println("Error: " + sqle);
-                    throw (sqle);
-                }
-            %>
-            <h2><fmt:message key="nuevoProducto" bundle="${text}"/></h2>
-            <h5><fmt:message key="completarProducto" bundle="${text}"/></h5>
-            <form action="../addProduct" method="POST">
-                <label for="codBarras"><fmt:message key="inputCodBarras" bundle="${text}"/></label>
-                <input type="number" name="codBarras" id="codBarras" minlength="13" value="${codBarras}" required>
-                <br>
-                <label for="supplier"><fmt:message key="inputBrand" bundle="${text}"/></label>
-                <select id="supplier" name="supplier" required>
-                     <%   while (rs.next()) { %>
-                        <option value=<%= rs.getLong("supplier.ID_BRAND")%>><%= rs.getString("supplier.BRAND")%></option>  
-                    <%  }%>
+            <h2><fmt:message key="servicios" bundle="${text}"/></h2>
+            <h5><fmt:message key="completarEditService" bundle="${text}"/> <strong><%out.print(request.getParameter("idService"));%></strong> </h5>
+
+            <form action="../editService" method="POST" id="form">
+                <input type="hidden" name="idService" id="idService" value=<%out.print(request.getParameter("idService"));%>>
+                <label for="dniClient"><fmt:message key="inputClient" bundle="${text}"/></label>
+                <select id="dniClient" name="dniClient" required>
+                    <c:forEach var="client" items="${hairdresser.client}">
+                        <option value="${client.dni}">${client.dni} - ${cliente.name}</option>  
+                    </c:forEach>
                 </select>
                 <br>
-                <label for="name"><fmt:message key="inputName" bundle="${text}"/></label>
-                <input type="text" name="name" id="name" maxlength="20" value="${name}" required>
+                <label for="idStylist"><fmt:message key="inputStylist" bundle="${text}"/></label>
+                <input type="text" name="idStylist" id="idStylist"  required value=<%out.print(request.getParameter("idStylist"));%>>
+                <select id="stylist" name="stylist" required>
+                    <c:forEach var="stylist" items="${hairdresser.stylist}">
+                        <option value="${stylist.id}">${stylist.id} - ${stylist.name}</option>  
+                    </c:forEach>
+                </select>
                 <br>
-                <label for="category"><fmt:message key="inputCategory" bundle="${text}"/></label>
-                <input type="text" name="category" id="category" maxlength="50" value="${category}" required>
-                <br>
-                <label for="costClient"><fmt:message key="inputCostClient" bundle="${text}"/></label>
-                <input type="decimal" name="costClient" id="costClient" value="${costClient}" required>
-                <br>
-                <label for="costSupplier"><fmt:message key="inputCostSupplier" bundle="${text}"/></label>
-                <input type="decimal" name="costSupplier" id="costSupplier" value="${costSupplier}" required>
-                <br>
-                <label for="stock"><fmt:message key="inputStock" bundle="${text}"/></label>
-                <input type="decimal" name="stock" id="stock" value="${stock}" required>
-                <br>
-                <input type="submit" value="Insertar Producto" class="btn btn-success">
+
+                <div class="buttonsLeft">
+                <input type="submit" name="actualizar" value="Actualizar" class="btn btn-success" onclick="return actualizar()">
+                <input type="submit" name="eliminar" value="Eliminar" class="borrar btn btn-danger" onclick="return deleteStylist()"/>
+                </div>
                 <br>
             </form>
         </section>
@@ -105,9 +92,9 @@
                 ${error}
             </div>
         </c:if>
-        <!--<footer class="container-fluid text-center">
+        <%-- <footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
-        </footer>-->
+        </footer>--%>
 
 
         <!--Bootstrap-->
@@ -116,4 +103,4 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
 
     </body>
-    
+</html>

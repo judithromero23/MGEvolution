@@ -1,6 +1,6 @@
 <%-- 
-    Document   : addProduct
-    Created on : 21-nov-2021, 20:19:11
+    Document   : onlyView
+    Created on : 28-nov-2021, 20:20:53
     Author     : judith
 --%>
 
@@ -8,6 +8,7 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="models.Conexion"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<jsp:useBean id="hairdresser" class="models.Hairdresser"/>
 <%@taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page contentType="text/html" pageEncoding="iso-8859-1"%>
 <fmt:setBundle basename="bundles.text" var="text"/>
@@ -24,10 +25,10 @@
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <!--CSS-->
-        <link rel="stylesheet" href="../assets/css/add.css">
+        <link rel="stylesheet" href="assets/css/view.css">
         <!--Icon and Name-->
-        <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="productos" bundle="${text}"/></title>
+        <link rel="shortcut icon" href="assets/images/LOGO_1_FINAL_PNG.png">
+        <title><fmt:message key="servicios" bundle="${text}"/></title>
     </head>
     <body>
         <header>
@@ -35,8 +36,8 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-dark container-fluid">
                 <!--Imagenes del encabezado-->
                 <div id="divEncabezado" class="navbar-brand">
-                    <a href="#"><img id="logotipoEncabezado" class="navbar-brand" src="../assets/images/LOGO_2.png" alt="Mg-Evolution Logo"></a>
-                    <a href="#"><img id="logotipoEncabezado2" class="navbar-brand" src="../assets/images/MGEvolution.png" alt="Mg-Evolution"></a>
+                    <a href="#"><img id="logotipoEncabezado" class="navbar-brand" src="assets/images/LOGO_2.png" alt="Mg-Evolution Logo"></a>
+                    <a href="#"><img id="logotipoEncabezado2" class="navbar-brand" src="assets/images/MGEvolution.png" alt="Mg-Evolution"></a>
                 </div>
                 <button id="btnHamburguesa" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon" id="icon"></span>
@@ -45,66 +46,60 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="allProduct.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="allService.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
-        <section class="container letraQuicksand">
+      <section class="container letraQuicksand">
+            <h2><fmt:message key="servicios" bundle="${text}"/></h2>
+            <h5><fmt:message key="listaServicios" bundle="${text}"/></h5>
             <%
                 Statement smt;
                 ResultSet rs = null;
-                
+
                 try {
                     Conexion con = new Conexion();
                     smt = con.getConnection().createStatement();
-                    
-                        rs = smt.executeQuery("SELECT supplier.* FROM supplier");
-                   
-                } catch (java.sql.SQLException sqle) {
+
+                   rs = smt.executeQuery("SELECT service.*, stylist.*, client.* FROM service INNER "
+                                + "JOIN stylist ON service.STYLIST_ID=stylist.ID INNER JOIN client ON "
+                                + "service.CLIENT_DNI=client.DNI ORDER BY `DATE`");
+                    } catch (java.sql.SQLException sqle) {
                     System.out.println("Error: " + sqle);
                     throw (sqle);
                 }
             %>
-            <h2><fmt:message key="nuevoProducto" bundle="${text}"/></h2>
-            <h5><fmt:message key="completarProducto" bundle="${text}"/></h5>
-            <form action="../addProduct" method="POST">
-                <label for="codBarras"><fmt:message key="inputCodBarras" bundle="${text}"/></label>
-                <input type="number" name="codBarras" id="codBarras" minlength="13" value="${codBarras}" required>
-                <br>
-                <label for="supplier"><fmt:message key="inputBrand" bundle="${text}"/></label>
-                <select id="supplier" name="supplier" required>
-                     <%   while (rs.next()) { %>
-                        <option value=<%= rs.getLong("supplier.ID_BRAND")%>><%= rs.getString("supplier.BRAND")%></option>  
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col"><fmt:message key="tableDateService" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableStylist" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableDNI" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableClient" bundle="${text}"/></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <%   while (rs.next()) { %>
+                   <tr>
+                        <th scope="col"><fmt:formatDate type ="both" value ="<%= rs.getTimestamp("DATE")%>"/></th>
+                        <td><%= rs.getString("STYLIST.NAME")%></td>
+                        <td><%= rs.getString("DNI")%></td>
+                        <td><%= rs.getString("CLIENT.NAME")%></td>
+                        
+                    </tr>
                     <%  }%>
-                </select>
-                <br>
-                <label for="name"><fmt:message key="inputName" bundle="${text}"/></label>
-                <input type="text" name="name" id="name" maxlength="20" value="${name}" required>
-                <br>
-                <label for="category"><fmt:message key="inputCategory" bundle="${text}"/></label>
-                <input type="text" name="category" id="category" maxlength="50" value="${category}" required>
-                <br>
-                <label for="costClient"><fmt:message key="inputCostClient" bundle="${text}"/></label>
-                <input type="decimal" name="costClient" id="costClient" value="${costClient}" required>
-                <br>
-                <label for="costSupplier"><fmt:message key="inputCostSupplier" bundle="${text}"/></label>
-                <input type="decimal" name="costSupplier" id="costSupplier" value="${costSupplier}" required>
-                <br>
-                <label for="stock"><fmt:message key="inputStock" bundle="${text}"/></label>
-                <input type="decimal" name="stock" id="stock" value="${stock}" required>
-                <br>
-                <input type="submit" value="Insertar Producto" class="btn btn-success">
-                <br>
-            </form>
-        </section>
-        <c:if test="${not empty error}">
+                </tbody>
+            </table>
             <br>
-            <div class="error alert alert-warning">
-                ${error}
-            </div>
-        </c:if>
+            <c:if test="${not empty error}">
+                <br>
+                <div class="error alert alert-warning">
+                    ${error}
+                </div>
+            </c:if>
+        </section>
         <!--<footer class="container-fluid text-center">
             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
         </footer>-->
@@ -114,6 +109,5 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-
     </body>
-    
+</html>
