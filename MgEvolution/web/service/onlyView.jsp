@@ -65,7 +65,7 @@
 
                    rs = smt.executeQuery("SELECT service.*, stylist.*, client.* FROM service INNER "
                                 + "JOIN stylist ON service.STYLIST_ID=stylist.ID INNER JOIN client ON "
-                                + "service.CLIENT_DNI=client.DNI ORDER BY `DATE`");
+                                + "service.CLIENT_DNI=client.DNI ORDER BY `DATE` DESC");
                     } catch (java.sql.SQLException sqle) {
                     System.out.println("Error: " + sqle);
                     throw (sqle);
@@ -83,7 +83,7 @@
                 <tbody>
                     <%   while (rs.next()) { %>
                    <tr>
-                        <th scope="col"><fmt:formatDate type ="both" value ="<%= rs.getTimestamp("DATE")%>"/></th>
+                        <th scope="col"><%= rs.getString("DATE")%></th>
                         <td><%= rs.getString("STYLIST.NAME")%></td>
                         <td><%= rs.getString("DNI")%></td>
                         <td><%= rs.getString("CLIENT.NAME")%></td>

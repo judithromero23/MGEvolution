@@ -30,6 +30,12 @@
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
         <title><fmt:message key="detailService" bundle="${text}"/></title>
+        <script>
+            function deleteDetail() {
+                return confirm('¿Está seguro que desea eliminar el producto de este servicio?');
+            }
+
+        </script>
     </head>
     <body>
         <header>
@@ -47,7 +53,7 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="../adminOption.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="../service/allService.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
@@ -55,16 +61,27 @@
         </header>
         <section class="container letraQuicksand">
             <h2><fmt:message key="detailService" bundle="${text}"/></h2>
-            <h5><fmt:message key="listaDetailService" bundle="${text}"/><strong><%out.print(request.getParameter("nameClient"));%></strong></h5>
-            <button type="button" class="btn btn-success" id="addButton" onclick="window.location.href = 'addDetail.jsp'"><fmt:message key="nuevo Detalle de Servicio" bundle="${text}"/></button>
-
+            <h5><fmt:message key="listaDetailService" bundle="${text}"/><strong></strong></h5>
+            <form action="addDetail.jsp">
+                <input type="hidden" name="idService" value=<%out.print(request.getParameter("idService"));%>>
+                <input type="submit" class="btn btn-success addButton" value="Nuevo nueva fila">
+            </form>
             <%
                 Statement smt;
                 Statement smt1;
                 ResultSet rs = null;
                 ResultSet rs1 = null;
-                String idServiceTotal = request.getParameter("idServiceTotal");
+                String requestUrl = request.getParameter("idService");
+                String idServiceTotal; 
+                 
+                if(requestUrl==null|| requestUrl.isEmpty()){
+                     idServiceTotal = request.getParameter("idService");
+                }else{
+                    idServiceTotal = requestUrl;
+                    
+                }
                 System.out.println(idServiceTotal);
+                
                 try {
                     Conexion con = new Conexion();
                     Conexion con1 = new Conexion();
@@ -93,6 +110,7 @@
                         <th scope="col"><fmt:message key="tableNameProducto" bundle="${text}"/></th>
                         <th scope="col"><fmt:message key="tableCostClient" bundle="${text}"/></th>
                         <th scope="col"><fmt:message key="tableCantidad" bundle="${text}"/></th>
+                        <th scope="col"><fmt:message key="tableModificar" bundle="${text}"/></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -102,25 +120,27 @@
                         <td><%= rs.getString("product.NAME")%></td>
                         <td><%= rs.getString("product.COSTCLIENT")%></td>
                         <td><%= rs.getInt("detailservice.AMOUNT")%></td>
-
                         <td>
-                            <%--  <form action="editDetailService.jsp" method="POST">
-                                  <input type="hidden"  name="codBarrasProducto" value=<%= rs.getLong("product.CODBARRAS")%>>
-                                  <input type="hidden" name="cantidadProducto" value=<%= rs.getInt("detailservice.AMOUNT")%>>
-                                  <input type="hidden" name="totalCost" value=<%= rs.getFloat("DNI")%>>
-                                  <input type="hidden" name="idDetailService" value=<%= rs.getInt("ID_DETAILSERVICE")%>>
-                                  <input type="submit" value="Editar" class="btn btn-warning">
-                              </form> --%>
+                            <form action="../editDetail" method="POST">
+                                <input type="hidden" name="idDetail" value=<%= rs.getInt("detailservice.ID_DETAILSERVICE")%>>
+                                <input type="hidden" name="amount" value=<%= rs.getInt("detailservice.AMOUNT")%>>
+                                <input type="hidden" name="idService" value=<%= rs.getInt("detailservice.SERVICE_ID")%>>
+                                <input type="submit" name="actualizarMas" value="+" class="btn btn-outline-dark"/>
+                                <input type="submit" name="actualizarMenos" value="-" class="btn btn-outline-dark"/>
+                                <input type="submit" name="eliminar" value="Eliminar" class="borrar btn btn-danger" onclick="return deleteDetail()"/>
+                            </form>
+                        </td>
+                        <td>
                         </td>
                     </tr>
-                    
+
                     <% }%>
 
                 </tbody>
                 <%while (rs1.next()) {%>
                 <tr>
                     <td><strong>Total</strong></td>
-                    <td colspan="3"><strong><%= rs1.getFloat("TOTAL")%></strong></td>
+                    <td colspan="4"><strong><%= rs1.getFloat("TOTAL")%></strong></td>
                 </tr>
 
                 <% }%>

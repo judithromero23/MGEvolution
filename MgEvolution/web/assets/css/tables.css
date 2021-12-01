@@ -36,6 +36,12 @@ section #addButton{
     width: 5rem;
     transition: transform 4s ;
 }
+
+.addButton{
+    position: relative;
+    left: 38vw;
+    bottom: 1rem;
+}
 #logotipoEncabezado2{
     margin-left: -1.5rem;
     width: 15rem;

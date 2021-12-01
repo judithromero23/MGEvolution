@@ -72,14 +72,11 @@
                 <div class="d-flex justify-content-around row marginbottom">
                     <button type="button" class="btn btn-secondary col-sm margin10px btnsize" onclick="window.location.href = 'service/allService.jsp'">
                         <i class="far fa-calendar-alt paddingRight"></i> <fmt:message key="servicios" bundle="${text}"/></button>
-                    <button type="button" class="btn btn-secondary col-sm margin10px btnsize" onclick="window.location.href = 'detailService/allDetailService.jsp'">
-                        <i class="far fa-credit-card paddingRight"></i> <fmt:message key="detalleServicio" bundle="${text}"/></button>
-                </div>
-
-                <div class="d-flex justify-content-around row marginbottom">
                     <button type="button" class="btn btn-secondary col-sm margin10px btnsize" onclick="window.location.href = 'supplier/allSupplier.jsp'">
                         <i class="far fa-id-badge paddingRight"></i> <fmt:message key="proveedores" bundle="${text}"/></button>
-                </div> 
+                </div>
+
+               
             </section>
         </c:if>
         <footer class="container-fluid text-center">

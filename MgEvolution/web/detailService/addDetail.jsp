@@ -1,6 +1,6 @@
 <%-- 
-    Document   : addService
-    Created on : 30-nov-2021, 19:15:52
+    Document   : addDetail
+    Created on : 01-dic-2021, 0:06:19
     Author     : judith
 --%>
 
@@ -26,10 +26,10 @@
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
         <!--CSS-->
-        <link rel="stylesheet" href="../assets/css/add.css">
+        <link rel="stylesheet" href="../assets/css/edit.css">
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
-        <title><fmt:message key="servicios" bundle="${text}"/></title>
+        <title><fmt:message key="detailService" bundle="${text}"/></title>
         <script>
             function deleteService() {
                 return confirm('¿Está seguro que desea eliminar el servicio?');
@@ -53,74 +53,56 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="allService.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
+                            <a class="nav-link" href="../service/allService.jsp"><i class="fa fa-caret-square-o-left"></i> <fmt:message key="atras" bundle="${text}"/></a>
                         </li>
                     </ul>
                 </div>
             </nav>
         </header>
         <section class="container letraQuicksand">
-            <h2><fmt:message key="servicios" bundle="${text}"/></h2>
-            <h5><fmt:message key="listaServicios" bundle="${text}"/></h5>
-            <%
-                Statement smtStylist;
-                ResultSet rsStylist = null;
-
-                Statement smtClient;
-                ResultSet rsClient = null;
+            <h2><fmt:message key="detailService" bundle="${text}"/></h2>
+            <h5><fmt:message key="addcDetailService" bundle="${text}"/></h5>
+             <%
+                Statement smt;
+                ResultSet rs = null;
+                
                 try {
-                    Conexion conStylist = new Conexion();
-                    Conexion conClient = new Conexion();
-
-                    smtStylist = conStylist.getConnection().createStatement();
-
-                    rsStylist = smtStylist.executeQuery("SELECT stylist.* FROM stylist");
-
-                    smtClient = conClient.getConnection().createStatement();
-
-                    rsClient = smtClient.executeQuery("SELECT client.* FROM client");
-
+                    Conexion con = new Conexion();
+                    smt = con.getConnection().createStatement();
+                    
+                        rs = smt.executeQuery("SELECT product.* FROM product ");
+                   
                 } catch (java.sql.SQLException sqle) {
                     System.out.println("Error: " + sqle);
                     throw (sqle);
                 }
             %>
-            <form action="../addService" method="POST">
-
-                <label for="date"><fmt:message key="inputDate" bundle="${text}"/></label>
-                <input type="datetime-local" id="date" name="date" required max="2021-12-14T00:00">
-                <br>
-                <label for="stylist"><fmt:message key="inputStylist" bundle="${text}"/></label>
-                <label for="stylist"><fmt:message key="inputStylist" bundle="${text}"/></label>
-                <select id="stylist" name="stylist" required>
-                    <%   while (rsStylist.next()) {%>
-                    <option value=<%= rsStylist.getLong("stylist.ID")%>><%= rsStylist.getString("stylist.NAME")%></option>  
+            
+            <form action="../addDetail" method="POST">
+                 <input type="hidden" name="idService" value=<%out.print(request.getParameter("idService"));%>>
+                <label for="product"><fmt:message key="inputProduct" bundle="${text}"/></label>
+                <select id="product" name="product" class="selectDetail" required>
+                     <%   while (rs.next()) { %>
+                        <option value=<%= rs.getLong("product.CODBARRAS")%>><%= rs.getString("product.CODBARRAS") %> - <%= rs.getString("product.NAME") %> - <%= rs.getString("product.CATEGORY") %></option>  
                     <%  }%>
                 </select>
                 <br>
-                <label for="client"><fmt:message key="inputClient" bundle="${text}"/></label>
-                <select id="client" name="client" required>
-                    <%   while (rsClient.next()) {%>
-                    <option value=<%= rsClient.getString("client.DNI")%>><%= rsClient.getString("client.NAME")%></option>  
-                    <%  }%>
-                </select>
-                <br>
-                <br>
-                <input type="submit" value="Crear Servicio" class="btn btn-success">
+                <label for="name"><fmt:message key="inputAmount" bundle="${text}"/></label>
+                <input type="number" name="amount" id="amount" required >
+                
+                <input type="submit" value="Insertar Producto" class="btn btn-success">
                 <br>
             </form>
-
-            <br>
-            <c:if test="${not empty error}">
-                <br>
-                <div class="error alert alert-warning">
-                    ${error}
-                </div>
-            </c:if>
         </section>
-        <%-- <footer class="container-fluid text-center">
-             <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
-         </footer>--%>
+        <c:if test="${not empty error}">
+            <br>
+            <div class="error alert alert-warning">
+                ${error}
+            </div>
+        </c:if>
+        <!--<footer class="container-fluid text-center">
+            <h5 class="tipoLetra1"><i class="fa fa-copyright"></i>MGEvolution</h5>
+        </footer>-->
 
 
         <!--Bootstrap-->
@@ -129,4 +111,4 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
 
     </body>
-</html>
+    

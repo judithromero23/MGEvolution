@@ -53,6 +53,13 @@ input[type='submit']{
     left: 20.4rem;
     margin-bottom: 1rem;
 }
+.selectDetail{
+    position: relative;
+    left: 10rem;
+    margin-bottom: 1rem;
+    width: 20rem;
+    height: 2rem;
+}
 input {
     position: relative;
     left: 15vw;

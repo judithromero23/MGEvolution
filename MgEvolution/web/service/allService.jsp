@@ -30,11 +30,13 @@
         <!--Icon and Name-->
         <link rel="shortcut icon" href="../assets/images/LOGO_1_FINAL_PNG.png">
         <title><fmt:message key="servicios" bundle="${text}"/></title>
-         <script>
+        <script>
             function deleteService() {
                 return confirm('¿Está seguro que desea eliminar el servicio?');
             }
-            
+            function recargar() {
+                location.reload();
+            }
         </script>
     </head>
     <body>
@@ -68,10 +70,11 @@
                 <i class="fa fa-search"></i>
             </form>
             <%
+                
                 Statement smt;
                 ResultSet rs = null;
                 String inputSearch = request.getParameter("inputSearch");
-                
+
                 try {
                     Conexion con = new Conexion();
                     smt = con.getConnection().createStatement();
@@ -82,11 +85,11 @@
                                 + "service.CLIENT_DNI=client.DNI WHERE(service.STYLIST_ID = '" + inputSearch + "') OR "
                                 + "(service.CLIENT_DNI LIKE '" + inputSearch + "%')OR (service.ID='" + inputSearch + "') "
                                 + "OR (client.NAME LIKE '" + inputSearch + "%') OR (stylist.NAME LIKE '" + inputSearch + "%') OR (service.DATE='" + inputSearch + "') "
-                                + "ORDER BY `DATE`");
+                                + "ORDER BY `DATE` DESC");
                     } else {
                         rs = smt.executeQuery("SELECT service.*, stylist.*, client.* FROM service INNER "
                                 + "JOIN stylist ON service.STYLIST_ID=stylist.ID INNER JOIN client ON "
-                                + "service.CLIENT_DNI=client.DNI ORDER BY `DATE`");
+                                + "service.CLIENT_DNI=client.DNI ORDER BY `DATE` DESC");
                     }
                 } catch (java.sql.SQLException sqle) {
                     System.out.println("Error: " + sqle);
@@ -101,26 +104,25 @@
                         <th scope="col"><fmt:message key="tableStylist" bundle="${text}"/></th>
                         <th scope="col"><fmt:message key="tableDNI" bundle="${text}"/></th>
                         <th scope="col"><fmt:message key="tableClient" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="Informacion" bundle="${text}"/></th>
-                        <th scope="col"><fmt:message key="tableEliminar" bundle="${text}"/></th>
+                        <th scope="col"></th>
+
                     </tr>
                 </thead>
                 <tbody>
                     <%   while (rs.next()) {%>
                     <tr>
                         <%--  <fmt:formatDate type = "both" dateStyle = "medium" var="date" timeStyle = "medium" value = "<%= rs.getDate("DATE")%>" />--%>
-                        <th scope="col"><fmt:formatDate type ="both" value ="<%= rs.getTimestamp("DATE")%>"/></th>
+                        <th scope="col"><%= rs.getString("DATE")%></th>
                         <td><%= rs.getString("STYLIST.NAME")%></td>
                         <td><%= rs.getString("DNI")%></td>
                         <td><%= rs.getString("CLIENT.NAME")%></td>
                         <td>
-                            <form action="../detailService/allDetail.jsp" method="POST">
-                                <input type="hidden"  name="idServiceTotal" value=<%= rs.getLong("SERVICE.ID")%>>
-                                 <input type="hidden" name="nameClient" value=<%= rs.getString("CLIENT.NAME")%>>
-                                <input type="submit" value="Detalles" class="btn btn-secondary">
+                            <form action="../detailService/allDetail.jsp" method="POST" style="margin-bottom: 3px">
+                                <input type="hidden"  name="idService" value=<%= rs.getLong("SERVICE.ID")%>>
+                                <input type="hidden" name="nameClient" value=<%= rs.getString("CLIENT.NAME")%>>
+                                <input type="submit" value="Detalles" class="btn btn-secondary" onclick="return recargar()">
                             </form>
-                        </td>
-                        <td>
+
                             <form action="../editService" method="POST">
                                 <input type="hidden"  name="idService" value=<%= rs.getLong("SERVICE.ID")%>>
                                 <input type="submit" name="eliminar" value="Eliminar" class="borrar btn btn-danger" onclick="return deleteService()"/>
@@ -147,6 +149,6 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
-        
+
     </body>
 </html>
