@@ -35,8 +35,6 @@ public class DetailService implements Serializable {
     por eso entre sus campos se encuentra los ids de las dos tablas que une además de su propio id_DetailService*/
     @Column(length = 25)
     private Integer amount;
-    @Column(length = 25)
-    private Float price;
     
     @ManyToOne
     private Product product;
@@ -59,14 +57,6 @@ public class DetailService implements Serializable {
         this.amount = amount;
     }
 
-    public Float getPrice() {
-        return price;
-    }
-
-    public void setPrice(Float price) {
-        this.price = price;
-    }
-    
     public Service getService(){
         return service;
     }

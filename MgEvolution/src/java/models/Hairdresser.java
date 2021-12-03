@@ -73,7 +73,7 @@ public class Hairdresser {
         ejc.create(stylist);
     }
 
-    public Stylist searchStylist(Long id) {
+    public static Stylist searchStylist(Long id) {
         StylistJpaController ejc = new StylistJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         return ejc.findStylist(id);
     }
@@ -169,7 +169,7 @@ public class Hairdresser {
         ejc.create(product);
     }
 
-    public Product searchProduct(Long codBarras) {
+    public static Product searchProduct(Long codBarras) {
         ProductJpaController ejc = new ProductJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         return ejc.findProduct(codBarras);
     }
@@ -218,7 +218,7 @@ public class Hairdresser {
         ejc.create(client);
     }
 
-    public Client searchClient(String dni) {
+    public static Client searchClient(String dni) {
         ClientJpaController ejc = new ClientJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         return ejc.findClient(dni);
     }
@@ -259,7 +259,7 @@ public class Hairdresser {
         ejc.create(service);
     }
 
-    public Service searchService(Long id) {
+    public static Service searchService(Long id) {
         ServiceJpaController ejc = new ServiceJpaController(Persistence.createEntityManagerFactory(PERSISTENCIA));
         return ejc.findService(id);
     }

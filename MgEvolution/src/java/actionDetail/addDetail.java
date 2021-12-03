@@ -3,29 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package actionClient;
+package actionDetail;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.entities.Client;
+import model.entities.DetailService;
+import model.entities.Product;
+import model.entities.Service;
 import models.Hairdresser;
 
 /**
  *
- * @author judith
+ * @author judit
  */
-@WebServlet(name = "addClient", urlPatterns = {"/addClient"})
-public class addClient extends HttpServlet {
+@WebServlet(name = "addDetail", urlPatterns = {"/addDetail"})
+public class addDetail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,48 +36,42 @@ public class addClient extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
         String error = null;
-        String dni = request.getParameter("dni");
-        String name = request.getParameter("name");
-        String lastName = request.getParameter("lastName");
-        String city = request.getParameter("city");
-        Integer phone = Integer.parseInt(request.getParameter("phone"));
-
-        Client newClient = new Client();
-        newClient.setDNI(dni);
-        newClient.setName(name);
-        newClient.setLastName(lastName);
-        newClient.setCity(city);
-        newClient.setPhone(phone);
-        //Date parse
-        String requestDate = request.getParameter("bithDate");
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
-        try {
-
-            date = format.parse(requestDate);
-            newClient.setBirthDate(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        System.out.println("Id Service: " + request.getParameter("idService"));
+        Long idService = Long.parseLong(request.getParameter("idService"));
+        
+        Integer amount = Integer.parseInt(request.getParameter("amount"));
+        
+        //Product CODBARRAS
+        String productInput = request.getParameter("product");
+        String[] infoproduct = productInput.split(" ");
+        Long codBarras = Long.parseLong(infoproduct[0]);
+        
+        //Find codBarras in product and idService in Service
+        Product product = Hairdresser.searchProduct(codBarras);
+        Service service = Hairdresser.searchService(idService);
+        
+        DetailService detail = new DetailService();
+        detail.setProduct(product);
+        detail.setAmount(amount);
+        detail.setService(service);
+                
+                
         Hairdresser hairdresser = (Hairdresser) request.getSession().getAttribute("hairdresser");
 
         try {
-            hairdresser.addClient(newClient);
+            hairdresser.addDetailService(detail);
         } catch (Exception ex) {
-           error = "Error al añadir a el cliente '" + dni + "', pruebe con otro dni.";
+            error = "Error al añadir el producto '" + codBarras + "', pruebe con otro código de barras.";
         }
         if (error != null) {
             request.setAttribute("error", error);
-            request.setAttribute("name", name);
-            request.setAttribute("lastName", lastName);
-            request.setAttribute("city", city);
-            request.setAttribute("phone", phone);
-            getServletContext().getRequestDispatcher("/client/onlyView.jsp").forward(request, response);
+            request.setAttribute("product", product);
+            request.setAttribute("service", service);
+            request.setAttribute("amount", amount);
+             response.sendRedirect("detailService/allDetail.jsp?idService=" + idService);
         } else {
-            response.sendRedirect(response.encodeRedirectURL("/MgEvolution/onlyViewClient.jsp?option=1"));
+             response.sendRedirect("detailService/allDetail.jsp?idService=" + idService);
         }
     }
 
